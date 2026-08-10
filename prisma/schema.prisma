@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RegistrationStatus {
+  pending
+  confirmed
+  cancelled
+}
+
+enum PaymentStatus {
+  pending
+  succeeded
+  failed
+}
+
+model Registration {
+  id        String              @id @default(cuid())
+  eventId   String
+  name      String
+  email     String
+  status    RegistrationStatus @default(pending)
+  amountPaid Int?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  payment Payment?
+
+  @@index([eventId])
+  @@index([email])
+}
+
+model Payment {
+  id                    String        @id @default(cuid())
+  registrationId        String        @unique
+  registration          Registration  @relation(fields: [registrationId], references: [id])
+  stripeSessionId       String        @unique
+  stripePaymentIntentId String?
+  amount                Int
+  currency              String        @default("usd")
+  status                PaymentStatus @default(pending)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+}
