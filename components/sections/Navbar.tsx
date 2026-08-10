@@ -9,9 +9,13 @@ import {
   Server05,
   Signal02,
   ChevronDown,
+  BookOpen02,
+  Users03,
+  CalendarCheck02,
 } from "@untitledui/icons";
 import { Button } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { Handshake } from "@/components/icons/Handshake";
 import { LINKS_ENABLED } from "@/lib/links";
 import type { ComponentType } from "react";
 
@@ -68,29 +72,29 @@ const ABOUT_ITEMS: DropdownItem[] = [
     title: "About Sovran",
     desc: "Who we are, how we work, and where we operate.",
     href: "/about",
-    icon: Building08,
+    icon: BookOpen02,
     image: "/images/sovran photo - our story.avif",
   },
   {
     title: "Leadership & Team",
     desc: "The people who lead our practice areas and run our engagements.",
     href: "/leadership",
-    icon: Signal02,
-    image: "",
+    icon: Users03,
+    image: "/images/sovran photo - leadership & team.avif",
   },
   {
-    title: "Careers",
-    desc: "Join a team working on Africa's most consequential advisory mandates.",
-    href: "/careers",
-    icon: PresentationChart02,
-    image: "",
+    title: "Partners & Institutional Relationships",
+    desc: "The institutions and organisations we work with.",
+    href: "/partnerships",
+    icon: Handshake,
+    image: "/images/sovran photo - partners & intitutional rshps.avif",
   },
   {
     title: "Events",
     desc: "Convenings, roundtables, and public programmes across our markets.",
     href: "/events",
-    icon: Server05,
-    image: "",
+    icon: CalendarCheck02,
+    image: "/images/sovran photo - events & convening.avif",
   },
 ];
 
@@ -203,7 +207,9 @@ function DropdownPanel({
   return (
     <div className="flex flex-col">
       {/* Main row: items + image */}
-      <div className={`flex gap-6 px-6 pt-5 pb-4 ${isLight ? "bg-[#F9FBFB]" : "bg-[#0e1214]"}`}>
+      <div
+        className={`flex gap-6 px-6 pt-5 pb-4 ${isLight ? "bg-[#F9FBFB]" : "bg-[#0e1214]"}`}
+      >
         {/* Left: item list */}
         <div className="flex flex-col gap-0.5 flex-1">
           {items.map((item, i) => {
@@ -228,7 +234,9 @@ function DropdownPanel({
                   <p className={`text-sm font-medium leading-5 ${titleCls}`}>
                     {item.title}
                   </p>
-                  <p className={`text-sm leading-5 ${descCls}`}>{item.desc}</p>
+                  <p className={`text-sm leading-5 text-pretty ${descCls}`}>
+                    {item.desc}
+                  </p>
                 </div>
               </ConditionalLink>
             );
@@ -363,7 +371,6 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
   const displayIndex =
     active !== null ? DROPDOWN_ORDER.indexOf(active) : lastIndex;
 
-
   return (
     <header
       data-theme={isLight ? undefined : "dark"}
@@ -459,35 +466,35 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
           onMouseEnter={handlePanelEnter}
           onMouseLeave={handleLeave}
         >
-            <div className="overflow-hidden">
-              <div
-                style={{
-                  display: "flex",
-                  width: "200%",
-                  transform: `translateX(${-displayIndex * 50}%)`,
-                  transition: slideEnabled ? `transform 380ms ${EASE}` : "none",
-                }}
-              >
-                <div style={{ width: "50%" }}>
-                  <DropdownPanel
-                    panelKey="expertise"
-                    theme={theme}
-                    hoveredIdx={hoveredIdx.expertise}
-                    onItemHover={(i) =>
-                      setHoveredIdx((prev) => ({ ...prev, expertise: i }))
-                    }
-                  />
-                </div>
-                <div style={{ width: "50%" }}>
-                  <DropdownPanel
-                    panelKey="about"
-                    theme={theme}
-                    hoveredIdx={hoveredIdx.about}
-                    onItemHover={(i) =>
-                      setHoveredIdx((prev) => ({ ...prev, about: i }))
-                    }
-                  />
-                </div>
+          <div className="overflow-hidden">
+            <div
+              style={{
+                display: "flex",
+                width: "200%",
+                transform: `translateX(${-displayIndex * 50}%)`,
+                transition: slideEnabled ? `transform 380ms ${EASE}` : "none",
+              }}
+            >
+              <div style={{ width: "50%" }}>
+                <DropdownPanel
+                  panelKey="expertise"
+                  theme={theme}
+                  hoveredIdx={hoveredIdx.expertise}
+                  onItemHover={(i) =>
+                    setHoveredIdx((prev) => ({ ...prev, expertise: i }))
+                  }
+                />
+              </div>
+              <div style={{ width: "50%" }}>
+                <DropdownPanel
+                  panelKey="about"
+                  theme={theme}
+                  hoveredIdx={hoveredIdx.about}
+                  onItemHover={(i) =>
+                    setHoveredIdx((prev) => ({ ...prev, about: i }))
+                  }
+                />
+              </div>
             </div>
           </div>
         </div>
