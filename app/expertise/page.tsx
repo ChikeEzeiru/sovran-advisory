@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "Expertise",
+  description:
+    "Sovran's practice areas span policy and government relations, market strategy, digital advisory, and stakeholder communications across African markets.",
+}
 import { Navbar } from "@/components/sections/Navbar"
 import { Footer } from "@/components/sections/Footer"
 

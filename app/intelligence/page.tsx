@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "Insights",
+  description:
+    "Sovran's Insights series draws on active engagements and primary research to surface what is actually happening in the markets we cover.",
+}
 import { Footer } from "@/components/sections/Footer"
 
 const ARTICLES = [

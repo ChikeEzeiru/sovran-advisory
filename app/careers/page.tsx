@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "Careers",
+  description:
+    "Join a team working on Africa's most consequential advisory mandates. Explore open roles at Sovran.",
+}
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/Button"
 

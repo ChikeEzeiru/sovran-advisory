@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "Leadership & Team",
+  description:
+    "Meet the people who lead Sovran's practice areas and run our client engagements across Africa.",
+}
 import { Footer } from "@/components/sections/Footer"
 
 const TEAM = [

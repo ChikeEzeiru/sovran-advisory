@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: "Events",
+  description:
+    "Convenings, roundtables, and public programmes hosted by Sovran Advisory across our markets.",
+}
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'

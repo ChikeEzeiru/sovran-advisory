@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "Policy & Government Relations",
+  description:
+    "We help clients navigate complex regulatory and political environments across African markets — from licensing approvals to multilateral negotiations.",
+}
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/Button"
 

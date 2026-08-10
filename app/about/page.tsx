@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "About the Firm",
+  description:
+    "Sovran is an Africa-focused advisory firm. Learn about who we are, how we work, and where we operate.",
+}
 import { Footer } from "@/components/sections/Footer"
 
 export default function AboutPage() {

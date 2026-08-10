@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "Digital & Technology Advisory",
+  description:
+    "We support digital market entry, technology regulation, and data governance for organisations operating at the frontier of Africa's digital economy.",
+}
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/Button"
 

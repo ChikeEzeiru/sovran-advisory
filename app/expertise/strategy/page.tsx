@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "Market & Corporate Strategy",
+  description:
+    "We advise corporates and investors on market entry, competitive positioning, and corporate strategy in African markets where standard frameworks do not apply.",
+}
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/Button"
 

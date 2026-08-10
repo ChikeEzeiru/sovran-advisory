@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/sections/Navbar"
+
+export const metadata: Metadata = {
+  title: "Communications & Stakeholder Engagement",
+  description:
+    "We design and execute stakeholder engagement programmes for complex transactions, regulatory processes, and multi-party negotiations across Africa.",
+}
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/Button"
 

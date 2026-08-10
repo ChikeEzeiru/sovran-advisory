@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "Case Studies",
+  description:
+    "Selected engagements across our markets — from infrastructure finance and regulatory licensing to customs harmonisation and stakeholder strategy.",
+}
 import { Navbar } from "@/components/sections/Navbar"
 import { Footer } from "@/components/sections/Footer"
 
