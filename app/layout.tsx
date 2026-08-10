@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import { SanityLive } from "@/sanity/lib/live";
 import { SquircleNoScript } from "@squircle-js/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -26,6 +27,7 @@ export default function RootLayout({
         <SquircleNoScript />
         {children}
         <SanityLive />
+        <SpeedInsights />
       </body>
     </html>
   );
