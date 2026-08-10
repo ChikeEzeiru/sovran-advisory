@@ -1,10 +1,6 @@
 import { Resend } from 'resend'
 import RegistrationConfirmationEmail from '@/emails/RegistrationConfirmationEmail'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
-const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'onboarding@resend.dev'
-
 export async function sendRegistrationConfirmation(params: {
   to: string
   name: string
@@ -13,6 +9,9 @@ export async function sendRegistrationConfirmation(params: {
   eventLocation?: string
   amountPaid?: number
 }) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'onboarding@resend.dev'
+
   const { error } = await resend.emails.send({
     from: FROM_ADDRESS,
     to: params.to,
