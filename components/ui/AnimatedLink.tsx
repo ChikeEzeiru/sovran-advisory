@@ -1,6 +1,7 @@
 "use client"
 
 import NextLink from "next/link"
+import { LINKS_ENABLED } from "@/lib/links"
 import type { ComponentPropsWithoutRef } from "react"
 
 type AnimatedLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
@@ -33,6 +34,10 @@ export function AnimatedLink({
       </span>
     </span>
   )
+
+  if (!LINKS_ENABLED) {
+    return <span className={base} {...props}>{inner}</span>
+  }
 
   if (external) {
     return (

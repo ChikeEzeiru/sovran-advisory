@@ -4,6 +4,8 @@ import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { FileShield01, Shield02, FileCheck03 } from "@untitledui/icons";
 import { Button } from "@/components/ui/Button";
+import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { LINKS_ENABLED } from "@/lib/links";
 
 const EASE = "cubic-bezier(0.65,0,0.35,1)";
 
@@ -34,13 +36,11 @@ const NAV_COLUMNS = [
   {
     heading: "Contact",
     links: [
-      { label: "Policy & Government Relations", href: "/contact/policy" },
-      { label: "Market & Corporate Strategy", href: "/contact/strategy" },
-      { label: "Digital & Technology Advisory", href: "/contact/technology" },
-      {
-        label: "Communications & Stakeholder Engagement",
-        href: "/contact/communications",
-      },
+      { label: "Get in Touch", href: "/contact" },
+      { label: "Lagos, Nigeria", href: "/contact" },
+      { label: "Kigali, Rwanda", href: "/contact" },
+      { label: "Accra, Ghana", href: "/contact" },
+      { label: "Nairobi, Kenya", href: "/contact" },
     ],
   },
 ];
@@ -78,7 +78,7 @@ function FooterNavLink({
   children: React.ReactNode;
 }) {
   return (
-    <Link
+    <ConditionalLink
       href={href}
       className="group/link relative inline-flex overflow-hidden text-[#d0d6d8] text-base leading-6 transition-colors duration-380 hover:text-white"
       style={{ transitionTimingFunction: EASE }}
@@ -96,7 +96,7 @@ function FooterNavLink({
       >
         {children}
       </span>
-    </Link>
+    </ConditionalLink>
   );
 }
 
@@ -305,21 +305,21 @@ export function Footer() {
           <div className="flex items-center justify-between max-w-[1600px] mx-auto w-full text-[#d0d6d8] text-base leading-6">
             <p>©️ 2026 Sovran Advisory. All rights reserved</p>
             <div className="flex items-center gap-3">
-              <Link
+              <ConditionalLink
                 href="/privacy"
                 className="transition-colors duration-380 hover:text-white"
                 style={{ transitionTimingFunction: EASE }}
               >
                 Privacy Policy
-              </Link>
+              </ConditionalLink>
               <span className="text-xl leading-7.5 font-medium">·</span>
-              <Link
+              <ConditionalLink
                 href="/terms"
                 className="transition-colors duration-380 hover:text-white"
                 style={{ transitionTimingFunction: EASE }}
               >
                 Terms of Use
-              </Link>
+              </ConditionalLink>
             </div>
           </div>
         </div>

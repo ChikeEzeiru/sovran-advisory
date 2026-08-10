@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Squircle } from "@squircle-js/react";
 import type { ReactNode } from "react";
+import { LINKS_ENABLED } from "@/lib/links";
 
 function ArrowRight({ className }: { className?: string }) {
   return (
@@ -78,7 +79,7 @@ function isPill(v: ButtonVariant) {
 
 export function Button({
   children,
-  href,
+  href: hrefProp,
   variant = "primary",
   size = "md",
   showIcon = true,
@@ -86,6 +87,7 @@ export function Button({
   onClick,
   type = "button",
 }: ButtonProps) {
+  const href = LINKS_ENABLED ? hrefProp : undefined
   const pill = isPill(variant);
   const { padding, text } = sizeCls[size];
 

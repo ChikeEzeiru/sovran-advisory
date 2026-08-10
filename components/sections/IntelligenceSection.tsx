@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { ConditionalLink } from "@/components/ui/ConditionalLink";
 
 const EASE = "cubic-bezier(0.65,0,0.35,1)";
 
@@ -58,7 +58,7 @@ function ArticleCard({ article }: { article: (typeof ARTICLES)[0] }) {
   return (
     <div className="group/card flex flex-1 flex-col gap-6 min-w-0">
       {/* Photo */}
-      <Link
+      <ConditionalLink
         href={article.href}
         className="relative block h-96 rounded-xl overflow-hidden shrink-0"
       >
@@ -71,7 +71,7 @@ function ArticleCard({ article }: { article: (typeof ARTICLES)[0] }) {
             className="absolute inset-0 size-full object-cover will-change-transform transition-transform duration-700 ease-out group-hover/card:scale-105 motion-reduce:transition-none"
           />
         ))}
-      </Link>
+      </ConditionalLink>
 
       {/* Meta */}
       <div className="flex flex-col gap-3">
@@ -85,7 +85,7 @@ function ArticleCard({ article }: { article: (typeof ARTICLES)[0] }) {
       </div>
 
       {/* Read link */}
-      <Link
+      <ConditionalLink
         href={article.href}
         className="inline-flex items-center gap-1.5 text-base font-semibold text-[#525252]"
       >
@@ -114,7 +114,7 @@ function ArticleCard({ article }: { article: (typeof ARTICLES)[0] }) {
             style={{ transitionTimingFunction: EASE }}
           />
         </span>
-      </Link>
+      </ConditionalLink>
     </div>
   );
 }

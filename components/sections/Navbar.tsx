@@ -11,6 +11,8 @@ import {
   ChevronDown,
 } from "@untitledui/icons";
 import { Button } from "@/components/ui/Button";
+import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { LINKS_ENABLED } from "@/lib/links";
 import type { ComponentType } from "react";
 
 const EASE = "cubic-bezier(0.65,0,0.35,1)";
@@ -135,7 +137,7 @@ function NavItem({
   onMouseEnter,
 }: NavItemProps) {
   return (
-    <Link
+    <ConditionalLink
       href={href}
       onMouseEnter={onMouseEnter}
       className={`group inline-flex items-center gap-1 px-3 py-2 text-base font-medium cursor-pointer select-none rounded-xl transition-colors duration-150 ${
@@ -170,7 +172,7 @@ function NavItem({
           }}
         />
       )}
-    </Link>
+    </ConditionalLink>
   );
 }
 
@@ -207,7 +209,7 @@ function DropdownPanel({
           {items.map((item, i) => {
             const Icon = item.icon;
             return (
-              <Link
+              <ConditionalLink
                 key={item.href}
                 href={item.href}
                 onMouseEnter={() => onItemHover(i)}
@@ -228,7 +230,7 @@ function DropdownPanel({
                   </p>
                   <p className={`text-sm leading-5 ${descCls}`}>{item.desc}</p>
                 </div>
-              </Link>
+              </ConditionalLink>
             );
           })}
         </div>
@@ -383,7 +385,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
         }`}
       >
         <div className="flex items-center justify-between w-full max-w-[1600px] px-8">
-          <Link href="/" className="shrink-0">
+          <ConditionalLink href="/" className="shrink-0">
             <Image
               src={isLight ? "/sovran-logo-light.svg" : "/sovran-logo.svg"}
               alt="Sovran"
@@ -391,7 +393,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
               height={40}
               priority
             />
-          </Link>
+          </ConditionalLink>
 
           <nav className="flex items-center">
             <NavItem

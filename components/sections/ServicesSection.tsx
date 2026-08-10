@@ -1,10 +1,10 @@
-import Link from "next/link";
 import {
   Building08,
   PresentationChart02,
   Server05,
   Signal02,
 } from "@untitledui/icons";
+import { ConditionalLink } from "@/components/ui/ConditionalLink";
 import type { ComponentType, CSSProperties } from "react";
 
 const EASE = "cubic-bezier(0.65,0,0.35,1)";
@@ -76,7 +76,7 @@ const SERVICES: Service[] = [
 function ServiceCard({ service }: { service: Service }) {
   const Icon = service.icon;
   return (
-    <Link
+    <ConditionalLink
       href={service.href}
       className="group relative flex flex-[1_0_0] min-w-160 min-h-90 items-end gap-6 p-8 rounded-xl overflow-hidden"
     >
@@ -137,7 +137,7 @@ function ServiceCard({ service }: { service: Service }) {
           style={{ transitionTimingFunction: EASE }}
         />
       </span>
-    </Link>
+    </ConditionalLink>
   );
 }
 

@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedLink } from "@/components/ui/AnimatedLink";
+import { ConditionalLink } from "@/components/ui/ConditionalLink";
 import { Badge } from "@/components/base/badges/badges";
 
 // ─── Brand colour for card overlay — update here to change across all cards ───
@@ -42,7 +42,7 @@ const CASES = [
 
 export function CaseStudiesSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const panelRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const panelRefs = useRef<(HTMLElement | null)[]>([]);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
   const logoRefs = useRef<(HTMLDivElement | null)[]>([]);
   const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -148,7 +148,7 @@ export function CaseStudiesSection() {
         {/* Expanding panels */}
         <div className="flex flex-1 gap-3 h-full min-w-0">
           {CASES.map((c, i) => (
-            <Link
+            <ConditionalLink
               key={c.href}
               href={c.href}
               ref={(el) => {
@@ -237,7 +237,7 @@ export function CaseStudiesSection() {
                   className="object-contain object-left brightness-0 invert"
                 />
               </div>
-            </Link>
+            </ConditionalLink>
           ))}
         </div>
       </div>
