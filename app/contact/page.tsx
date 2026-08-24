@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Get in touch with Sovran Advisory. We work with governments, institutions, and corporates across African markets.",
 }
-import { Footer } from "@/components/sections/Footer"
+import { SiteFooter } from "@/components/sections/SiteFooter"
 
 const OFFICES = [
   {
@@ -36,13 +36,13 @@ export default function ContactPage() {
       <main>
         <section className="px-12 pt-40 pb-24 max-w-[1600px] mx-auto w-full">
           <div className="flex flex-col gap-4 max-w-3xl">
-            <div className="self-start border border-[#d0d6d8] rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-[#67787c]">Contact</span>
+            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
+              <span className="text-base font-normal leading-6 text-text-quaternary">Contact</span>
             </div>
-            <h1 className="text-5xl font-medium leading-tight tracking-tight text-[#161b1d]">
+            <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary">
               Discuss an engagement with our team.
             </h1>
-            <p className="text-xl font-normal leading-8 text-[#4b585b] max-w-2xl">
+            <p className="text-xl font-normal leading-8 text-text-tertiary max-w-2xl">
               We respond to all enquiries within one business day. For sensitive matters, please indicate as much in your note and we will handle accordingly.
             </p>
           </div>
@@ -54,49 +54,49 @@ export default function ContactPage() {
             <div className="flex-1 flex flex-col gap-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-[#161b1d]">First name</label>
+                  <label className="text-sm font-medium text-text-primary">First name</label>
                   <input
                     type="text"
                     placeholder="First name"
-                    className="w-full px-3.5 py-2.5 text-base rounded-xl border border-[#d0d6d8] bg-white text-[#161b1d] placeholder:text-[#67787c] outline-none focus:ring-2 focus:ring-[#1a3d2e]/30"
+                    className="w-full px-3.5 py-2.5 text-base rounded-[2px] border border-border-primary bg-bg-primary text-text-primary placeholder:text-text-placeholder outline-none focus:ring-2 focus:ring-border-brand/30"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-[#161b1d]">Last name</label>
+                  <label className="text-sm font-medium text-text-primary">Last name</label>
                   <input
                     type="text"
                     placeholder="Last name"
-                    className="w-full px-3.5 py-2.5 text-base rounded-xl border border-[#d0d6d8] bg-white text-[#161b1d] placeholder:text-[#67787c] outline-none focus:ring-2 focus:ring-[#1a3d2e]/30"
+                    className="w-full px-3.5 py-2.5 text-base rounded-[2px] border border-border-primary bg-bg-primary text-text-primary placeholder:text-text-placeholder outline-none focus:ring-2 focus:ring-border-brand/30"
                   />
                 </div>
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-[#161b1d]">Email</label>
+                <label className="text-sm font-medium text-text-primary">Email</label>
                 <input
                   type="email"
                   placeholder="you@organisation.com"
-                  className="w-full px-3.5 py-2.5 text-base rounded-xl border border-[#d0d6d8] bg-white text-[#161b1d] placeholder:text-[#67787c] outline-none focus:ring-2 focus:ring-[#1a3d2e]/30"
+                  className="w-full px-3.5 py-2.5 text-base rounded-[2px] border border-border-primary bg-bg-primary text-text-primary placeholder:text-text-placeholder outline-none focus:ring-2 focus:ring-border-brand/30"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-[#161b1d]">Organisation</label>
+                <label className="text-sm font-medium text-text-primary">Organisation</label>
                 <input
                   type="text"
                   placeholder="Your organisation"
-                  className="w-full px-3.5 py-2.5 text-base rounded-xl border border-[#d0d6d8] bg-white text-[#161b1d] placeholder:text-[#67787c] outline-none focus:ring-2 focus:ring-[#1a3d2e]/30"
+                  className="w-full px-3.5 py-2.5 text-base rounded-[2px] border border-border-primary bg-bg-primary text-text-primary placeholder:text-text-placeholder outline-none focus:ring-2 focus:ring-border-brand/30"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-[#161b1d]">Message</label>
+                <label className="text-sm font-medium text-text-primary">Message</label>
                 <textarea
                   rows={5}
                   placeholder="Briefly describe what you would like to discuss."
-                  className="w-full px-3.5 py-2.5 text-base rounded-xl border border-[#d0d6d8] bg-white text-[#161b1d] placeholder:text-[#67787c] outline-none focus:ring-2 focus:ring-[#1a3d2e]/30 resize-none"
+                  className="w-full px-3.5 py-2.5 text-base rounded-[2px] border border-border-primary bg-bg-primary text-text-primary placeholder:text-text-placeholder outline-none focus:ring-2 focus:ring-border-brand/30 resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="self-start bg-[#1a3d2e] hover:bg-[#2a5c45] text-white text-base font-medium px-5 py-3 rounded-xl transition-colors duration-150"
+                className="self-start bg-bg-brand-solid hover:bg-bg-brand-solid-hover text-text-primary-on-brand text-base font-medium px-5 py-3 rounded-[2px] transition-colors duration-150"
               >
                 Send message
               </button>
@@ -104,20 +104,20 @@ export default function ContactPage() {
 
             {/* Offices */}
             <div className="w-80 shrink-0 flex flex-col gap-8">
-              <h2 className="text-xl font-medium text-[#161b1d]">Our offices</h2>
+              <h2 className="text-xl font-semibold text-text-primary">Our offices</h2>
               {OFFICES.map((office) => (
                 <div key={office.country} className="flex flex-col gap-1.5">
-                  <p className="text-sm font-medium uppercase tracking-wide text-[#67787c]">{office.country}</p>
-                  <p className="text-base text-[#4b585b] leading-6">{office.address}</p>
-                  <p className="text-base text-[#4b585b]">{office.phone}</p>
-                  <a href={`mailto:${office.email}`} className="text-base text-[#1a3d2e] hover:underline">{office.email}</a>
+                  <p className="text-sm font-medium uppercase tracking-wide text-text-quaternary">{office.country}</p>
+                  <p className="text-base text-text-tertiary leading-6">{office.address}</p>
+                  <p className="text-base text-text-tertiary">{office.phone}</p>
+                  <a href={`mailto:${office.email}`} className="text-base text-text-brand-secondary hover:underline">{office.email}</a>
                 </div>
               ))}
             </div>
           </div>
         </section>
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   )
 }

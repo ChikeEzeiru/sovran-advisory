@@ -35,14 +35,14 @@ export default async function EventsPage() {
   const events = data as EventListItem[]
 
   return (
-    <main className="max-w-3xl mx-auto py-16 px-6">
-      <h1 className="text-3xl font-semibold mb-8">Upcoming Events</h1>
+    <main className="mx-auto max-w-3xl px-6 py-16 text-text-primary">
+      <h1 className="mb-8 text-3xl font-semibold">Upcoming Events</h1>
       <div className="flex flex-col gap-6">
         {events.map((event) => (
           <Link
             key={event._id}
             href={`/events/${event.slug.current}`}
-            className="flex gap-4 border rounded-lg p-4 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+            className="flex gap-4 rounded-xs border border-border-primary p-4 transition-colors duration-150 hover:bg-bg-primary-hover"
           >
             {event.coverImage && (
               <Image
@@ -50,24 +50,26 @@ export default async function EventsPage() {
                 alt=""
                 width={160}
                 height={120}
-                className="rounded object-cover"
+                className="rounded-xs object-cover"
               />
             )}
             <div>
-              <h2 className="text-xl font-medium">{event.title}</h2>
-              <p className="text-zinc-600 dark:text-zinc-400">
+              <h2 className="text-xl font-semibold text-text-primary">{event.title}</h2>
+              <p className="text-text-tertiary">
                 {new Date(event.startDate).toLocaleDateString(undefined, {
                   dateStyle: 'medium',
                 })}
                 {event.location && ` · ${event.location}`}
               </p>
-              <p className="text-zinc-600 dark:text-zinc-400">
+              <p className="text-text-tertiary">
                 {event.price ? `$${(event.price / 100).toFixed(2)}` : 'Free'}
               </p>
             </div>
           </Link>
         ))}
-        {events.length === 0 && <p>No upcoming events.</p>}
+        {events.length === 0 && (
+          <p className="text-text-tertiary">No upcoming events.</p>
+        )}
       </div>
     </main>
   )

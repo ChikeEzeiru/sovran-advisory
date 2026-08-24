@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Selected engagements across our markets — from infrastructure finance and regulatory licensing to customs harmonisation and stakeholder strategy.",
 }
 import { Navbar } from "@/components/sections/Navbar"
-import { Footer } from "@/components/sections/Footer"
+import { SiteFooter } from "@/components/sections/SiteFooter"
 
 const CASES = [
   {
@@ -37,13 +37,13 @@ export default function CaseStudiesPage() {
       <main>
         <section className="px-12 pt-40 pb-24 max-w-[1600px] mx-auto w-full">
           <div className="flex flex-col gap-4 max-w-3xl">
-            <div className="self-start border border-[#d0d6d8] rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-[#67787c]">Case Studies</span>
+            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
+              <span className="text-base font-normal leading-6 text-text-quaternary">Case Studies</span>
             </div>
-            <h1 className="text-5xl font-medium leading-tight tracking-tight text-[#161b1d]">
+            <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary">
               Selected engagements across our markets.
             </h1>
-            <p className="text-xl font-normal leading-8 text-[#4b585b] max-w-2xl">
+            <p className="text-xl font-normal leading-8 text-text-tertiary max-w-2xl">
               A record of what we have helped our clients achieve.
             </p>
           </div>
@@ -55,23 +55,23 @@ export default function CaseStudiesPage() {
               <Link
                 key={c.href}
                 href={c.href}
-                className="group flex items-start justify-between gap-12 p-8 rounded-xl bg-[#e3e7e8] hover:bg-[#d8dede] transition-colors duration-200"
+                className="group flex items-start justify-between gap-12 p-8 rounded-[2px] bg-bg-quaternary hover:bg-border-primary transition-colors duration-200"
               >
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-normal text-[#67787c]">{c.category}</span>
-                    <span className="text-[#d0d6d8]">·</span>
-                    <span className="text-sm font-normal text-[#67787c]">{c.client}</span>
+                    <span className="text-sm font-normal text-text-quaternary">{c.category}</span>
+                    <span className="text-text-secondary">·</span>
+                    <span className="text-sm font-normal text-text-quaternary">{c.client}</span>
                   </div>
-                  <p className="text-xl font-normal leading-7 text-[#4b585b]">{c.title}</p>
+                  <p className="text-xl font-normal leading-7 text-text-tertiary">{c.title}</p>
                 </div>
-                <span className="shrink-0 text-[#1a3d2e] font-medium text-sm mt-1 group-hover:underline">Read more →</span>
+                <span className="shrink-0 text-text-brand-secondary font-medium text-sm mt-1 group-hover:underline">Read more →</span>
               </Link>
             ))}
           </div>
         </section>
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   )
 }

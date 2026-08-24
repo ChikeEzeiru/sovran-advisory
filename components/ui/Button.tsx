@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Squircle } from "@squircle-js/react";
 import type { ReactNode } from "react";
 import { LINKS_ENABLED } from "@/lib/links";
 
@@ -36,6 +35,7 @@ export type ButtonVariant =
   | "destructive-link";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type ButtonInteraction = "self" | "service-card";
 
 interface ButtonProps {
   children: ReactNode;
@@ -49,16 +49,16 @@ interface ButtonProps {
 }
 
 // Inner top-highlight border for dark-bg variants (fades top→bottom)
-const innerHighlight = "before:absolute before:inset-px before:rounded-[14px] before:border before:border-white/[0.12] before:[mask-image:linear-gradient(to_bottom,black,transparent)] before:pointer-events-none";
+const innerHighlight = "before:absolute before:inset-px before:rounded-[1px] before:border before:border-white/[0.12] before:[mask-image:linear-gradient(to_bottom,black,transparent)] before:pointer-events-none";
 
 const variantCls: Record<ButtonVariant, string> = {
-  primary:          `bg-[#1A3D2E] hover:bg-[#2A5C45] text-white shadow-xs-skeuomorphic ${innerHighlight}`,
-  "primary-alt":    `bg-[#22292B] hover:bg-[#3A4547] text-white shadow-xs-skeuomorphic ${innerHighlight}`,
-  secondary:        "bg-white hover:bg-[var(--color-secondary-hover)] text-[#22292B] shadow-xs-skeuomorphic ring-1 ring-[#D4D1CC] ring-inset",
-  tertiary:         "bg-[var(--btn-tertiary-bg)] hover:bg-[var(--btn-tertiary-bg-hover)] text-[var(--btn-muted-text)]",
-  link:             "text-[var(--btn-muted-text)]",
-  destructive:      `bg-[#C13030] hover:bg-[#D94040] text-white shadow-xs-skeuomorphic ${innerHighlight}`,
-  "destructive-link": "text-[#C13030]",
+  primary:          `bg-bg-brand-solid hover:bg-bg-brand-solid-hover text-text-primary-on-brand shadow-xs-skeuomorphic active:shadow-xs ${innerHighlight}`,
+  "primary-alt":    `bg-bg-primary-solid hover:bg-bg-secondary-solid text-text-primary-on-brand shadow-xs-skeuomorphic active:shadow-xs ${innerHighlight}`,
+  secondary:        "bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs-skeuomorphic active:shadow-xs ring-1 ring-border-primary ring-inset",
+  tertiary:         "bg-bg-tertiary hover:bg-bg-secondary-hover text-text-tertiary",
+  link:             "text-text-tertiary hover:text-text-tertiary-hover",
+  destructive:      `bg-bg-error-solid hover:bg-bg-error-solid-hover text-text-primary-on-brand shadow-xs-skeuomorphic active:shadow-xs ${innerHighlight}`,
+  "destructive-link": "text-text-error-primary hover:text-text-error-primary-hover",
 };
 
 // px, py, text size, line-height
@@ -70,11 +70,69 @@ const sizeCls: Record<ButtonSize, { padding: string; text: string }> = {
   xl: { padding: "px-4.5 py-3", text: "text-base leading-6" }, // 16/24 → 48px
 };
 
-const PILL_RADIUS = 16;
-const PILL_SMOOTHING = 0.6;
-
 function isPill(v: ButtonVariant) {
   return v !== "link" && v !== "destructive-link";
+}
+
+const textMotionCls: Record<ButtonInteraction, string> = {
+  self: "group-hover:-translate-y-full",
+  "service-card": "group-hover/service-card:-translate-y-full",
+};
+
+const outgoingIconMotionCls: Record<ButtonInteraction, string> = {
+  self: "group-hover:translate-x-full",
+  "service-card": "group-hover/service-card:translate-x-full",
+};
+
+const incomingIconMotionCls: Record<ButtonInteraction, string> = {
+  self: "group-hover:translate-x-0",
+  "service-card": "group-hover/service-card:translate-x-0",
+};
+
+export function ButtonVisual({
+  children,
+  size = "md",
+  showIcon = true,
+  interaction = "self",
+}: {
+  children: ReactNode;
+  size?: ButtonSize;
+  showIcon?: boolean;
+  interaction?: ButtonInteraction;
+}) {
+  const textHeight = size === "lg" || size === "xl" ? "h-6" : "h-5";
+  const leading = size === "lg" || size === "xl" ? "leading-6" : "leading-5";
+  const sharedMotion =
+    "transition-transform duration-380 ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none";
+
+  return (
+    <>
+      <span className={`relative flex overflow-hidden ${textHeight}`}>
+        <span
+          className={`${leading} whitespace-nowrap ${sharedMotion} ${textMotionCls[interaction]}`}
+        >
+          {children}
+        </span>
+        <span
+          className={`absolute top-full left-0 ${leading} whitespace-nowrap ${sharedMotion} ${textMotionCls[interaction]}`}
+          aria-hidden="true"
+        >
+          {children}
+        </span>
+      </span>
+
+      {showIcon && (
+        <span className="relative inline-flex size-4 shrink-0 items-center overflow-hidden">
+          <ArrowRight
+            className={`shrink-0 ${sharedMotion} ${outgoingIconMotionCls[interaction]}`}
+          />
+          <ArrowRight
+            className={`absolute inset-0 shrink-0 -translate-x-full ${sharedMotion} ${incomingIconMotionCls[interaction]}`}
+          />
+        </span>
+      )}
+    </>
+  );
 }
 
 export function Button({
@@ -93,42 +151,19 @@ export function Button({
 
   const base = [
     "group relative inline-flex items-center gap-1.5 cursor-pointer font-medium",
-    "transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current",
+    "transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current",
     text,
-    pill ? padding : "",
+    pill
+      ? `rounded-[2px] ${padding} active:scale-[0.98] active:duration-100 motion-reduce:transform-none`
+      : "",
     variantCls[variant],
     className,
   ].join(" ");
 
-  // Text container height matches the line-height of the chosen size
-  const textHeight = size === "lg" || size === "xl" ? "h-6" : "h-5";
-  const leading = size === "lg" || size === "xl" ? "leading-6" : "leading-5";
-
   const inner = (
-    <>
-      {/* Text slides vertically */}
-      <span className={`relative overflow-hidden flex ${textHeight}`}>
-        <span
-          className={`${leading} whitespace-nowrap transition-transform duration-380 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full motion-reduce:transition-none`}
-        >
-          {children}
-        </span>
-        <span
-          className={`absolute top-full left-0 ${leading} whitespace-nowrap transition-transform duration-380 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full motion-reduce:transition-none`}
-          aria-hidden
-        >
-          {children}
-        </span>
-      </span>
-
-      {/* Icon slides horizontally */}
-      {showIcon && (
-        <span className="relative overflow-hidden inline-flex items-center w-4 h-4 shrink-0">
-          <ArrowRight className="shrink-0 transition-transform duration-380 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-x-full motion-reduce:transition-none" />
-          <ArrowRight className="absolute inset-0 shrink-0 -translate-x-full transition-transform duration-380 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-x-0 motion-reduce:transition-none" />
-        </span>
-      )}
-    </>
+    <ButtonVisual size={size} showIcon={showIcon}>
+      {children}
+    </ButtonVisual>
   );
 
   // Link variants: no squircle clipping
@@ -144,22 +179,15 @@ export function Button({
     );
   }
 
-  // Pill variants: iOS corner smoothing via squircle clip-path
-  return (
-    <Squircle
-      asChild
-      cornerRadius={PILL_RADIUS}
-      cornerSmoothing={PILL_SMOOTHING}
-    >
-      {href ? (
-        <Link href={href} className={base}>
-          {inner}
-        </Link>
-      ) : (
-        <button type={type} onClick={onClick} className={base}>
-          {inner}
-        </button>
-      )}
-    </Squircle>
+  // Keep the 2px geometry on the shadow-bearing element. A clip-path here
+  // would also clip the external portion of the skeuomorphic box shadow.
+  return href ? (
+    <Link href={href} className={base}>
+      {inner}
+    </Link>
+  ) : (
+    <button type={type} onClick={onClick} className={base}>
+      {inner}
+    </button>
   );
 }

@@ -3,11 +3,26 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Squircle } from "@squircle-js/react";
-import { PauseCircle, PlayCircle } from "@untitledui/icons";
 import { Button } from "@/components/ui/Button";
 
 const EASE = "cubic-bezier(0.65,0,0.35,1)";
+
+function PlayIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="size-5" aria-hidden="true">
+      <path d="M5.75 4.6a1 1 0 0 1 1.54-.84l8.1 5.4a1 1 0 0 1 0 1.68l-8.1 5.4a1 1 0 0 1-1.54-.84V4.6Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function PauseIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="size-5" aria-hidden="true">
+      <rect x="5" y="4" width="3.5" height="12" rx="0.75" fill="currentColor" />
+      <rect x="11.5" y="4" width="3.5" height="12" rx="0.75" fill="currentColor" />
+    </svg>
+  );
+}
 
 type CardId = "africa" | "international";
 
@@ -24,14 +39,14 @@ const CARDS = [
   {
     id: "international" as CardId,
     label: "International",
-    description: "Advising multilateral and development institutions on African markets.",
+    description:
+      "Advising multilateral and development institutions on African markets.",
     icon: "/icon-globe.svg",
     // This icon is drawn for white bg (closed state) — invert it on dark bg (open)
     invertWhenOpen: true,
     href: "#",
   },
 ];
-
 
 export function HomeHero() {
   const router = useRouter();
@@ -61,11 +76,14 @@ export function HomeHero() {
   }
 
   return (
-    <section data-theme="dark" className="relative w-full h-screen min-h-160 flex flex-col overflow-hidden">
+    <section
+      data-theme="dark"
+      className="relative w-full h-[87.5svh] flex flex-col overflow-hidden"
+    >
       {/* Background video */}
       <video
         ref={videoRef}
-        src="/videos/sovran-hero.mp4"
+        src="/videos/sovran-new-hero-810p.mp4"
         autoPlay
         muted
         loop
@@ -95,15 +113,16 @@ export function HomeHero() {
                 <button
                   key={card.id}
                   onClick={() => handleCardClick(card)}
-                  className={`w-full text-left rounded-2xl border border-[rgba(255,255,255,0.29)] overflow-hidden cursor-pointer transition-colors duration-300 ${
-                    isOpen ? "bg-white" : "bg-[rgba(255,255,255,0.12)]"
+                  data-theme={isOpen ? "light" : undefined}
+                  className={`w-full text-left rounded-xs border border-[rgba(255,255,255,0.29)] overflow-hidden cursor-pointer transition-colors duration-300 ${
+                    isOpen ? "bg-bg-primary" : "bg-[rgba(255,255,255,0.12)]"
                   }`}
                 >
                   {/* Header row */}
                   <div className="flex items-center gap-4 pt-4 pb-2 px-4">
                     <span
                       className={`flex items-center justify-center p-1.5 rounded-full shrink-0 transition-colors duration-300 ${
-                        isOpen ? "bg-[#090b0c]" : "bg-white"
+                        isOpen ? "bg-bg-primary-solid" : "bg-white"
                       }`}
                     >
                       <Image
@@ -124,7 +143,7 @@ export function HomeHero() {
                     </span>
                     <span
                       className={`text-xl font-medium leading-7.5 whitespace-nowrap transition-colors duration-300 ${
-                        isOpen ? "text-[#394447]" : "text-white"
+                        isOpen ? "text-text-secondary" : "text-white"
                       }`}
                     >
                       {card.label}
@@ -140,7 +159,7 @@ export function HomeHero() {
                       style={{ transitionTimingFunction: EASE }}
                     >
                       <div className="pb-2 pl-16 pr-4">
-                        <p className="text-base font-normal leading-6 text-[#67787c]">
+                        <p className="text-base font-normal leading-6 text-text-quaternary">
                           {card.description}
                         </p>
                       </div>
@@ -159,7 +178,7 @@ export function HomeHero() {
         <div className="flex flex-col gap-8 w-full max-w-[1600px] mx-auto px-8">
           {/* Headline */}
           <div className="flex flex-col gap-3">
-            <div className="self-start border border-[#d0d6d8] rounded-[10px] px-3 py-1">
+            <div className="self-start border border-border-primary rounded-xs px-3 py-1">
               <span className="text-base font-normal leading-6 text-white whitespace-nowrap">
                 Policy · Strategy · Technology · Communications
               </span>
@@ -174,30 +193,41 @@ export function HomeHero() {
           <div className="flex items-center justify-between w-full">
             {/* Left buttons */}
             <div className="flex items-center gap-2">
-              <Button variant="secondary" size="xl" href="/contact">Contact Us</Button>
-              <Button variant="tertiary" size="xl" href="/case-studies" showIcon={false}>See Case Studies</Button>
+              <Button variant="primary" size="xl" href="/contact">
+                Contact Us
+              </Button>
+              <Button
+                variant="tertiary"
+                size="xl"
+                href="/case-studies"
+                showIcon={false}
+              >
+                See Case Studies
+              </Button>
             </div>
 
             {/* Pause / Play — icon only */}
-            <Squircle asChild cornerRadius={16} cornerSmoothing={0.6}>
-              <button
-                onClick={toggleVideo}
-                aria-label={playing ? "Pause video" : "Play video"}
-                className="relative inline-flex items-center justify-center p-2 border border-[#d4d4d4] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] overflow-hidden cursor-pointer select-none text-[#f1f3f3]"
-              >
-                <span
-                  aria-hidden
-                  className="absolute inset-0 bg-[rgba(255,255,255,0.22)] pointer-events-none rounded-[inherit]"
-                />
-                <span className="relative">
-                  {playing ? <PauseCircle size={20} /> : <PlayCircle size={20} />}
-                </span>
-                <span
-                  aria-hidden
-                  className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_0px_0px_1px_rgba(0,0,0,0.18),inset_0px_-2px_0px_0px_rgba(0,0,0,0.05)]"
-                />
-              </button>
-            </Squircle>
+            <button
+              onClick={toggleVideo}
+              aria-label={playing ? "Pause video" : "Play video"}
+              className="relative inline-flex items-center justify-center overflow-hidden rounded-xs border border-[#d4d4d4] p-2 text-[#f1f3f3] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] cursor-pointer select-none"
+            >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[rgba(255,255,255,0.22)]"
+              />
+              <span className="relative">
+                {playing ? (
+                  <PauseIcon />
+                ) : (
+                  <PlayIcon />
+                )}
+              </span>
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0px_0px_0px_1px_rgba(0,0,0,0.18),inset_0px_-2px_0px_0px_rgba(0,0,0,0.05)]"
+              />
+            </button>
           </div>
         </div>
       </div>

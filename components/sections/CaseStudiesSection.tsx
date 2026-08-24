@@ -9,7 +9,7 @@ import { ConditionalLink } from "@/components/ui/ConditionalLink";
 import { Badge } from "@/components/base/badges/badges";
 
 // ─── Brand colour for card overlay — update here to change across all cards ───
-const CARD_COLOR = "#161B1D";
+const CARD_COLOR = "var(--sovran-color-bg-primary-solid)";
 
 const CASES = [
   {
@@ -128,18 +128,18 @@ export function CaseStudiesSection() {
         {/* Left col */}
         <div className="flex flex-col justify-between self-stretch shrink-0 w-108">
           <div className="flex flex-col gap-3">
-            <div className="self-start border border-[#d0d6d8] rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-[#67787c] whitespace-nowrap">
+            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
+              <span className="text-base font-normal leading-6 text-text-quaternary whitespace-nowrap">
                 Case Studies
               </span>
             </div>
-            <p className="text-4xl font-medium leading-11 tracking-tight text-[#161b1d]">
+            <p className="text-4xl font-medium leading-11 tracking-tight text-text-primary">
               Selected engagements across our markets.
             </p>
           </div>
           <AnimatedLink
             href="/case-studies"
-            className="inline-flex items-center gap-1.5 text-base font-semibold text-[#525252]"
+            className="inline-flex items-center gap-1.5 text-base font-semibold text-text-brand-secondary"
           >
             See All Case Studies
           </AnimatedLink>
@@ -154,7 +154,7 @@ export function CaseStudiesSection() {
               ref={(el) => {
                 panelRefs.current[i] = el;
               }}
-              className="relative flex flex-col justify-between overflow-hidden rounded-xl p-6"
+              className="relative flex flex-col justify-between overflow-hidden rounded-[2px] p-6"
               style={{
                 width: i === 0 ? "80%" : "10%",
                 backgroundColor: CARD_COLOR,
@@ -195,7 +195,7 @@ export function CaseStudiesSection() {
                   type="modern"
                   color="gray"
                   size="md"
-                  className="text-sm font-normal leading-5 text-[#161b1d]! border-none! bg-white/80! ring-0! shadow-none!"
+                  className="text-sm font-normal leading-5 text-text-primary! border-none! bg-white/80! ring-0! shadow-none!"
                 >
                   {c.category}
                 </Badge>

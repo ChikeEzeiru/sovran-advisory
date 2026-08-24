@@ -1,51 +1,16 @@
 @import "tailwindcss";
+@import "../design-tokens/generated.css";
 
 :root {
-  /* Brand — to be specified */
-  --color-brand: #1A3D2E;
-
-  /* Semantic */
-  --color-primary-alt: #22292B;
-  --color-error: #C13030;
-
-  /* Secondary button */
-  --color-secondary-bg: #FFFFFF;
-  --color-secondary-border: #D4D1CC;
-  --color-secondary-text: #22292B;
-
-  /* Tertiary: primary-alt at 29% in light mode */
-  --color-tertiary-bg: rgba(34, 41, 43, 0.29);
-  --color-tertiary-text: #22292B;
-
-  /* Button context tokens — light defaults */
-  --btn-muted-text: #22292B;
-  --btn-tertiary-bg: rgba(34, 41, 43, 0.14);
-  --btn-tertiary-bg-hover: rgba(34, 41, 43, 0.22);
-
   /* Shadows */
-  --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  --shadow-xs-skeuomorphic: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), inset 0px 0px 0px 1px rgba(16, 24, 40, 0.18), inset 0px -2px 0px 0px rgba(16, 24, 40, 0.05);
-
-  /* Surface */
-  --background: #f1f3f3;
-  --color-secondary-hover: #f1f3f3;
-  --foreground: #22292B;
-}
-
-/* Dark section override — applied via data-theme="dark" on any parent */
-[data-theme="dark"] {
-  --btn-muted-text: #F5F4F1;
-  --btn-tertiary-bg: rgba(255, 255, 255, 0.29);
-  --btn-tertiary-bg-hover: rgba(255, 255, 255, 0.38);
+  --sovran-shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  --sovran-shadow-xs-skeuomorphic: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), inset 0px 0px 0px 1px rgba(16, 24, 40, 0.18), inset 0px -2px 0px 0px rgba(16, 24, 40, 0.05);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-secondary-hover: var(--color-secondary-hover);
   --font-sans: var(--font-archivo);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-xs-skeuomorphic: var(--shadow-xs-skeuomorphic);
+  --shadow-xs: var(--sovran-shadow-xs);
+  --shadow-xs-skeuomorphic: var(--sovran-shadow-xs-skeuomorphic);
 }
 
 @keyframes marquee-scroll {
@@ -54,8 +19,8 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--sovran-color-bg-secondary-alt-2);
+  color: var(--sovran-color-text-primary);
   font-family: var(--font-archivo), system-ui, sans-serif;
 }
 

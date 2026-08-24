@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/sections/Navbar"
-import { Footer } from "@/components/sections/Footer"
+import { SiteFooter } from "@/components/sections/SiteFooter"
 
 export default function PrivacyPage() {
   return (
@@ -8,13 +8,13 @@ export default function PrivacyPage() {
       <main>
         <section className="px-12 pt-40 pb-24 max-w-[1600px] mx-auto w-full">
           <div className="flex flex-col gap-4 max-w-3xl">
-            <div className="self-start border border-[#d0d6d8] rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-[#67787c]">Legal</span>
+            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
+              <span className="text-base font-normal leading-6 text-text-quaternary">Legal</span>
             </div>
-            <h1 className="text-5xl font-medium leading-tight tracking-tight text-[#161b1d]">
+            <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary">
               Privacy Policy
             </h1>
-            <p className="text-base font-normal leading-6 text-[#67787c]">Last updated: July 2026</p>
+            <p className="text-base font-normal leading-6 text-text-quaternary">Last updated: July 2026</p>
           </div>
         </section>
 
@@ -47,14 +47,14 @@ export default function PrivacyPage() {
               },
             ].map((section) => (
               <div key={section.heading} className="flex flex-col gap-3">
-                <h2 className="text-xl font-medium text-[#161b1d]">{section.heading}</h2>
-                <p className="text-base font-normal leading-7 text-[#4b585b]">{section.body}</p>
+                <h2 className="text-xl font-semibold text-text-primary">{section.heading}</h2>
+                <p className="text-base font-normal leading-7 text-text-tertiary">{section.body}</p>
               </div>
             ))}
           </div>
         </section>
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   )
 }

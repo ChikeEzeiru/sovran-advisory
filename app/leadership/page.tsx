@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Meet the people who lead Sovran's practice areas and run our client engagements across Africa.",
 }
-import { Footer } from "@/components/sections/Footer"
+import { SiteFooter } from "@/components/sections/SiteFooter"
 
 const TEAM = [
   {
@@ -48,13 +48,13 @@ export default function LeadershipPage() {
       <main>
         <section className="px-12 pt-40 pb-24 max-w-[1600px] mx-auto w-full">
           <div className="flex flex-col gap-4 max-w-3xl">
-            <div className="self-start border border-[#d0d6d8] rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-[#67787c]">Leadership & Team</span>
+            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
+              <span className="text-base font-normal leading-6 text-text-quaternary">Leadership & Team</span>
             </div>
-            <h1 className="text-5xl font-medium leading-tight tracking-tight text-[#161b1d]">
+            <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary">
               The people behind the work.
             </h1>
-            <p className="text-xl font-normal leading-8 text-[#4b585b] max-w-2xl">
+            <p className="text-xl font-normal leading-8 text-text-tertiary max-w-2xl">
               Our team brings together decades of experience in policy, finance, and markets across the African continent.
             </p>
           </div>
@@ -63,19 +63,19 @@ export default function LeadershipPage() {
         <section className="px-12 pb-32 max-w-[1600px] mx-auto w-full">
           <div className="grid grid-cols-3 gap-8">
             {TEAM.map((member) => (
-              <div key={member.name + member.title} className="flex flex-col gap-4 p-8 rounded-xl bg-[#e3e7e8]">
-                <div className="w-16 h-16 rounded-full bg-[#d0d6d8]" aria-hidden />
+              <div key={member.name + member.title} className="flex flex-col gap-4 p-8 rounded-[2px] bg-bg-quaternary">
+                <div className="w-16 h-16 rounded-full bg-bg-quaternary" aria-hidden />
                 <div className="flex flex-col gap-1">
-                  <p className="text-lg font-medium text-[#161b1d]">{member.name}</p>
-                  <p className="text-sm font-normal text-[#67787c]">{member.title}</p>
+                  <p className="text-lg font-medium text-text-primary">{member.name}</p>
+                  <p className="text-sm font-normal text-text-quaternary">{member.title}</p>
                 </div>
-                <p className="text-base font-normal leading-6 text-[#4b585b]">{member.bio}</p>
+                <p className="text-base font-normal leading-6 text-text-tertiary">{member.bio}</p>
               </div>
             ))}
           </div>
         </section>
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   )
 }

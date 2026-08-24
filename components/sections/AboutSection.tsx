@@ -1,76 +1,113 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 import { SpinningNumber } from "@/components/ui/SpinningNumber";
 
-const STATS = [
+type GridItem =
+  | {
+      type: "stat";
+      value: number;
+      suffix: string;
+      label: string;
+    }
+  | {
+      type: "image";
+      src: string;
+    };
+
+const GRID_ITEMS: GridItem[] = [
   {
-    numeric: 11,
-    suffix: " Years",
-    label: "in continuous practice\nacross African markets",
+    type: "stat",
+    value: 12,
+    suffix: "+ years",
+    label: "advising across\ncomplex markets",
   },
+  { type: "image", src: "/images/about-us/Grid-img_1.avif" },
   {
-    numeric: 20,
-    suffix: "+ Markets",
-    label: "active engagements, not\njust registered presence",
+    type: "stat",
+    value: 450,
+    suffix: "+ staff",
+    label: "across our teams and\nspecialist network",
   },
+  { type: "image", src: "/images/about-us/Grid-img_2.avif" },
+  { type: "image", src: "/images/about-us/Grid-img_3.avif" },
   {
-    numeric: 450,
-    suffix: "+ Staff",
-    label: "across six\nregional offices",
+    type: "stat",
+    value: 20,
+    suffix: "+ markets",
+    label: "supported across\nthe continent",
+  },
+  { type: "image", src: "/images/about-us/Grid-img_4.avif" },
+  {
+    type: "stat",
+    value: 96,
+    suffix: "% repeat",
+    label: "or referred engagements",
   },
 ];
 
 export function AboutSection() {
   return (
-    <section className="flex flex-col items-center gap-16 px-4 py-24">
-      {/* Badge + body copy */}
-      <div className="flex flex-col items-center gap-3 max-w-200 w-full px-8">
-        <div className="self-center border border-[#d0d6d8] rounded-[10px] px-3 py-1">
-          <span className="text-base font-normal leading-6 text-[#67787c] whitespace-nowrap">
+    <section
+      aria-labelledby="about-heading"
+      className="flex flex-col gap-16 py-16"
+    >
+      <div className="flex w-full flex-col items-center gap-2 px-12 text-center max-md:px-6">
+        <div className="rounded-xs border border-border-secondary-alt px-3 py-1">
+          <p className="whitespace-nowrap text-base font-normal leading-6 text-text-quaternary">
             About Sovran
-          </span>
+          </p>
         </div>
-        <p className="text-2xl font-medium leading-8 text-[#394447] text-center">
-          We work with governments and companies across Africa. We advise on
-          policy, strategy, technology, and communications. We know the people
-          in the room, and we know the methods that work.
-        </p>
+        <h2
+          id="about-heading"
+          className="text-4xl font-medium leading-11 tracking-tight text-text-primary"
+        >
+          Behind decisions that shape markets.
+        </h2>
       </div>
 
-      {/* Stats grid */}
-      <div className="flex justify-center w-full px-8">
-        <div className="grid grid-cols-3 gap-6 max-w-200 w-full text-center">
-          {STATS.map((stat) => (
-            <div
-              key={stat.numeric}
-              className="flex flex-col gap-3 items-center"
-            >
-              {/* Accessible label — screen readers get the full string */}
-              <p className="sr-only">
-                {stat.numeric}
-                {stat.suffix}
-              </p>
-              {/* Visual reel — inherits text styles, hidden from a11y tree */}
+      <div className="mx-auto grid w-full max-w-400 grid-cols-4 gap-6 px-12 max-md:grid-cols-2 max-md:gap-3 max-md:px-6">
+        {GRID_ITEMS.map((item, index) => {
+          if (item.type === "image") {
+            return (
               <div
-                aria-hidden
-                className="flex items-center justify-center text-4xl font-medium tracking-tight text-[#394447] w-full"
+                key={item.src}
+                className="relative min-h-80 overflow-hidden rounded-xs bg-bg-quaternary max-md:min-h-56"
               >
-                <SpinningNumber value={stat.numeric} />
-                <span>{stat.suffix}</span>
+                <Image
+                  src={item.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover"
+                />
               </div>
-              <p className="text-xl font-normal leading-normal text-[#67787c] w-full whitespace-pre-line">
-                {stat.label}
+            );
+          }
+
+          return (
+            <div
+              key={`${item.value}-${index}`}
+              className="flex min-h-80 flex-col items-center justify-center gap-3 p-6 text-center max-md:min-h-56 max-sm:px-2"
+            >
+              <p className="sr-only">
+                {item.value}
+                {item.suffix}
+              </p>
+              <div
+                aria-hidden="true"
+                className="flex w-full items-center justify-center text-4xl font-medium leading-12 tracking-tight text-text-secondary"
+              >
+                <SpinningNumber value={item.value} />
+                <span>{item.suffix}</span>
+              </div>
+              <p className="w-full whitespace-pre-line text-xl font-normal leading-7.5 text-text-quaternary">
+                {item.label}
               </p>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
-
-      {/* CTA */}
-      <Button variant="primary" size="md" href="/about">
-        Read our Story
-      </Button>
     </section>
   );
 }

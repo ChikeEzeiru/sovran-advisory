@@ -11,8 +11,8 @@ import { LogoMarquee } from "@/components/sections/LogoMarquee"
 import { AboutSection } from "@/components/sections/AboutSection"
 import { ServicesSection } from "@/components/sections/ServicesSection"
 import { CaseStudiesSection } from "@/components/sections/CaseStudiesSection"
-import { IntelligenceSection } from "@/components/sections/IntelligenceSection"
-import { Footer } from "@/components/sections/Footer"
+import { PerspectivesSection } from "@/components/sections/PerspectivesSection"
+import { SiteFooter } from "@/components/sections/SiteFooter"
 
 export default function Home() {
   return (
@@ -23,8 +23,8 @@ export default function Home() {
       <AboutSection />
       <ServicesSection />
       <CaseStudiesSection />
-      <IntelligenceSection />
-      <Footer />
+      <PerspectivesSection />
+      <SiteFooter />
     </>
   )
 }

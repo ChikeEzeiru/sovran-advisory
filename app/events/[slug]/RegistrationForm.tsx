@@ -49,7 +49,7 @@ export default function RegistrationForm({ eventId }: { eventId: string }) {
         required
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="border rounded px-3 py-2"
+        className="border rounded-[2px] px-3 py-2"
       />
       <input
         type="email"
@@ -57,13 +57,13 @@ export default function RegistrationForm({ eventId }: { eventId: string }) {
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border rounded px-3 py-2"
+        className="border rounded-[2px] px-3 py-2"
       />
       {error && <p className="text-red-600 text-sm">{error}</p>}
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="bg-foreground text-background rounded px-4 py-2 disabled:opacity-50"
+        className="bg-foreground text-background rounded-[2px] px-4 py-2 disabled:opacity-50"
       >
         {status === 'submitting' ? 'Submitting…' : 'Register'}
       </button>

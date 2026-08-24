@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Building08,
   PresentationChart02,
@@ -16,7 +15,6 @@ import {
 import { Button } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
 import { Handshake } from "@/components/icons/Handshake";
-import { LINKS_ENABLED } from "@/lib/links";
 import type { ComponentType } from "react";
 
 const EASE = "cubic-bezier(0.65,0,0.35,1)";
@@ -33,36 +31,38 @@ interface DropdownItem {
   href: string;
   icon: ComponentType<{ size?: number; className?: string }>;
   image: string; // empty string = placeholder until provided
+  overlay?: string;
 }
 
 const EXPERTISE_ITEMS: DropdownItem[] = [
   {
-    title: "Policy & Government Relations",
-    desc: "Working with governments and multilateral bodies across Africa.",
-    href: "/expertise/policy",
+    title: "Intelligence",
+    desc: "See the signals, constraints and opportunities that matter before you commit.",
+    href: "/expertise/intelligence",
+    icon: Signal02,
+    image: "/images/services/sovran photo - Intelligence.avif",
+  },
+  {
+    title: "Strategy",
+    desc: "Choose a route to market, investment or growth that fits the situation.",
+    href: "/expertise/strategy",
+    icon: PresentationChart02,
+    image: "/images/services/sovran photo - comms and stakeholder eng.avif",
+  },
+  {
+    title: "Institutions",
+    desc: "Work with the regulators, partners and public systems that shape the outcome.",
+    href: "/expertise/institutions",
     icon: Building08,
     image: "/images/services/sovran photo - policy and govt relations.avif",
   },
   {
-    title: "Digital & Technology Advisory",
-    desc: "Technology strategy for governments and institutions.",
-    href: "/expertise/technology",
+    title: "Delivery",
+    desc: "Turn decisions into coordinated programmes, operating models and measurable progress.",
+    href: "/expertise/delivery",
     icon: Server05,
-    image: "/images/services/sovran photo - digital and tech advisory.avif",
-  },
-  {
-    title: "Market & Corporate Strategy",
-    desc: "Helping corporates and investors enter and operate in African markets.",
-    href: "/expertise/strategy",
-    icon: PresentationChart02,
-    image: "/images/services/sovran photo - market and corporate strategy.avif",
-  },
-  {
-    title: "Communications & Stakeholder Engagement",
-    desc: "Reputation management and strategic communications.",
-    href: "/expertise/communications",
-    icon: Signal02,
-    image: "/images/services/sovran photo - comms and stakeholder eng.avif",
+    image: "/images/services/comms-base.png",
+    overlay: "/images/services/sovran photo - digital and tech advisory 2.avif",
   },
 ];
 
@@ -144,10 +144,10 @@ function NavItem({
     <ConditionalLink
       href={href}
       onMouseEnter={onMouseEnter}
-      className={`group inline-flex items-center gap-1 px-3 py-2 text-base font-medium cursor-pointer select-none rounded-xl transition-colors duration-150 ${
+      className={`group inline-flex items-center gap-1 px-3 py-2 text-base font-medium cursor-pointer select-none rounded-xs transition-colors duration-150 ${
         theme === "light"
-          ? "text-[#22292B] hover:bg-black/8"
-          : "text-[#F1F3F3] hover:bg-white/15"
+          ? "text-text-secondary hover:bg-bg-primary-hover"
+          : "text-text-secondary hover:bg-bg-primary-hover"
       }`}
     >
       <span className="relative overflow-hidden flex h-6">
@@ -199,16 +199,16 @@ function DropdownPanel({
   const FooterIcon = footer.icon;
   const isLight = theme === "light";
 
-  const titleCls = isLight ? "text-[#161b1d]" : "text-[#e8ecec]";
-  const descCls = isLight ? "text-[#67787c]" : "text-[#7a8e93]";
-  const itemHover = isLight ? "hover:bg-[#edf0f0]" : "hover:bg-white/6";
-  const activeItem = isLight ? "bg-[#edf0f0]" : "bg-white/8";
+  const titleCls = "text-text-primary";
+  const descCls = "text-text-quaternary";
+  const itemHover = "hover:bg-bg-primary-hover";
+  const activeItem = "bg-bg-primary-hover";
 
   return (
     <div className="flex flex-col">
       {/* Main row: items + image */}
       <div
-        className={`flex gap-6 px-6 pt-5 pb-4 ${isLight ? "bg-[#F9FBFB]" : "bg-[#0e1214]"}`}
+        className="flex gap-6 px-6 pt-5 pb-4 bg-bg-primary"
       >
         {/* Left: item list */}
         <div className="flex flex-col gap-0.5 flex-1">
@@ -219,13 +219,13 @@ function DropdownPanel({
                 key={item.href}
                 href={item.href}
                 onMouseEnter={() => onItemHover(i)}
-                className={`flex items-start gap-3 px-3 py-3 rounded-xl transition-colors duration-150 ${
+                className={`flex items-start gap-3 px-3 py-3 rounded-xs transition-colors duration-150 ${
                   hoveredIdx === i ? activeItem : itemHover
                 }`}
               >
                 <span
-                  className={`mt-0.5 shrink-0 p-1.5 rounded-lg ${
-                    isLight ? "bg-[#e3e7e8]" : "bg-white/10"
+                  className={`mt-0.5 shrink-0 p-1.5 rounded-xs ${
+                    isLight ? "bg-bg-quaternary" : "bg-white/10"
                   }`}
                 >
                   <Icon size={16} className={descCls} />
@@ -245,7 +245,7 @@ function DropdownPanel({
 
         {/* Right: vertically sliding image strip */}
         <div
-          className="shrink-0 rounded-xl overflow-hidden"
+          className="shrink-0 rounded-xs overflow-hidden"
           style={{ width: 476, height: IMG_H }}
         >
           {items.some((it) => it.image) ? (
@@ -270,6 +270,15 @@ function DropdownPanel({
                     className="object-cover"
                     unoptimized
                   />
+                  {item.overlay && (
+                    <Image
+                      src={item.overlay}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  )}
                 </div>
               ))}
             </div>
@@ -277,7 +286,7 @@ function DropdownPanel({
             // Placeholder until About images are provided
             <div
               className={`w-full h-full ${
-                isLight ? "bg-[#d8dede]" : "bg-white/10"
+                isLight ? "bg-border-primary" : "bg-white/10"
               }`}
             />
           )}
@@ -286,12 +295,12 @@ function DropdownPanel({
 
       {/* Footer bar */}
       <div
-        className={`flex items-center justify-between gap-4 px-9 py-4 ${isLight ? "bg-white" : "bg-[#080c0d]"}`}
+        className="flex items-center justify-between gap-4 px-9 py-4 bg-bg-primary"
       >
         <div className="flex items-center gap-3">
           <span
-            className={`shrink-0 p-1.5 rounded-lg ${
-              isLight ? "bg-[#e3e7e8]" : "bg-white/10"
+            className={`shrink-0 p-1.5 rounded-xs ${
+              isLight ? "bg-bg-quaternary" : "bg-white/10"
             }`}
           >
             <FooterIcon size={16} className={descCls} />
@@ -382,10 +391,10 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
         className={`h-18 flex items-center justify-center px-4 border-b transition-[background-color,backdrop-filter,border-color] duration-300 ease-out ${
           isLight
             ? active
-              ? "bg-[#F1F3F3] border-transparent"
+              ? "bg-bg-tertiary border-transparent"
               : scrolled
-                ? "bg-[#F1F3F3] border-[#d0d6d8]"
-                : "bg-[#F1F3F3] border-transparent"
+                ? "bg-bg-tertiary border-border-primary"
+                : "bg-bg-tertiary border-transparent"
             : scrolled || active
               ? "bg-black/50 backdrop-blur-md border-transparent"
               : "bg-transparent backdrop-blur-none border-transparent"
@@ -429,11 +438,11 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
               Case Studies
             </NavItem>
             <NavItem
-              href="/intelligence"
+              href="/perspectives"
               theme={theme}
               onMouseEnter={handleNonDropdownEnter}
             >
-              Insights
+              Perspectives
             </NavItem>
             <NavItem
               href="/careers"
@@ -462,7 +471,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
         }`}
       >
         <div
-          className="w-full max-w-250 rounded-b-xl overflow-hidden shadow-[0px_20px_24px_-4px_#00000014,0px_8px_8px_-4px_#00000008,0px_3px_3px_-1.5px_#0000000a]"
+          className="w-full max-w-250 rounded-b-xs overflow-hidden shadow-[0px_20px_24px_-4px_#00000014,0px_8px_8px_-4px_#00000008,0px_3px_3px_-1.5px_#0000000a]"
           onMouseEnter={handlePanelEnter}
           onMouseLeave={handleLeave}
         >
