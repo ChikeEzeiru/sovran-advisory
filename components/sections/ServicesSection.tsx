@@ -46,7 +46,7 @@ function ServiceCard({ service }: { service: Service }) {
   return (
     <ConditionalLink
       href={service.href}
-      className="group/service-card block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+      className="group/service-card block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
     >
       <div className="relative h-95 overflow-hidden rounded-xs bg-bg-quaternary mb-5">
         <Image
@@ -69,7 +69,7 @@ function ServiceCard({ service }: { service: Service }) {
         )}
       </div>
 
-      <div className="flex w-full flex-col items-start gap-2 sm:w-85">
+      <div className="flex w-full flex-col items-start gap-2">
         <h3 className="text-xl font-semibold leading-7 text-text-primary">
           {service.title}
         </h3>
@@ -116,13 +116,13 @@ export function ServicesSection() {
 
         <ul
           role="list"
-          className="flex gap-4 overflow-x-auto pb-2"
+          className="flex w-full gap-4 overflow-x-auto pb-2"
           style={{ scrollbarWidth: "none" }}
         >
           {SERVICES.map((service) => (
             <li
               key={service.href}
-              className="w-72 shrink-0 transition-[width] duration-500 ease-out sm:w-85 pointer-fine:hover:w-90 motion-reduce:transition-none"
+              className="w-72 shrink-0 transition-[flex-grow,width] duration-500 ease-out sm:w-85 xl:w-auto xl:min-w-0 xl:flex-[1_1_0%] xl:pointer-fine:hover:flex-[1.08_1_0%] motion-reduce:transition-none"
             >
               <ServiceCard service={service} />
             </li>

@@ -1,81 +1,26 @@
-import type { Metadata } from "next"
-import { Navbar } from "@/components/sections/Navbar"
+import type { Metadata } from "next";
+import { Navbar } from "@/components/sections/Navbar";
+import { SiteFooter } from "@/components/sections/SiteFooter";
+import { InternalPageHero } from "@/components/sections/InternalPageHero";
 
-export const metadata: Metadata = {
-  title: "Leadership & Team",
-  description:
-    "Meet the people who lead Sovran's practice areas and run our client engagements across Africa.",
-}
-import { SiteFooter } from "@/components/sections/SiteFooter"
+export const metadata: Metadata = { title: "Leadership", description: "The fictional leadership team behind Sovran’s conceptual advisory practice." };
 
-const TEAM = [
-  {
-    name: "Placeholder Name",
-    title: "Managing Partner",
-    bio: "Placeholder bio. This team member leads the firm's advisory practice across East Africa with a background in public policy and development finance.",
-  },
-  {
-    name: "Placeholder Name",
-    title: "Partner, West Africa",
-    bio: "Placeholder bio. Based in Accra, this partner oversees the firm's engagements in Ghana, Nigeria, and the broader ECOWAS region.",
-  },
-  {
-    name: "Placeholder Name",
-    title: "Partner, Digital & Technology",
-    bio: "Placeholder bio. This partner leads the firm's digital advisory practice, advising governments and corporates on technology regulation and digital market entry.",
-  },
-  {
-    name: "Placeholder Name",
-    title: "Director, Policy & Government Relations",
-    bio: "Placeholder bio. Fifteen years of experience working at the intersection of government and business in Sub-Saharan Africa.",
-  },
-  {
-    name: "Placeholder Name",
-    title: "Director, Communications",
-    bio: "Placeholder bio. Specialist in stakeholder engagement and communications strategy for complex multi-party transactions.",
-  },
-  {
-    name: "Placeholder Name",
-    title: "Associate, Strategy",
-    bio: "Placeholder bio. Supports the firm's market and corporate strategy practice across the continent.",
-  },
-]
+const LEADERS = [
+  ["Amara Okafor", "Co-Founder & Managing Partner", "Amara leads Sovran’s strategy and market advisory work. Her career spans corporate strategy, market intelligence and transformation work for organisations operating across emerging economies."],
+  ["Daniel Mensah", "Co-Founder & Partner, Institutional Advisory", "Daniel leads work involving public institutions, regulatory environments and multi-party programmes. His background spans policy, economic development and stakeholder strategy."],
+  ["Lina Adeyemi", "Partner, Intelligence", "Lina leads market and investment analysis. She helps clients turn fragmented commercial, competitor and policy information into decisions that can be tested."],
+  ["Kofi Asare", "Partner, Delivery", "Kofi leads implementation and operating-model work. He works with client teams to turn approved plans into coordinated programmes with visible accountability."],
+];
 
 export default function LeadershipPage() {
-  return (
-    <>
-      <Navbar theme="light" />
-      <main>
-        <section className="px-12 pt-40 pb-24 max-w-[1600px] mx-auto w-full">
-          <div className="flex flex-col gap-4 max-w-3xl">
-            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-text-quaternary">Leadership & Team</span>
-            </div>
-            <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary">
-              The people behind the work.
-            </h1>
-            <p className="text-xl font-normal leading-8 text-text-tertiary max-w-2xl">
-              Our team brings together decades of experience in policy, finance, and markets across the African continent.
-            </p>
-          </div>
-        </section>
-
-        <section className="px-12 pb-32 max-w-[1600px] mx-auto w-full">
-          <div className="grid grid-cols-3 gap-8">
-            {TEAM.map((member) => (
-              <div key={member.name + member.title} className="flex flex-col gap-4 p-8 rounded-[2px] bg-bg-quaternary">
-                <div className="w-16 h-16 rounded-full bg-bg-quaternary" aria-hidden />
-                <div className="flex flex-col gap-1">
-                  <p className="text-lg font-medium text-text-primary">{member.name}</p>
-                  <p className="text-sm font-normal text-text-quaternary">{member.title}</p>
-                </div>
-                <p className="text-base font-normal leading-6 text-text-tertiary">{member.bio}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </main>
-      <SiteFooter />
-    </>
-  )
+  return <><Navbar theme="light" /><main>
+    <InternalPageHero eyebrow="Leadership" title="The people behind the work." intro="The profiles below are fictional and created for this conceptual project." image="/images/sovran photo - leadership & team.avif" imageAlt="Professionals moving through a contemporary urban workplace." />
+    <section className="mx-auto grid w-full max-w-400 grid-cols-2 gap-x-12 px-12 pb-24 max-lg:grid-cols-1 max-md:px-6 max-md:pb-16">
+      {LEADERS.map(([name, title, bio], index) => <article key={name} className="flex min-h-80 flex-col justify-between border-t border-border-primary py-6 last:border-b">
+        <div className="flex items-start justify-between gap-6"><div><h2 className="text-2xl font-medium text-text-primary">{name}</h2><p className="mt-1 text-sm text-text-quaternary">{title}</p></div><span className="text-sm tabular-nums text-text-quaternary">{String(index + 1).padStart(2, "0")}</span></div>
+        <p className="max-w-xl text-lg leading-7 text-text-tertiary">{bio}</p>
+        <p className="text-sm text-text-quaternary">Fictional identity · Conceptual profile</p>
+      </article>)}
+    </section>
+  </main><SiteFooter /></>;
 }

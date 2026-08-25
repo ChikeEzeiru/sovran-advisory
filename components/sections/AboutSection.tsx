@@ -50,7 +50,7 @@ export function AboutSection() {
   return (
     <section
       aria-labelledby="about-heading"
-      className="flex flex-col gap-16 py-16"
+      className="flex flex-col gap-16 py-24"
     >
       <div className="flex w-full flex-col items-center gap-2 px-12 text-center max-md:px-6">
         <div className="rounded-xs border border-border-secondary-alt px-3 py-1">

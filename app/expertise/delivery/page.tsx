@@ -1,99 +1,20 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/sections/Navbar";
+import { PracticePage } from "@/components/pages/PracticePage";
 
-export const metadata: Metadata = {
-  title: "Communications & Stakeholder Engagement",
-  description:
-    "We design and execute stakeholder engagement programmes for complex transactions, regulatory processes, and multi-party negotiations across Africa.",
-};
-import { SiteFooter } from "@/components/sections/SiteFooter";
-import { Button } from "@/components/ui/Button";
+export const metadata: Metadata = { title: "Delivery", description: "Turn approved strategy into coordinated, measurable progress." };
 
-export default function CommunicationsExpertisePage() {
-  return (
-    <>
-      <Navbar theme="light" />
-      <main>
-        <section className="px-12 pt-40 pb-24 max-w-[1600px] mx-auto w-full">
-          <div className="flex flex-col gap-4 max-w-3xl">
-            <div className="border border-border-primary rounded-[10px] px-3 py-1 self-start">
-              <span className="text-base font-normal leading-6 text-text-quaternary">
-                Expertise
-              </span>
-            </div>
-            <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary">
-              Communications & Stakeholder Engagement
-            </h1>
-            <p className="text-xl font-normal leading-8 text-text-tertiary max-w-2xl">
-              We design and execute stakeholder engagement programmes for
-              complex transactions, regulatory processes, and multi-party
-              negotiations.
-            </p>
-          </div>
-        </section>
-
-        <section className="px-12 pb-32 max-w-[1600px] mx-auto w-full">
-          <div className="flex gap-16 items-start">
-            <div className="flex-1 flex flex-col gap-8">
-              <p className="text-lg font-normal leading-7 text-text-tertiary">
-                Placeholder copy. The most technically sound proposals fail when
-                they cannot build the coalitions needed to move forward.
-                Stakeholder engagement is not a communications exercise — it is
-                a strategic one. It requires a clear thesis about who has the
-                power to help or block, what each of them needs, and how to
-                sequence the engagement.
-              </p>
-              <p className="text-lg font-normal leading-7 text-text-tertiary">
-                Our communications and stakeholder engagement practice is
-                designed for exactly these situations: transactions, regulatory
-                processes, and negotiations where the outcome depends on
-                managing a complex web of interests.
-              </p>
-              <div className="flex flex-col gap-4">
-                <h2 className="text-2xl font-semibold text-text-primary">
-                  What this covers
-                </h2>
-                <ul className="flex flex-col gap-3">
-                  {[
-                    "Stakeholder mapping and analysis",
-                    "Engagement strategy and execution",
-                    "Public affairs and media relations",
-                    "Crisis communications",
-                    "Narrative development and messaging",
-                  ].map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-base font-normal leading-6 text-text-tertiary"
-                    >
-                      <span className="text-text-brand-secondary mt-0.5">
-                        —
-                      </span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-4">
-                <Button href="/contact" variant="primary" size="lg">
-                  Discuss an engagement
-                </Button>
-              </div>
-            </div>
-            <div className="w-72 shrink-0 flex flex-col gap-4 p-8 rounded-xs bg-bg-quaternary">
-              <p className="text-sm font-medium uppercase tracking-wide text-text-quaternary">
-                Related case studies
-              </p>
-              <a
-                href="/case-studies/eagla-customs-standard"
-                className="text-base font-normal leading-6 text-text-brand-secondary hover:underline"
-              >
-                EAGLA — Customs harmonisation across three authorities
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-      <SiteFooter />
-    </>
-  );
+export default function DeliveryPage() {
+  return <PracticePage data={{
+    name: "Delivery", title: "Make the decision real.",
+    intro: "We help teams coordinate people, priorities and practical work so an approved strategy becomes progress that can be seen and measured.",
+    image: "/images/services/sovran photo - digital and tech advisory 2.avif", imageAlt: "A transport and logistics system operating at scale.",
+    services: ["Programme design", "Transformation delivery", "Implementation support", "Performance tracking", "Strategic communications"],
+    receive: "A working delivery plan, a programme rhythm, clear responsibilities and a way to track progress.",
+    callWhen: "When strategy has been approved but implementation is complex, cross-functional or at risk of drifting.", cta: "Discuss a delivery question",
+    caseStudy: { title: "Launching two regional hubs through one coordinated delivery programme", meta: "Logistics · West Africa", href: "/case-studies/logistics-expansion", image: "/images/case-studies/financial_services-case.avif" },
+    perspectives: [
+      { title: "Three signals reshaping East African logistics", type: "Regional brief", href: "/perspectives/signals-reshaping-east-african-logistics" },
+      { title: "Local context is not a footnote to strategy", type: "Opinion", href: "/perspectives/local-context-and-strategy" },
+    ],
+  }} />;
 }

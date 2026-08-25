@@ -1,56 +1,50 @@
-import type { Metadata } from "next"
-import { Navbar } from "@/components/sections/Navbar"
+import type { Metadata } from "next";
+import Image from "next/image";
+import { Navbar } from "@/components/sections/Navbar";
+import { SiteFooter } from "@/components/sections/SiteFooter";
+import { InternalPageHero } from "@/components/sections/InternalPageHero";
+import { Button } from "@/components/ui/Button";
 
-export const metadata: Metadata = {
-  title: "About the Firm",
-  description:
-    "Sovran is an Africa-focused advisory firm. Learn about who we are, how we work, and where we operate.",
-}
-import { SiteFooter } from "@/components/sections/SiteFooter"
+export const metadata: Metadata = { title: "About Sovran", description: "Built for decisions that cannot be separated from their context." };
+
+const STEPS = [
+  ["01", "Frame the decision", "Agree what must be decided, by whom and by when."],
+  ["02", "Build the right picture", "Gather market, commercial, institutional and operational evidence."],
+  ["03", "Make choices visible", "Set out options, trade-offs and conditions for success."],
+  ["04", "Work alongside the team", "Move from recommendation to delivery with clear ownership."],
+];
 
 export default function AboutPage() {
-  return (
-    <>
-      <Navbar theme="light" />
-      <main>
-        <section className="px-12 pt-40 pb-24 max-w-[1600px] mx-auto w-full">
-          <div className="flex flex-col gap-4 max-w-3xl">
-            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-text-quaternary">About</span>
-            </div>
-            <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary">
-              Built for the complexity of African markets.
-            </h1>
-            <p className="text-xl font-normal leading-8 text-text-tertiary max-w-2xl">
-              Sovran Advisory was founded on a simple premise: that organisations operating in Africa&apos;s most consequential markets deserve counsel that is rigorous, contextual, and genuinely accountable to results.
-            </p>
-          </div>
-        </section>
+  return <>
+    <Navbar theme="light" />
+    <main>
+      <InternalPageHero eyebrow="About Sovran" title="Built for decisions that cannot be separated from their context." intro="We bring intelligence, strategy, institutional understanding and delivery together because complex decisions rarely sit in one department or one market." image="/images/sovran photo - our story.avif" imageAlt="A working city and its infrastructure seen from above." />
 
-        <section className="px-12 pb-24 max-w-[1600px] mx-auto w-full">
-          <div className="grid grid-cols-2 gap-12">
-            <div className="flex flex-col gap-6">
-              <h2 className="text-3xl font-medium tracking-tight text-text-primary">Our approach</h2>
-              <p className="text-lg font-normal leading-7 text-text-tertiary">
-                We combine deep political economy expertise with sector-specific knowledge across financial services, infrastructure, digital, and public policy. Our engagements are designed to move governments, regulators, and markets — not just advise them.
-              </p>
-              <p className="text-lg font-normal leading-7 text-text-tertiary">
-                Every mandate begins with a clear thesis: what outcome is achievable, what stands in the way, and who has the power to change it. We test that thesis constantly as we work.
-              </p>
-            </div>
-            <div className="flex flex-col gap-6">
-              <h2 className="text-3xl font-medium tracking-tight text-text-primary">Where we operate</h2>
-              <p className="text-lg font-normal leading-7 text-text-tertiary">
-                Our primary markets span East, West, and Southern Africa, with offices in Kigali, Accra, and Nairobi. We work across the continent where our clients need us.
-              </p>
-              <p className="text-lg font-normal leading-7 text-text-tertiary">
-                Our relationships with policymakers, regulators, and institutional investors are built over years — not assembled for a single engagement.
-              </p>
-            </div>
+      <section className="mx-auto grid w-full max-w-400 grid-cols-12 gap-8 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
+        <div className="col-span-4"><p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Our story</p></div>
+        <div className="col-span-8 flex max-w-4xl flex-col gap-6 text-xl leading-8 text-text-tertiary">
+          <p>Sovran started in 2012 as a small market-intelligence practice supporting organisations entering unfamiliar markets. Clients soon needed more than a report: they needed a route to market, a clear understanding of institutions and support turning decisions into work.</p>
+          <p>That evolution shaped Sovran today. We work with business leaders, investors and public institutions when the stakes are high and the conditions are changing.</p>
+        </div>
+      </section>
+
+      <section className="bg-bg-primary">
+        <div className="mx-auto grid w-full max-w-400 grid-cols-2 gap-6 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
+          <div className="relative min-h-160 overflow-hidden rounded-xs bg-bg-quaternary max-lg:min-h-112">
+            <Image src="/images/sovran photo - partners & intitutional rshps.avif" alt="A city district shaped by transport, civic and commercial infrastructure." fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
           </div>
-        </section>
-      </main>
-      <SiteFooter />
-    </>
-  )
+          <div className="flex flex-col justify-between gap-12 px-6 py-4 max-md:px-0">
+            <div><p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">How we work</p><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Clear decisions, made useful.</h2></div>
+            <ol className="border-t border-border-primary">{STEPS.map(([number, title, copy]) => <li key={number} className="grid grid-cols-[3rem_1fr] gap-4 border-b border-border-primary py-5"><span className="text-sm text-text-quaternary">{number}</span><div><h3 className="text-xl font-medium text-text-secondary">{title}</h3><p className="mt-1 text-base leading-6 text-text-tertiary">{copy}</p></div></li>)}</ol>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto flex w-full max-w-400 items-end justify-between gap-8 px-12 py-24 max-md:flex-col max-md:items-start max-md:px-6 max-md:py-16">
+        <div className="max-w-2xl"><p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Leadership</p><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Experience across markets, institutions and delivery.</h2></div>
+        <Button href="/leadership" variant="secondary" size="lg">Meet the leadership team</Button>
+      </section>
+    </main>
+    <SiteFooter />
+  </>;
 }

@@ -1,246 +1,183 @@
-"use client";
-
-import { useRef, useEffect } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AnimatedLink } from "@/components/ui/AnimatedLink";
+import { Button } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
-import { Badge } from "@/components/base/badges/badges";
 
-// ─── Brand colour for card overlay — update here to change across all cards ───
-const CARD_COLOR = "var(--sovran-color-bg-primary-solid)";
-
-const CASES = [
-  {
-    category: "Development Finance",
-    body: "Political economy risk assessment cleared a $200M infrastructure loan for disbursement on schedule.",
-    logo: { src: "/logos/GDFC logo.svg", alt: "GDFC", width: 68, height: 24 },
-    href: "/case-studies/gdfc-infrastructure-loan",
-    image: "/images/case-studies/development_finance-case.avif", // add image path when available
-  },
-  {
-    category: "Financial Services",
-    body: 'Licensed in two markets within an eighteen-month window their own regulatory counsel called "aggressive but not impossible."',
-    logo: {
-      src: "/logos/Meridian Capital logo.svg",
-      alt: "Meridian Capital",
-      width: 131,
-      height: 24,
+const FEATURED_STUDY = {
+  title:
+    "Building a smarter route into three fast-moving payments markets for Asterpay",
+  image: "/images/case-studies/Case-study_Asterpay.avif",
+  logo: "/logos/case_study_logos/Asterpay Logo.svg",
+  logoAlt: "Asterpay",
+  href: "/case-studies",
+  metrics: [
+    {
+      value: "42",
+      label: "regulators, industry bodies and potential partners mapped",
     },
-    href: "/case-studies/meridian-capital-licensing",
-    image: "/images/case-studies/financial_services-case.avif", // add image path when available
+    {
+      value: "3",
+      label:
+        "simultaneous launches replaced by a controlled two-stage programme",
+    },
+  ],
+};
+
+const SUPPORTING_STUDIES = [
+  {
+    title:
+      "Testing an infrastructure opportunity against freight corridor constraints",
+    logo: "/logos/case_study_logos/Northline logo.svg",
+    logoAlt: "Northline",
+    href: "/case-studies",
+    metrics: [
+      { value: "2", label: "linked assets prioritised for initial investment" },
+    ],
   },
   {
-    category: "Public Sector",
-    body: "Three customs authorities aligned on a shared standard in ten months, against a multilateral estimate of three to five years",
-    logo: { src: "/logos/Eagla Logo.svg", alt: "EAGLA", width: 80, height: 24 },
-    href: "/case-studies/eagla-customs-standard",
-    image: "/images/case-studies/public_sector-case.avif", // add image path when available
+    title:
+      "Launching two regional hubs through one coordinated delivery programme",
+    logo: "/logos/case_study_logos/Axis logo.svg",
+    logoAlt: "Axis",
+    href: "/case-studies",
+    metrics: [
+      { value: "2", label: "new hubs launched with one delivery" },
+      { value: "12 mo.", label: "regional transformation programme" },
+    ],
   },
 ];
 
-export function CaseStudiesSection() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const panelRefs = useRef<(HTMLElement | null)[]>([]);
-  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const logoRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const overlayRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const panels = panelRefs.current;
-    const contents = contentRefs.current;
-    const logos = logoRefs.current;
-    const numbers = numberRefs.current;
-    const overlays = overlayRefs.current;
-
-    const heights = contents.map((el) => el?.scrollHeight ?? 0);
-
-    panels.forEach(
-      (p, i) => p && gsap.set(p, { width: i === 0 ? "80%" : "10%" })
-    );
-    contents.forEach(
-      (c, i) =>
-        c &&
-        gsap.set(c, {
-          height: i === 0 ? heights[0] : 0,
-          opacity: i === 0 ? 1 : 0,
-        })
-    );
-    logos.forEach((l, i) => l && gsap.set(l, { opacity: i === 0 ? 1 : 0 }));
-    numbers.forEach((n, i) => n && gsap.set(n, { opacity: i === 0 ? 0 : 1 }));
-    overlays.forEach(
-      (o, i) => o && gsap.set(o, { opacity: i === 0 ? 0.25 : 1 })
-    );
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: wrapperRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.5,
-        },
-      });
-
-      CASES.slice(0, -1).forEach((_, i) => {
-        tl
-          // Panel widths animate over full duration
-          .to(panels[i], { width: "10%", ease: "none", duration: 1 }, i)
-          .to(panels[i + 1], { width: "80%", ease: "none", duration: 1 }, i)
-          // Overlay: full opacity when collapsed, subtle tint when expanded
-          .to(overlays[i], { opacity: 1, ease: "none", duration: 1 }, i)
-          .to(overlays[i + 1], { opacity: 0.25, ease: "none", duration: 1 }, i)
-          // Collapsing card: height over full duration, content/logo out first half, number in second half
-          .to(contents[i], { height: 0, ease: "none", duration: 1 }, i)
-          .to(contents[i], { opacity: 0, ease: "none", duration: 0.5 }, i)
-          .to(logos[i], { opacity: 0, ease: "none", duration: 0.5 }, i)
-          .to(numbers[i], { opacity: 1, ease: "none", duration: 0.5 }, i + 0.5)
-          // Expanding card: height over full duration, number out first half, content/logo in second half
-          .to(
-            contents[i + 1],
-            { height: heights[i + 1], ease: "none", duration: 1 },
-            i
-          )
-          .to(numbers[i + 1], { opacity: 0, ease: "none", duration: 0.5 }, i)
-          .to(
-            contents[i + 1],
-            { opacity: 1, ease: "none", duration: 0.5 },
-            i + 0.5
-          )
-          .to(
-            logos[i + 1],
-            { opacity: 1, ease: "none", duration: 0.5 },
-            i + 0.5
-          );
-      });
-    }, wrapperRef);
-
-    return () => ctx.revert();
-  }, []);
-
+function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div ref={wrapperRef} style={{ height: "300vh" }}>
-      <div className="sticky top-0 h-screen flex gap-6 items-start px-12 pt-32 pb-24 max-w-[1600px] mx-auto w-full overflow-hidden">
-        {/* Left col */}
-        <div className="flex flex-col justify-between self-stretch shrink-0 w-108">
-          <div className="flex flex-col gap-3">
-            <div className="self-start border border-border-primary rounded-[10px] px-3 py-1">
-              <span className="text-base font-normal leading-6 text-text-quaternary whitespace-nowrap">
+    <p className="flex items-baseline gap-1 text-base leading-6">
+      <span className="shrink-0 font-semibold text-text-secondary">
+        {value}
+      </span>
+      <span className="text-text-tertiary">{label}</span>
+    </p>
+  );
+}
+
+export function CaseStudiesSection() {
+  return (
+    <section
+      aria-labelledby="case-studies-heading"
+      className="bg-utility-neutral-100 pt-24 pb-16 max-md:px-6"
+    >
+      <div className="mx-auto flex w-full max-w-400 flex-col px-12 gap-16">
+        <div className="grid grid-cols-2 items-start gap-4 max-md:grid-cols-1 max-md:gap-8">
+          <div className="flex min-w-0 flex-col items-start gap-2">
+            <div className="rounded-xs border border-border-secondary-alt bg-bg-secondary-alt px-3 py-1">
+              <p className="whitespace-nowrap text-base leading-6 text-text-quaternary">
                 Case Studies
-              </span>
+              </p>
             </div>
-            <p className="text-4xl font-medium leading-11 tracking-tight text-text-primary">
-              Selected engagements across our markets.
-            </p>
+            <h2
+              id="case-studies-heading"
+              className="max-w-xl text-4xl font-medium leading-11 tracking-tight text-text-secondary"
+            >
+              Practical outcomes for complex challenges.
+            </h2>
           </div>
-          <AnimatedLink
-            href="/case-studies"
-            className="inline-flex items-center gap-1.5 text-base font-semibold text-text-brand-secondary"
-          >
-            See All Case Studies
-          </AnimatedLink>
+
+          <div className="flex min-w-0 flex-col items-start gap-5">
+            <p className="max-w-2xl text-xl font-normal leading-7.5 text-text-tertiary">
+              From entering new markets to delivering complex programmes, our
+              work brings together the expertise each challenge requires.
+            </p>
+            <Button href="/case-studies" variant="primary" size="lg">
+              View all Case Studies
+            </Button>
+          </div>
         </div>
 
-        {/* Expanding panels */}
-        <div className="flex flex-1 gap-3 h-full min-w-0">
-          {CASES.map((c, i) => (
+        <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
+          <article className="col-span-2 flex min-w-0 flex-col gap-2 max-md:col-span-1">
             <ConditionalLink
-              key={c.href}
-              href={c.href}
-              ref={(el) => {
-                panelRefs.current[i] = el;
-              }}
-              className="relative flex flex-col justify-between overflow-hidden rounded-[2px] p-6"
-              style={{
-                width: i === 0 ? "80%" : "10%",
-                backgroundColor: CARD_COLOR,
-              }}
+              href={FEATURED_STUDY.href}
+              className="group/featured flex min-w-0 items-center gap-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
             >
-              {/* Background image — hidden until image path is provided */}
-              {c.image && (
+              <span className="relative h-9 w-10.5 shrink-0 overflow-hidden rounded-xs">
                 <Image
-                  src={c.image}
+                  src={FEATURED_STUDY.logo}
+                  alt={FEATURED_STUDY.logoAlt}
+                  fill
+                  unoptimized
+                  className="object-cover"
+                />
+              </span>
+              <h3 className="text-xl font-medium leading-7.5 tracking-tight text-text-secondary group-hover/featured:text-text-brand-secondary">
+                {FEATURED_STUDY.title}
+              </h3>
+            </ConditionalLink>
+
+            <ConditionalLink
+              href={FEATURED_STUDY.href}
+              aria-label={FEATURED_STUDY.title}
+              className="relative aspect-[10/3] w-full overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+            >
+              <Image
+                src={FEATURED_STUDY.image}
+                alt=""
+                fill
+                unoptimized
+                sizes="(min-width: 1600px) 1504px, (min-width: 768px) calc(100vw - 96px), calc(100vw - 48px)"
+                className="object-cover"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 bg-black/20"
+              />
+            </ConditionalLink>
+
+            <div className="flex items-start justify-between gap-8 px-2 pt-3 pb-5 max-md:flex-col max-md:gap-2">
+              {FEATURED_STUDY.metrics.map((metric) => (
+                <Metric key={metric.label} {...metric} />
+              ))}
+            </div>
+          </article>
+
+          {SUPPORTING_STUDIES.map((study) => (
+            <article
+              key={study.logoAlt}
+              className="flex min-w-0 flex-col gap-2"
+            >
+              <ConditionalLink
+                href={study.href}
+                className="group/supporting relative flex h-64 flex-col overflow-hidden rounded-xs p-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+              >
+                <Image
+                  src="/images/case-studies/case-study-card-texture.png"
                   alt=""
                   fill
-                  className="object-cover"
-                  sizes="80vw"
-                />
-              )}
-
-              {/* Colour overlay — full opacity when collapsed, subtle tint when expanded */}
-              <div
-                ref={(el) => {
-                  overlayRefs.current[i] = el;
-                }}
-                className="absolute inset-0 z-[1]"
-                style={{
-                  backgroundColor: CARD_COLOR,
-                  opacity: i === 0 ? 0.25 : 1,
-                }}
-              />
-
-              {/* Content — height and opacity driven by GSAP */}
-              <div
-                ref={(el) => {
-                  contentRefs.current[i] = el;
-                }}
-                className="relative z-[2] flex flex-col gap-4 overflow-hidden"
-                style={{ opacity: i === 0 ? 1 : 0 }}
-              >
-                <Badge
-                  type="modern"
-                  color="gray"
-                  size="md"
-                  className="text-sm font-normal leading-5 text-text-primary! border-none! bg-white/80! ring-0! shadow-none!"
-                >
-                  {c.category}
-                </Badge>
-
-                <p className="text-xl font-normal leading-normal text-white/90">
-                  {c.body}
-                </p>
-              </div>
-
-              {/* Number — visible when collapsed, hidden when expanded */}
-              <div
-                ref={(el) => {
-                  numberRefs.current[i] = el;
-                }}
-                style={{ opacity: i === 0 ? 0 : 1 }}
-                className="absolute bottom-6 left-0 right-0 z-[2] flex justify-center pointer-events-none"
-              >
-                <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center">
-                  <span className="text-lg font-medium text-white">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-              </div>
-
-              {/* Logo — opacity driven by GSAP on wrapper div */}
-              <div
-                ref={(el) => {
-                  logoRefs.current[i] = el;
-                }}
-                style={{ opacity: i === 0 ? 1 : 0 }}
-                className="relative z-[2] shrink-0"
-              >
-                <Image
-                  src={c.logo.src}
-                  alt={c.logo.alt}
-                  width={c.logo.width}
-                  height={c.logo.height}
                   unoptimized
-                  className="object-contain object-left brightness-0 invert"
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover opacity-80"
                 />
+                <div className="relative z-10 flex min-w-0 items-start gap-3 py-2">
+                  <span className="relative h-10 w-12 shrink-0 overflow-hidden rounded-xs">
+                    <Image
+                      src={study.logo}
+                      alt={study.logoAlt}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
+                  </span>
+                  <h3 className="text-xl font-medium leading-7.5 tracking-tight text-text-primary-on-brand">
+                    {study.title}
+                  </h3>
+                </div>
+              </ConditionalLink>
+
+              <div className="flex items-start justify-between gap-6 px-2 pt-3 pb-5 max-lg:flex-col max-lg:gap-2">
+                {study.metrics.map((metric) => (
+                  <Metric key={metric.label} {...metric} />
+                ))}
               </div>
-            </ConditionalLink>
+            </article>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
