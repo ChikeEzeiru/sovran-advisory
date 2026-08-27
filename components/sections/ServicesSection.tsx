@@ -88,7 +88,7 @@ function ServiceCard({ service }: { service: Service }) {
 
 export function ServicesSection() {
   return (
-    <section aria-labelledby="services-heading" className="py-24">
+    <section aria-labelledby="services-heading" className="py-20">
       <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-10 px-12 max-md:px-6">
         <div className="flex max-w-4xl flex-col gap-4">
           {/* Badge + body copy */}

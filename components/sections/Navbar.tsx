@@ -295,7 +295,11 @@ function DropdownPanel({
 
       {/* Footer bar */}
       <div
-        className="flex items-center justify-between gap-4 px-9 py-4 bg-bg-primary"
+        className={`flex items-center justify-between gap-4 border-t-[0.5px] border-border-secondary-alt px-9 py-4 ${
+          isLight
+            ? "bg-bg-secondary"
+            : "bg-[color-mix(in_srgb,var(--sovran-color-bg-primary)_97%,white)]"
+        }`}
       >
         <div className="flex items-center gap-3">
           <span

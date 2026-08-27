@@ -61,7 +61,7 @@ export function CaseStudiesSection() {
   return (
     <section
       aria-labelledby="case-studies-heading"
-      className="bg-utility-neutral-100 pt-24 pb-16 max-md:px-6"
+      className="bg-utility-neutral-100 py-20 max-md:px-6"
     >
       <div className="mx-auto flex w-full max-w-400 flex-col px-12 gap-16">
         <div className="grid grid-cols-2 items-start gap-4 max-md:grid-cols-1 max-md:gap-8">

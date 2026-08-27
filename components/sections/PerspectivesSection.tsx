@@ -312,7 +312,7 @@ export function PerspectivesSection() {
   }
 
   return (
-    <section aria-labelledby={headingId} className="py-24">
+    <section aria-labelledby={headingId} className="py-20">
       <div className="flex flex-col gap-10 px-12 max-w-[1600px] mx-auto w-full">
         {/* Header: stacked heading+subheading left, nav buttons right */}
         <header className="flex items-start justify-between">
