@@ -69,7 +69,7 @@ function ServiceCard({ service }: { service: Service }) {
         )}
       </div>
 
-      <div className="flex w-full flex-col items-start gap-2">
+      <div className="flex w-full flex-col items-start gap-2 xl:w-[calc((100cqw-9rem)/4)] xl:shrink-0">
         <h3 className="text-xl font-semibold leading-7 text-text-primary">
           {service.title}
         </h3>
@@ -89,7 +89,7 @@ function ServiceCard({ service }: { service: Service }) {
 export function ServicesSection() {
   return (
     <section aria-labelledby="services-heading" className="py-20">
-      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-10 px-12 max-md:px-6">
+      <div className="@container mx-auto flex w-full max-w-[1600px] flex-col gap-10 px-12 max-md:px-6">
         <div className="flex max-w-4xl flex-col gap-4">
           {/* Badge + body copy */}
           <div className="flex flex-col gap-2">
