@@ -29,6 +29,7 @@ const NAV_COLUMNS = [
     links: [
       { label: "About", href: "/about" },
       { label: "Leadership & Team", href: "/leadership" },
+      { label: "Partners & Relationships", href: "/partnerships" },
       { label: "Case Studies", href: "/case-studies" },
       { label: "Perspectives", href: "/perspectives" },
       { label: "Events", href: "/events" },
@@ -181,15 +182,21 @@ export function Footer() {
 
       <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 max-lg:flex-col max-lg:gap-12 max-md:px-6">
         <div className="flex w-108 shrink-0 flex-col items-start gap-8 max-md:w-full">
-          <div ref={markRef} className="size-16">
-            <Image
-              src="/sovran-footer-mark.svg"
-              alt="Sovran Advisory"
-              width={65}
-              height={64}
-              className="size-full"
-            />
-          </div>
+          <ConditionalLink
+            href="/"
+            aria-label="Sovran Advisory home"
+            className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+          >
+            <div ref={markRef} className="size-16">
+              <Image
+                src="/sovran-footer-mark.svg"
+                alt=""
+                width={65}
+                height={64}
+                className="size-full"
+              />
+            </div>
+          </ConditionalLink>
 
           <div className="flex w-full flex-col gap-3 text-base leading-6">
             <p>

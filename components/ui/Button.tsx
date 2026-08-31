@@ -46,6 +46,7 @@ interface ButtonProps {
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 // Inner top-highlight border for dark-bg variants (fades top→bottom)
@@ -75,18 +76,21 @@ function isPill(v: ButtonVariant) {
 }
 
 const textMotionCls: Record<ButtonInteraction, string> = {
-  self: "group-hover:-translate-y-full",
-  "service-card": "group-hover/service-card:-translate-y-full",
+  self: "group-hover:-translate-y-full group-disabled:translate-y-0",
+  "service-card":
+    "group-hover/service-card:-translate-y-full group-disabled:translate-y-0",
 };
 
 const outgoingIconMotionCls: Record<ButtonInteraction, string> = {
-  self: "group-hover:translate-x-full",
-  "service-card": "group-hover/service-card:translate-x-full",
+  self: "group-hover:translate-x-full group-disabled:translate-x-0",
+  "service-card":
+    "group-hover/service-card:translate-x-full group-disabled:translate-x-0",
 };
 
 const incomingIconMotionCls: Record<ButtonInteraction, string> = {
-  self: "group-hover:translate-x-0",
-  "service-card": "group-hover/service-card:translate-x-0",
+  self: "group-hover:translate-x-0 group-disabled:-translate-x-full",
+  "service-card":
+    "group-hover/service-card:translate-x-0 group-disabled:-translate-x-full",
 };
 
 export function ButtonVisual({
@@ -121,17 +125,47 @@ export function ButtonVisual({
         </span>
       </span>
 
-      {showIcon && (
-        <span className="relative inline-flex size-4 shrink-0 items-center overflow-hidden">
-          <ArrowRight
-            className={`shrink-0 ${sharedMotion} ${outgoingIconMotionCls[interaction]}`}
-          />
-          <ArrowRight
-            className={`absolute inset-0 shrink-0 -translate-x-full ${sharedMotion} ${incomingIconMotionCls[interaction]}`}
-          />
-        </span>
-      )}
+      {showIcon && <ButtonArrowVisual interaction={interaction} />}
     </>
+  );
+}
+
+export function ButtonArrowVisual({
+  interaction = "self",
+  direction = "right",
+  className = "",
+}: {
+  interaction?: ButtonInteraction;
+  direction?: "left" | "right";
+  className?: string;
+}) {
+  const sharedMotion =
+    "transition-transform duration-380 ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none";
+  const outgoing =
+    direction === "right"
+      ? outgoingIconMotionCls[interaction]
+      : interaction === "self"
+        ? "group-hover:-translate-x-full group-disabled:translate-x-0"
+        : "group-hover/service-card:-translate-x-full group-disabled:translate-x-0";
+  const incoming =
+    direction === "right"
+      ? `-translate-x-full ${incomingIconMotionCls[interaction]}`
+      : interaction === "self"
+        ? "translate-x-full group-hover:translate-x-0 group-disabled:translate-x-full"
+        : "translate-x-full group-hover/service-card:translate-x-0 group-disabled:translate-x-full";
+  const rotation = direction === "left" ? "rotate-180" : "";
+
+  return (
+    <span
+      className={`relative inline-flex size-4 shrink-0 items-center overflow-hidden ${className}`}
+    >
+      <ArrowRight
+        className={`size-full shrink-0 ${rotation} ${sharedMotion} ${outgoing}`}
+      />
+      <ArrowRight
+        className={`absolute inset-0 size-full shrink-0 ${rotation} ${sharedMotion} ${incoming}`}
+      />
+    </span>
   );
 }
 
@@ -144,14 +178,16 @@ export function Button({
   className = "",
   onClick,
   type = "button",
+  disabled = false,
 }: ButtonProps) {
-  const href = LINKS_ENABLED ? hrefProp : undefined
+  const href = LINKS_ENABLED && !disabled ? hrefProp : undefined
   const pill = isPill(variant);
   const { padding, text } = sizeCls[size];
 
   const base = [
     "group relative inline-flex items-center gap-1.5 cursor-pointer font-medium",
     "transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current",
+    "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100",
     text,
     pill
       ? `rounded-[2px] ${padding} active:scale-[0.98] active:duration-100 motion-reduce:transform-none`
@@ -173,7 +209,7 @@ export function Button({
         {inner}
       </Link>
     ) : (
-      <button type={type} onClick={onClick} className={base}>
+      <button type={type} onClick={onClick} disabled={disabled} className={base}>
         {inner}
       </button>
     );
@@ -186,7 +222,7 @@ export function Button({
       {inner}
     </Link>
   ) : (
-    <button type={type} onClick={onClick} className={base}>
+    <button type={type} onClick={onClick} disabled={disabled} className={base}>
       {inner}
     </button>
   );

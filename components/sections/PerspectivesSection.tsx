@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { Squircle } from "@squircle-js/react";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
-import { Button } from "@/components/ui/Button";
+import { Button, ButtonVisual } from "@/components/ui/Button";
 
 // Squeezy carousel layout constants (adapted from Stripe's pattern)
 const S_GAP = 8; // gap before small cards (col >= 4)
@@ -538,7 +538,7 @@ export function PerspectivesSection() {
             <li key={article.href} className="shrink-0 w-72 snap-start">
               <ConditionalLink
                 href={article.href}
-                className="flex flex-col gap-4"
+                className="group flex flex-col gap-4"
               >
                 <div className="relative h-48 overflow-hidden rounded-xs">
                   <Image
@@ -557,15 +557,11 @@ export function PerspectivesSection() {
                     {article.body}
                   </span>
                 </div>
-                <Button
-                  href={article.href}
-                  variant="secondary"
-                  size="sm"
-                  showIcon={false}
-                  className="self-start"
-                >
-                  {article.cta}
-                </Button>
+                <span className="relative inline-flex self-start items-center gap-1.5 rounded-xs bg-bg-primary px-3 py-2 text-sm font-medium leading-5 text-text-secondary shadow-xs-skeuomorphic ring-1 ring-border-primary ring-inset transition-colors duration-150 group-hover:bg-bg-primary-hover">
+                  <ButtonVisual size="sm" showIcon={false}>
+                    {article.cta}
+                  </ButtonVisual>
+                </span>
               </ConditionalLink>
             </li>
           ))}

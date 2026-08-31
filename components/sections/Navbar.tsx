@@ -207,9 +207,7 @@ function DropdownPanel({
   return (
     <div className="flex flex-col">
       {/* Main row: items + image */}
-      <div
-        className="flex gap-6 px-6 pt-5 pb-4 bg-bg-primary"
-      >
+      <div className="flex gap-6 px-6 pt-5 pb-4 bg-bg-primary">
         {/* Left: item list */}
         <div className="flex flex-col gap-0.5 flex-1">
           {items.map((item, i) => {
