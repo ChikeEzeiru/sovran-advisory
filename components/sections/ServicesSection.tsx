@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
 import { ButtonVisual } from "@/components/ui/Button";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 
 interface Service {
   title: string;
@@ -93,11 +94,7 @@ export function ServicesSection() {
         <div className="flex max-w-4xl flex-col gap-4">
           {/* Badge + body copy */}
           <div className="flex flex-col gap-2">
-            <div className="self-start border border-border-primary rounded-xs px-3 py-1">
-              <span className="text-base font-normal leading-6 text-text-quaternary whitespace-nowrap">
-                What we do
-              </span>
-            </div>
+            <SectionEyebrow>What we do</SectionEyebrow>
 
             <h2
               id="services-heading"

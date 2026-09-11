@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 
 const FEATURED_STUDY = {
   title:
@@ -66,11 +67,7 @@ export function CaseStudiesSection() {
       <div className="mx-auto flex w-full max-w-400 flex-col px-12 gap-16">
         <div className="grid grid-cols-2 items-start gap-4 max-md:grid-cols-1 max-md:gap-8">
           <div className="flex min-w-0 flex-col items-start gap-2">
-            <div className="rounded-xs border border-border-secondary-alt bg-bg-secondary-alt px-3 py-1">
-              <p className="whitespace-nowrap text-base leading-6 text-text-quaternary">
-                Case Studies
-              </p>
-            </div>
+            <SectionEyebrow>Case Studies</SectionEyebrow>
             <h2
               id="case-studies-heading"
               className="max-w-xl text-4xl font-medium leading-11 tracking-tight text-text-secondary"
@@ -113,7 +110,7 @@ export function CaseStudiesSection() {
             <ConditionalLink
               href={FEATURED_STUDY.href}
               aria-label={FEATURED_STUDY.title}
-              className="relative aspect-[10/3] w-full overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+              className="relative aspect-10/3 w-full overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
             >
               <Image
                 src={FEATURED_STUDY.image}

@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { InternalPageHero } from "@/components/sections/InternalPageHero";
 import { Button } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 
 export type PracticePageData = {
   name: string;
@@ -35,7 +36,7 @@ export function PracticePage({ data }: { data: PracticePageData }) {
         <section className="border-y border-border-secondary-alt bg-bg-primary">
           <div className="mx-auto grid w-full max-w-400 grid-cols-12 gap-8 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
             <div className="col-span-4">
-              <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">What we do</p>
+              <SectionEyebrow>What we do</SectionEyebrow>
               <h2 className="mt-3 max-w-sm text-3xl font-medium leading-9 tracking-tight text-text-primary">
                 Focused work around the decision in front of you.
               </h2>
@@ -70,7 +71,7 @@ export function PracticePage({ data }: { data: PracticePageData }) {
         <section className="bg-utility-neutral-100">
           <div className="mx-auto flex w-full max-w-400 flex-col gap-10 px-12 py-24 max-md:px-6 max-md:py-16">
             <div>
-              <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Related work</p>
+              <SectionEyebrow>Related work</SectionEyebrow>
               <h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">See the thinking in practice.</h2>
             </div>
             <div className="grid grid-cols-2 gap-6 max-lg:grid-cols-1">

@@ -2,36 +2,17 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
-import { Button } from "@/components/ui/Button";
+import { AboutCareersSection } from "@/components/sections/AboutCareersSection";
+import { AboutLeadershipSection } from "@/components/sections/AboutLeadershipSection";
+import { AboutRegionalPresenceSection } from "@/components/sections/AboutRegionalPresenceSection";
+import { AboutEvolutionSection } from "@/components/sections/AboutEvolutionSection";
+import { AboutPointOfViewSection } from "@/components/sections/AboutPointOfViewSection";
 
 export const metadata: Metadata = {
   title: "About Sovran",
   description:
     "Built for decisions that cannot be separated from their context.",
 };
-
-const STEPS = [
-  [
-    "01",
-    "Frame the decision",
-    "Agree what must be decided, by whom and by when.",
-  ],
-  [
-    "02",
-    "Build the right picture",
-    "Gather market, commercial, institutional and operational evidence.",
-  ],
-  [
-    "03",
-    "Make choices visible",
-    "Set out options, trade-offs and conditions for success.",
-  ],
-  [
-    "04",
-    "Work alongside the team",
-    "Move from recommendation to delivery with clear ownership.",
-  ],
-];
 
 export default function AboutPage() {
   return (
@@ -80,93 +61,48 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="grid w-full grid-cols-2 gap-16 px-12 py-16 max-lg:grid-cols-1 max-lg:gap-10">
-          <div className="flex flex-col gap-6 max-w-336">
-            <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary">
-              Our story{" "}
-              <span className="text-text-quaternary">
-                started with market intelligence
-              </span>
-            </h2>
-            <p className="text-xl leading-7.5 text-text-tertiary">
-              Sovran began as a small market-intelligence practice. Our early
-              work focused on helping clients understand new markets before
-              committing capital, entering partnerships or expanding operations.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-5 text-xl leading-7.5 text-text-tertiary">
-            <p>
-              But the questions rarely ended with the research. Clients needed
-              to know what to do next, how to enter, who to work with, which
-              institutions mattered and how to carry a decision through. So our
-              work expanded with them.
-            </p>
-            <p>
-              Today, that experience shapes how we approach every engagement:
-              understand the market, make the right choices, navigate the
-              institutions involved and support implementation.
-            </p>
-          </div>
-        </section>
-
-        <section className="bg-bg-primary">
-          <div className="mx-auto grid w-full max-w-400 grid-cols-2 gap-6 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
-            <div className="relative min-h-160 overflow-hidden rounded-xs bg-bg-quaternary max-lg:min-h-112">
-              <Image
-                src="/images/sovran photo - partners & intitutional rshps.avif"
-                alt="A city district shaped by transport, civic and commercial infrastructure."
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-              />
+        <section className="flex flex-col items-center justify-center">
+          <div className="grid w-full grid-cols-2 gap-16 px-12 py-16 max-lg:grid-cols-1 max-lg:gap-10 max-w-400">
+            <div className="flex flex-col gap-6 max-w-336">
+              <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary">
+                Our story{" "}
+                <span className="text-text-quaternary">
+                  started with market intelligence
+                </span>
+              </h2>
+              <p className="text-xl leading-7.5 text-text-tertiary">
+                Sovran began as a small market-intelligence practice. Our early
+                work focused on helping clients understand new markets before
+                committing capital, entering partnerships or expanding
+                operations.
+              </p>
             </div>
-            <div className="flex flex-col justify-between gap-12 px-6 py-4 max-md:px-0">
-              <div>
-                <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">
-                  How we work
-                </p>
-                <h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">
-                  Clear decisions, made useful.
-                </h2>
-              </div>
-              <ol className="border-t border-border-primary">
-                {STEPS.map(([number, title, copy]) => (
-                  <li
-                    key={number}
-                    className="grid grid-cols-[3rem_1fr] gap-4 border-b border-border-primary py-5"
-                  >
-                    <span className="text-sm text-text-quaternary">
-                      {number}
-                    </span>
-                    <div>
-                      <h3 className="text-xl font-medium text-text-secondary">
-                        {title}
-                      </h3>
-                      <p className="mt-1 text-base leading-6 text-text-tertiary">
-                        {copy}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+
+            <div className="flex flex-col gap-5 text-xl leading-7.5 text-text-tertiary">
+              <p>
+                But the questions rarely ended with the research. Clients needed
+                to know what to do next, how to enter, who to work with, which
+                institutions mattered and how to carry a decision through. So
+                our work expanded with them.
+              </p>
+              <p>
+                Today, that experience shapes how we approach every engagement:
+                understand the market, make the right choices, navigate the
+                institutions involved and support implementation.
+              </p>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto flex w-full max-w-400 items-end justify-between gap-8 px-12 py-24 max-md:flex-col max-md:items-start max-md:px-6 max-md:py-16">
-          <div className="max-w-2xl">
-            <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">
-              Leadership
-            </p>
-            <h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">
-              Experience across markets, institutions and delivery.
-            </h2>
-          </div>
-          <Button href="/leadership" variant="secondary" size="lg">
-            Meet the leadership team
-          </Button>
-        </section>
+        <AboutEvolutionSection />
+
+        <AboutPointOfViewSection />
+
+        <AboutLeadershipSection />
+
+        <AboutRegionalPresenceSection />
+
+        <AboutCareersSection />
       </main>
       <SiteFooter />
     </>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { SpinningNumber } from "@/components/ui/SpinningNumber";
 
 type GridItem =
@@ -53,11 +54,7 @@ export function AboutSection() {
       className="flex flex-col gap-16 py-20"
     >
       <div className="flex w-full flex-col items-center gap-2 px-12 text-center max-md:px-6">
-        <div className="rounded-xs border border-border-secondary-alt px-3 py-1">
-          <p className="whitespace-nowrap text-base font-normal leading-6 text-text-quaternary">
-            About Sovran
-          </p>
-        </div>
+        <SectionEyebrow>About Sovran</SectionEyebrow>
         <h2
           id="about-heading"
           className="text-4xl font-medium leading-11 tracking-tight text-text-primary"

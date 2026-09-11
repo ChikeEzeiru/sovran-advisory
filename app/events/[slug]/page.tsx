@@ -64,6 +64,12 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               <div className="mt-6"><RegistrationForm eventId={typedEvent._id} /></div>
             </aside>
           </div>
+
+          <div className="mx-auto flex w-full max-w-400 px-12 pb-24 max-md:px-6 max-md:pb-16">
+            <span className="rounded-xs border border-border-secondary bg-bg-secondary px-3 py-1 text-sm leading-5 text-text-tertiary">
+              Conceptual event
+            </span>
+          </div>
         </article>
       </main>
       <SiteFooter />

@@ -4,6 +4,7 @@ import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { InternalPageHero } from "@/components/sections/InternalPageHero";
 import { Button } from "@/components/ui/Button";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 
 export const metadata: Metadata = {
   title: "Partners & Institutional Relationships",
@@ -39,7 +40,7 @@ export default function PartnershipsPage() {
         <section className="border-y border-border-secondary-alt bg-bg-primary">
           <div className="mx-auto grid w-full max-w-400 grid-cols-12 gap-8 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
             <div className="col-span-4">
-              <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Why partnerships matter</p>
+              <SectionEyebrow>Why partnerships matter</SectionEyebrow>
               <h2 className="mt-3 max-w-sm text-3xl font-medium leading-9 tracking-tight text-text-primary">Built around the work, not displayed for effect.</h2>
             </div>
             <div className="col-span-8 flex max-w-4xl flex-col gap-6 text-xl leading-8 text-text-tertiary">
@@ -50,7 +51,7 @@ export default function PartnershipsPage() {
         </section>
 
         <section className="mx-auto flex w-full max-w-400 flex-col gap-10 px-12 py-24 max-md:px-6 max-md:py-16">
-          <div><p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Our partnership model</p><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Different relationships for different conditions.</h2></div>
+          <div><SectionEyebrow>Our partnership model</SectionEyebrow><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Different relationships for different conditions.</h2></div>
           <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-1">
             {PARTNER_TYPES.map((item) => (
               <article key={item.number} className="flex min-h-88 flex-col justify-between rounded-xs bg-bg-quaternary p-8 max-md:min-h-72 max-md:p-6">
@@ -67,7 +68,7 @@ export default function PartnershipsPage() {
               <Image src="/images/about-us/Grid-img_3.avif" alt="Infrastructure connecting institutions, markets and communities." fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
             </div>
             <div className="flex flex-col justify-between gap-12 rounded-xs bg-bg-primary p-8 max-md:p-6">
-              <div><p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">How we work together</p><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Clear roles protect the quality of the work.</h2></div>
+              <div><SectionEyebrow>How we work together</SectionEyebrow><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Clear roles protect the quality of the work.</h2></div>
               <ol className="border-t border-border-primary">
                 {PRINCIPLES.map(([title, copy], index) => (
                   <li key={title} className="grid grid-cols-[3rem_1fr] gap-4 border-b border-border-primary py-5">
@@ -81,7 +82,7 @@ export default function PartnershipsPage() {
         </section>
 
         <section className="mx-auto flex w-full max-w-400 items-end justify-between gap-8 px-12 py-24 max-md:flex-col max-md:items-start max-md:px-6 max-md:py-16">
-          <div className="max-w-2xl"><p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Work with Sovran</p><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Bring a capability or institutional perspective to the right question.</h2><p className="mt-4 text-base leading-6 text-text-tertiary">All relationships described on this conceptual site are fictional and shown for demonstration purposes.</p></div>
+          <div className="max-w-2xl"><SectionEyebrow>Work with Sovran</SectionEyebrow><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Bring a capability or institutional perspective to the right question.</h2><p className="mt-4 text-base leading-6 text-text-tertiary">All relationships described on this conceptual site are fictional and shown for demonstration purposes.</p></div>
           <Button href="/contact" variant="secondary" size="lg">Start a conversation</Button>
         </section>
       </main>

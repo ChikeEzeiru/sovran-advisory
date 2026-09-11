@@ -251,10 +251,11 @@ interface BadgeWithFlagProps<T extends BadgeTypes> {
     flag?: FlagTypes;
     color?: BadgeTypeToColorMap<typeof withPillTypes>[T];
     children: ReactNode;
+    className?: string;
 }
 
 export const BadgeWithFlag = <T extends BadgeTypes>(props: BadgeWithFlagProps<T>) => {
-    const { size = "md", color = "gray", flag = "AU", type = "pill-color", children } = props;
+    const { size = "md", color = "gray", flag = "AU", type = "pill-color", children, className } = props;
 
     const colors = withPillTypes[type];
 
@@ -276,7 +277,7 @@ export const BadgeWithFlag = <T extends BadgeTypes>(props: BadgeWithFlagProps<T>
     };
 
     return (
-        <span className={cx(colors.common, sizes[type][size], colors.styles[color].root)}>
+        <span className={cx(colors.common, sizes[type][size], colors.styles[color].root, className)}>
             <img src={`https://www.untitledui.com/images/flags/${flag}.svg`} className="size-4 max-w-none rounded-full" alt={`${flag} flag`} />
             {children}
         </span>
