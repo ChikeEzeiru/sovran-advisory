@@ -1,35 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { geoContains, geoNaturalEarth1, geoPath } from "d3-geo";
-import type { Feature, FeatureCollection, Geometry } from "geojson";
-import africaData from "@/data/africa.json";
+import { useEffect, useId, useMemo, useState } from "react";
+import { REGIONAL_MAP_GEOMETRY } from "@/data/regional-map.generated";
 import {
   SOVRAN_LOCATIONS,
   type SovranLocation,
 } from "@/data/sovran-locations";
-
-type AfricaProperties = {
-  id: string;
-  name: string;
-};
-
-type AfricaFeature = Feature<Geometry, AfricaProperties>;
-
-type MapCell = {
-  x: number;
-  y: number;
-  countryId: string;
-  countryName: string;
-  active: boolean;
-};
-
-type CountryHitArea = {
-  countryName: string;
-  path: string;
-};
-
-const AFRICA = africaData as FeatureCollection<Geometry, AfricaProperties>;
 
 const COUNTRY_ALIASES: Record<string, string> = {
   "cote divoire": "ivory coast",
@@ -41,6 +17,8 @@ const COUNTRY_ALIASES: Record<string, string> = {
   "the gambia": "gambia",
   "united republic of tanzania": "tanzania",
 };
+
+const COUNTRY_PATHS: Record<string, string> = REGIONAL_MAP_GEOMETRY.countries;
 
 function normaliseCountryName(value: string) {
   const normalised = value
@@ -64,202 +42,77 @@ function groupLocations(locations: SovranLocation[]) {
   return groups;
 }
 
-function useMapDimensions(
-  containerRef: React.RefObject<HTMLDivElement | null>,
-  fillContainer: boolean,
-) {
-  const [dimensions, setDimensions] = useState({ width: 960, height: 560 });
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const observer = new ResizeObserver(([entry]) => {
-      const nextWidth = Math.round(entry.contentRect.width);
-      const naturalHeight =
-        nextWidth < 640
-          ? Math.max(340, Math.round(nextWidth * 0.92))
-          : Math.min(720, Math.round(nextWidth * 0.58));
-      const nextHeight = fillContainer
-        ? Math.round(entry.contentRect.height)
-        : naturalHeight;
-
-      setDimensions((current) =>
-        Math.abs(current.width - nextWidth) >= 8 ||
-        Math.abs(current.height - nextHeight) >= 8
-          ? { width: nextWidth, height: nextHeight }
-          : current,
-      );
-    });
-
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, [containerRef, fillContainer]);
-
-  return dimensions;
-}
-
-function buildCells(
-  width: number,
-  height: number,
-  activeCountries: Set<string>,
-  focusPresence: boolean,
-) {
-  const padding = 4;
-  const cellSize = width < 640 ? 4.5 : width < 1024 ? 4 : 3.5;
-  const cellStep = width < 640 ? 7 : width < 1024 ? 6 : 5;
-  const projection = geoNaturalEarth1().fitExtent(
-    [
-      [padding, padding],
-      [width - padding, height - padding],
-    ],
-    AFRICA,
-  );
-
-  if (focusPresence && width >= 480) {
-    const focusScale = width >= 600 ? 1.38 : 1.26;
-    projection.scale(projection.scale() * focusScale);
-
-    const [[scaledLeft, scaledTop], [scaledRight]] =
-      geoPath(projection).bounds(AFRICA);
-    const [translateX, translateY] = projection.translate();
-    projection.translate([
-      translateX + width / 2 - (scaledLeft + scaledRight) / 2,
-      translateY + padding - scaledTop,
-    ]);
-  }
-
-  if (width > 720) {
-    const [[currentLeft], [currentRight]] =
-      geoPath(projection).bounds(AFRICA);
-    const projectedWidth = currentRight - currentLeft;
-
-    if (projectedWidth < 640) {
-      projection.scale(projection.scale() * (640 / projectedWidth));
-
-      const [[scaledLeft, scaledTop], [scaledRight]] =
-        geoPath(projection).bounds(AFRICA);
-      const [translateX, translateY] = projection.translate();
-      projection.translate([
-        translateX + width / 2 - (scaledLeft + scaledRight) / 2,
-        translateY + padding - scaledTop,
-      ]);
-    }
-  }
-
-  const [[mapLeft, mapTop], [mapRight, mapBottom]] =
-    geoPath(projection).bounds(AFRICA);
-  const left = Math.max(0, mapLeft);
-  const top = Math.max(0, mapTop);
-  const right = Math.min(width, mapRight);
-  const bottom = Math.min(height, mapBottom);
-  const features = AFRICA.features as AfricaFeature[];
-  const pathGenerator = geoPath(projection);
-  const hitAreas = features.flatMap((feature): CountryHitArea[] => {
-    const countryName = normaliseCountryName(feature.properties.name);
-    const path = activeCountries.has(countryName)
-      ? pathGenerator(feature)
-      : null;
-
-    return path ? [{ countryName, path }] : [];
-  });
-  const cells: MapCell[] = [];
-
-  for (let y = top; y <= bottom; y += cellStep) {
-    for (let x = left; x <= right; x += cellStep) {
-      const coordinate = projection.invert?.([x, y]);
-      if (!coordinate) continue;
-
-      const country = features.find((feature) =>
-        geoContains(feature, coordinate),
-      );
-      if (!country) continue;
-
-      const countryKey = normaliseCountryName(country.properties.name);
-      cells.push({
-        x: Math.round(x * 10) / 10,
-        y: Math.round(y * 10) / 10,
-        countryId: country.properties.id,
-        countryName: countryKey,
-        active: activeCountries.has(countryKey),
-      });
-    }
-  }
-
-  return { cells, cellSize, hitAreas };
+function patternId(mapId: string, country: string) {
+  return `${mapId}-${country.replaceAll(" ", "-")}`;
 }
 
 export function RegionalPresenceMap({
   locations = SOVRAN_LOCATIONS,
   showLocationList = true,
   fillContainer = false,
-  focusPresence = false,
+  allowOverflow = false,
+  highlightedCountry,
   onActiveCountryChange,
   className = "",
 }: {
   locations?: SovranLocation[];
   showLocationList?: boolean;
   fillContainer?: boolean;
-  focusPresence?: boolean;
+  allowOverflow?: boolean;
+  highlightedCountry?: string | null;
   onActiveCountryChange?: (country: string | null) => void;
   className?: string;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { width, height } = useMapDimensions(containerRef, fillContainer);
+  const mapId = useId().replaceAll(":", "");
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const locationsByCountry = useMemo(() => groupLocations(locations), [locations]);
-  const activeCountries = useMemo(
-    () => new Set(locationsByCountry.keys()),
+  const countries = useMemo(
+    () =>
+      [...locationsByCountry].flatMap(([country, countryLocations]) => {
+        const path = COUNTRY_PATHS[country];
+
+        return path
+          ? [
+              {
+                country,
+                path,
+                label: countryLocations
+                  .map((location) => `${location.city}, ${location.country}`)
+                  .join("; "),
+              },
+            ]
+          : [];
+      }),
     [locationsByCountry],
   );
-  const { cells, cellSize, hitAreas } = useMemo(
-    () => buildCells(width, height, activeCountries, focusPresence),
-    [width, height, activeCountries, focusPresence],
-  );
-  const cellsByCountry = useMemo(() => {
-    const groups = new Map<string, MapCell[]>();
-    for (const cell of cells.filter((item) => item.active)) {
-      groups.set(cell.countryName, [
-        ...(groups.get(cell.countryName) ?? []),
-        cell,
-      ]);
-    }
-    return groups;
-  }, [cells]);
 
-  const visibleCountry = hoveredCountry ?? selectedCountry;
+  const mapActiveCountry = hoveredCountry ?? selectedCountry;
+  const externalCountry = highlightedCountry
+    ? normaliseCountryName(highlightedCountry)
+    : null;
+  const visibleCountry = hoveredCountry ?? externalCountry ?? selectedCountry;
+  const neutralPatternId = `${mapId}-neutral`;
 
   useEffect(() => {
-    const location = visibleCountry
-      ? locationsByCountry.get(visibleCountry)?.[0]
+    const location = mapActiveCountry
+      ? locationsByCountry.get(mapActiveCountry)?.[0]
       : undefined;
     onActiveCountryChange?.(location?.country ?? null);
-  }, [locationsByCountry, onActiveCountryChange, visibleCountry]);
+  }, [locationsByCountry, mapActiveCountry, onActiveCountryChange]);
 
   useEffect(() => {
     if (process.env.NODE_ENV === "production") return;
 
-    const datasetCountries = new Set(
-      AFRICA.features.map((feature) =>
-        normaliseCountryName(feature.properties.name),
-      ),
-    );
-
-    for (const location of locations) {
-      const country = normaliseCountryName(location.country);
-      if (!datasetCountries.has(country)) {
+    for (const [country, countryLocations] of locationsByCountry) {
+      if (!COUNTRY_PATHS[country]) {
         console.warn(
-          `RegionalPresenceMap: configured country "${location.country}" was not found in the geographic dataset.`,
-        );
-      } else if (!cellsByCountry.has(country)) {
-        console.warn(
-          `RegionalPresenceMap: configured country "${location.country}" is too small to appear at the current cell density.`,
+          `RegionalPresenceMap: no generated path exists for "${countryLocations[0]?.country}". Run npm run map:build after changing locations.`,
         );
       }
     }
-  }, [cellsByCountry, locations]);
+  }, [locationsByCountry]);
 
   function selectCountry(country: string) {
     setSelectedCountry((current) => (current === country ? null : country));
@@ -267,91 +120,101 @@ export function RegionalPresenceMap({
 
   return (
     <div
-      ref={containerRef}
       className={`${fillContainer ? "absolute inset-0" : "relative w-full"} ${className}`}
     >
       <svg
-        viewBox={`0 0 ${width} ${height}`}
+        viewBox={`0 0 ${REGIONAL_MAP_GEOMETRY.width} ${REGIONAL_MAP_GEOMETRY.height}`}
+        preserveAspectRatio="xMidYMin meet"
         role="img"
         aria-label="Sovran Advisory regional presence across Africa"
-        className="block size-full overflow-hidden"
+        className={`block size-full ${allowOverflow ? "overflow-visible" : "overflow-hidden"}`}
         onPointerDown={(event) => {
           if (event.target === event.currentTarget) setSelectedCountry(null);
         }}
       >
-        <g aria-hidden="true" className="pointer-events-none">
-          {cells
-            .filter((cell) => !cell.active)
-            .map((cell, index) => (
-              <rect
-                key={`${cell.countryId}-${cell.x}-${cell.y}`}
-                x={cell.x - cellSize / 2}
-                y={cell.y - cellSize / 2}
-                width={cellSize}
-                height={cellSize}
-                rx={0.5}
-                fill="var(--sovran-color-fg-quaternary)"
-                className="regional-map-cell opacity-25"
-                style={{ animationDelay: `${Math.min(index * 2, 280)}ms` }}
-              />
-            ))}
-        </g>
+        <defs>
+          <pattern
+            id={neutralPatternId}
+            patternUnits="userSpaceOnUse"
+            x={REGIONAL_MAP_GEOMETRY.patternX}
+            y={REGIONAL_MAP_GEOMETRY.patternY}
+            width={REGIONAL_MAP_GEOMETRY.cellStep}
+            height={REGIONAL_MAP_GEOMETRY.cellStep}
+          >
+            <rect
+              width={REGIONAL_MAP_GEOMETRY.cellSize}
+              height={REGIONAL_MAP_GEOMETRY.cellSize}
+              rx={0.5}
+              fill="var(--sovran-color-fg-quaternary)"
+            />
+          </pattern>
 
-        {[...cellsByCountry].map(([country, countryCells]) => {
-          const highlighted = visibleCountry === country;
-          const hitArea = hitAreas.find(
-            (area) => area.countryName === country,
-          );
-          const label = (locationsByCountry.get(country) ?? [])
-            .map((location) => `${location.city}, ${location.country}`)
-            .join("; ");
+          {countries.map(({ country }) => {
+            const highlighted = visibleCountry === country;
 
-          return (
-            <g
-              key={country}
-              role="button"
-              tabIndex={0}
-              aria-label={label}
-              aria-pressed={selectedCountry === country}
-              className="cursor-pointer outline-none focus-visible:[filter:brightness(1.15)]"
-              onPointerEnter={() => setHoveredCountry(country)}
-              onPointerLeave={() => setHoveredCountry(null)}
-              onPointerDown={(event) => event.stopPropagation()}
-              onClick={() => selectCountry(country)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  selectCountry(country);
-                }
-              }}
-              onFocus={() => setHoveredCountry(country)}
-              onBlur={() => setHoveredCountry(null)}
-            >
-              {hitArea && (
-                <path
-                  d={hitArea.path}
-                  fill="transparent"
-                  stroke="none"
-                  pointerEvents="all"
-                />
-              )}
-              {countryCells.map((cell, index) => (
+            return (
+              <pattern
+                key={country}
+                id={patternId(mapId, country)}
+                patternUnits="userSpaceOnUse"
+                x={REGIONAL_MAP_GEOMETRY.patternX}
+                y={REGIONAL_MAP_GEOMETRY.patternY}
+                width={REGIONAL_MAP_GEOMETRY.cellStep}
+                height={REGIONAL_MAP_GEOMETRY.cellStep}
+              >
                 <rect
-                  key={`${cell.countryId}-${cell.x}-${cell.y}`}
-                  x={cell.x - cellSize / 2}
-                  y={cell.y - cellSize / 2}
-                  width={cellSize}
-                  height={cellSize}
+                  width={REGIONAL_MAP_GEOMETRY.cellSize}
+                  height={REGIONAL_MAP_GEOMETRY.cellSize}
                   rx={0.5}
-                  fill="var(--sovran-color-bg-brand-solid)"
-                  className="regional-map-cell transition-opacity duration-150 motion-reduce:transition-none"
-                  opacity={highlighted ? 1 : 0.82}
-                  style={{ animationDelay: `${Math.min(index * 4, 220)}ms` }}
+                  fill={
+                    highlighted
+                      ? "var(--sovran-color-brand-900)"
+                      : "var(--sovran-color-bg-brand-solid)"
+                  }
+                  className="transition-colors duration-150 motion-reduce:transition-none"
                 />
-              ))}
-            </g>
-          );
-        })}
+              </pattern>
+            );
+          })}
+        </defs>
+
+        <path
+          d={REGIONAL_MAP_GEOMETRY.africaPath}
+          fill={`url(#${neutralPatternId})`}
+          className="pointer-events-none opacity-25"
+          aria-hidden="true"
+        />
+
+        {countries.map(({ country, path, label }) => (
+          <g
+            key={country}
+            role="button"
+            tabIndex={0}
+            aria-label={label}
+            aria-pressed={selectedCountry === country}
+            className="cursor-pointer outline-none focus-visible:[filter:brightness(1.15)]"
+            onPointerEnter={() => setHoveredCountry(country)}
+            onPointerLeave={() => setHoveredCountry(null)}
+            onPointerDown={(event) => event.stopPropagation()}
+            onClick={() => selectCountry(country)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                selectCountry(country);
+              }
+            }}
+            onFocus={() => setHoveredCountry(country)}
+            onBlur={() => setHoveredCountry(null)}
+          >
+            <path
+              d={path}
+              fill={`url(#${patternId(mapId, country)})`}
+              className="pointer-events-none"
+              aria-hidden="true"
+            />
+            <path d={path} fill="transparent" stroke="none" pointerEvents="all" />
+          </g>
+        ))}
       </svg>
 
       <div

@@ -75,7 +75,7 @@ export function AboutLeadershipSection() {
                   alt={`Portrait of ${leader.name}`}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className={`object-cover ${leader.imagePosition}`}
+                  className={`object-cover transition-transform duration-500 ease-out group-hover/leader:scale-105 motion-reduce:transition-none motion-reduce:transform-none ${leader.imagePosition}`}
                 />
               </div>
 

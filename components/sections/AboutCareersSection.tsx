@@ -24,7 +24,7 @@ const OPEN_ROLES = [
 
 export function AboutCareersSection() {
   return (
-    <section className="border-t border-border-secondary  px-12 pt-24 pb-16 max-md:px-6 max-md:pt-16 max-md:pb-12">
+    <section className="px-12 pt-24 pb-16 max-md:px-6 max-md:pt-16 max-md:pb-12">
       <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
         <div className="mx-auto flex max-w-222 flex-col items-center gap-3 text-center">
           <SectionEyebrow>Careers</SectionEyebrow>

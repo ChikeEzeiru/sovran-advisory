@@ -38,20 +38,8 @@ body {
   to   { transform: rotate(360deg); }
 }
 
-@keyframes regional-map-cell-enter {
-  from { opacity: 0; }
-}
-
-.regional-map-cell {
-  animation: regional-map-cell-enter 360ms ease-out both;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .about-evolution-marquee {
-    animation: none;
-  }
-
-  .regional-map-cell {
     animation: none;
   }
 }

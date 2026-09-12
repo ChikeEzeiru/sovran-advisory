@@ -6,7 +6,11 @@ import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { SOVRAN_LOCATIONS } from "@/data/sovran-locations";
 
 export function AboutRegionalPresenceSection() {
-  const [activeCountry, setActiveCountry] = useState<string | null>(null);
+  const [mapActiveCountry, setMapActiveCountry] = useState<string | null>(null);
+  const [addressActiveCountry, setAddressActiveCountry] = useState<
+    string | null
+  >(null);
+  const activeCountry = addressActiveCountry ?? mapActiveCountry;
 
   return (
     <section
@@ -38,6 +42,10 @@ export function AboutRegionalPresenceSection() {
               {SOVRAN_LOCATIONS.map((location) => (
                 <div
                   key={`${location.city}-${location.country}`}
+                  onPointerEnter={() =>
+                    setAddressActiveCountry(location.country)
+                  }
+                  onPointerLeave={() => setAddressActiveCountry(null)}
                   className={`flex flex-col gap-2 transition-opacity duration-250 ease-out motion-reduce:transition-none ${
                     activeCountry && activeCountry !== location.country
                       ? "opacity-30"
@@ -58,13 +66,14 @@ export function AboutRegionalPresenceSection() {
           </div>
 
           <div className="relative h-full min-w-0 flex-1 overflow-visible max-lg:h-112 max-lg:w-full max-lg:flex-none">
-            <div className="absolute -top-29 left-1/2 h-149 w-full -translate-x-1/2 max-lg:inset-0 max-lg:size-full max-lg:translate-x-0">
+            <div className="absolute -top-48 left-1/2 h-149 w-full -translate-x-1/2 max-lg:inset-0 max-lg:size-full max-lg:translate-x-0">
               <RegionalPresenceMap
                 locations={SOVRAN_LOCATIONS}
                 showLocationList={false}
                 fillContainer
-                focusPresence
-                onActiveCountryChange={setActiveCountry}
+                allowOverflow
+                highlightedCountry={addressActiveCountry}
+                onActiveCountryChange={setMapActiveCountry}
               />
             </div>
           </div>
