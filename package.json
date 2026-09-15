@@ -6,6 +6,7 @@
     "tokens:build": "node design-tokens/build-tokens.mjs",
     "tokens:check": "node design-tokens/build-tokens.mjs --check",
     "map:build": "node scripts/generate-regional-map.mjs",
+    "sanity:seed": "node --experimental-strip-types --env-file=.env.local scripts/seed-sanity.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

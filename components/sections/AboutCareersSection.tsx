@@ -1,26 +1,8 @@
 import Image from "next/image";
-import { Clock, CurrencyDollarCircle } from "@untitledui/icons";
-import { BadgeWithFlag } from "@/components/base/badges/badges";
+import { CareerRoleCard } from "@/components/sections/CareerRoleCard";
+import { Button } from "@/components/ui/Button";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
-
-const OPEN_ROLES = [
-  {
-    title: "Senior Associate, Strategy & Market Intelligence",
-    location: "Accra, Ghana",
-    flag: "GH" as const,
-    description:
-      "Turn research, market insight and commercial context into clear recommendations for clients making complex decisions.",
-    salary: "20k - 30k",
-  },
-  {
-    title: "Consultant, Policy & Public Affairs",
-    location: "Lagos, Nigeria",
-    flag: "NG" as const,
-    description:
-      "Help clients understand policy, regulation and stakeholder dynamics, and navigate the environments shaping their work.",
-    salary: "25k - 35k",
-  },
-];
+import { INITIAL_CAREER_ROLES } from "@/lib/career-roles";
 
 export function AboutCareersSection() {
   return (
@@ -62,45 +44,18 @@ export function AboutCareersSection() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 ">
-            {OPEN_ROLES.map((role) => (
-              <article
-                key={role.title}
-                className="flex min-h-42 flex-col rounded-xs border border-border-secondary bg-bg-primary p-6"
-              >
-                <div className="flex items-start justify-between gap-5 max-sm:flex-col max-sm:gap-3">
-                  <h4 className="max-w-182.5 text-base font-medium leading-6 text-text-primary">
-                    {role.title}
-                  </h4>
-                  <BadgeWithFlag
-                    type="color"
-                    size="md"
-                    color="gray"
-                    flag={role.flag}
-                    className="shrink-0 rounded-xs"
-                  >
-                    {role.location}
-                  </BadgeWithFlag>
-                </div>
-
-                <p className="mt-2.5 text-base max-w-182.5 leading-6 text-text-tertiary">
-                  {role.description}
-                </p>
-
-                <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-6 text-sm leading-5 text-text-tertiary">
-                  <span className="inline-flex items-center gap-2">
-                    <Clock aria-hidden="true" className="size-5" />
-                    Full-time
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <CurrencyDollarCircle
-                      aria-hidden="true"
-                      className="size-5"
-                    />
-                    {role.salary}
-                  </span>
-                </div>
-              </article>
+            {INITIAL_CAREER_ROLES.map((role) => (
+              <CareerRoleCard key={role.id} role={role} />
             ))}
+
+            <Button
+              href="/careers#open-roles"
+              variant="primary-alt"
+              size="md"
+              className="justify-self-start"
+            >
+              All open roles
+            </Button>
           </div>
         </div>
       </div>

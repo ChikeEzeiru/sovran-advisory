@@ -3,7 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 
-export function FooterCTA() {
+type FooterCTAProps = {
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
+};
+
+export function FooterCTA({
+  title = "Have a decision to work through?",
+  description = "Tell us what is changing, what is at stake, and where you need clarity.",
+  buttonLabel = "Start a conversation",
+}: FooterCTAProps = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const hasEnteredRef = useRef(false);
@@ -99,15 +109,14 @@ export function FooterCTA() {
             id="footer-cta-heading"
             className="text-3xl font-medium leading-10 text-text-primary"
           >
-            Have a decision to work through?
+            {title}
           </h2>
           <p className="text-base leading-6 text-text-quaternary">
-            Tell us what is changing, what is at stake, and where you need
-            clarity.
+            {description}
           </p>
         </div>
         <Button href="/contact" variant="primary" size="lg">
-          Start a conversation
+          {buttonLabel}
         </Button>
       </div>
     </section>

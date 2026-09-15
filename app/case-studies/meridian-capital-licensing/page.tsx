@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/sections/Navbar"
 import { SiteFooter } from "@/components/sections/SiteFooter"
+import { ContentBadge } from "@/components/ui/ContentBadge"
 
 export default function MeridianCaseStudyPage() {
   return (
@@ -58,6 +59,9 @@ export default function MeridianCaseStudyPage() {
                 <p className="text-base font-normal text-text-primary">Policy & Government Relations</p>
               </div>
             </div>
+          </div>
+          <div className="mt-16">
+            <ContentBadge label="Concept work" />
           </div>
         </section>
       </main>

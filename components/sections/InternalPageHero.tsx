@@ -7,6 +7,8 @@ type InternalPageHeroProps = {
   image?: string;
   imageAlt?: string;
   meta?: string;
+  align?: "left" | "center";
+  spacing?: "default" | "compact";
 };
 
 export function InternalPageHero({
@@ -16,17 +18,31 @@ export function InternalPageHero({
   image,
   imageAlt = "",
   meta,
+  align = "left",
+  spacing = "default",
 }: InternalPageHeroProps) {
+  const isCentered = align === "center" && !image;
+
   return (
-    <section className="mx-auto w-full max-w-400 px-12 pt-40 pb-24 max-md:px-6 max-md:pt-32 max-md:pb-16">
+    <section
+      className={`mx-auto w-full max-w-400 px-12 pb-24 max-md:px-6 max-md:pb-16 ${
+        spacing === "compact" ? "pt-30 max-md:pt-28" : "pt-40 max-md:pt-32"
+      }`}
+    >
       <div
         className={
           image
             ? "grid grid-cols-2 items-end gap-12 max-lg:grid-cols-1"
-            : "max-w-4xl"
+            : isCentered
+              ? "mx-auto max-w-4xl"
+              : "max-w-4xl"
         }
       >
-        <div className="flex min-w-0 flex-col items-start gap-4">
+        <div
+          className={`flex min-w-0 flex-col gap-4 ${
+            isCentered ? "items-center text-center" : "items-start"
+          }`}
+        >
           <div className="rounded-xs border border-border-secondary-alt bg-bg-secondary-alt px-3 py-1">
             <p className="text-base leading-6 text-text-quaternary">
               {eyebrow}

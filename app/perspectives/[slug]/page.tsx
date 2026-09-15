@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Send01 } from "@untitledui/icons";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Button } from "@/components/ui/Button";
 import { ArticleShareActions } from "@/components/ui/ArticleShareActions";
-import { PERSPECTIVES } from "@/lib/perspectives";
-import { PERSPECTIVE_DETAILS } from "@/lib/perspective-details";
+import { FeaturedIcon } from "@/components/ui/FeaturedIcon";
+import {
+  getPerspectiveBySlug,
+  getPerspectiveSlugs,
+} from "@/lib/cms-content";
 
-export function generateStaticParams() {
-  return PERSPECTIVES.map(({ slug }) => ({ slug }));
+export async function generateStaticParams() {
+  return getPerspectiveSlugs();
 }
 
 export async function generateMetadata({
@@ -18,8 +22,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = PERSPECTIVES.find((item) => item.slug === slug);
-  return article ? { title: article.title, description: article.summary } : {};
+  const article = await getPerspectiveBySlug(slug);
+  return article
+    ? {
+        title: article.seoTitle ?? article.title,
+        description: article.seoDescription ?? article.summary,
+      }
+    : {};
 }
 
 export default async function PerspectivePage({
@@ -28,11 +37,10 @@ export default async function PerspectivePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = PERSPECTIVES.find((item) => item.slug === slug);
-  const detail = PERSPECTIVE_DETAILS[slug];
-  if (!article || !detail) notFound();
+  const article = await getPerspectiveBySlug(slug);
+  if (!article) notFound();
 
-  const readingTime = `${Math.max(7, detail.sections.length * 3)} min read`;
+  const readingTime = `${Math.max(7, article.sections.length * 3)} min read`;
 
   return (
     <>
@@ -60,8 +68,8 @@ export default async function PerspectivePage({
             <div className="flex flex-col gap-8">
               <div className="relative aspect-19/10 overflow-hidden rounded-xs bg-bg-quaternary">
                 <Image
-                  src={detail.image}
-                  alt=""
+                  src={article.image}
+                  alt={article.imageAlt}
                   fill
                   priority
                   sizes="(min-width: 1280px) 1216px, calc(100vw - 48px)"
@@ -79,7 +87,7 @@ export default async function PerspectivePage({
                       Written by
                     </dt>
                     <dd className="mt-2 text-lg font-medium text-text-primary">
-                      Sovran Editorial Team
+                      {article.author}
                     </dd>
                   </div>
                   <div>
@@ -87,7 +95,7 @@ export default async function PerspectivePage({
                       Published on
                     </dt>
                     <dd className="mt-2 text-lg font-medium text-text-primary">
-                      {detail.published}
+                      {article.published}
                     </dd>
                   </div>
                 </dl>
@@ -112,7 +120,7 @@ export default async function PerspectivePage({
                   >
                     Introduction
                   </a>
-                  {detail.sections.map((section) => (
+                  {article.sections.map((section) => (
                     <a
                       key={section.id}
                       href={`#${section.id}`}
@@ -131,12 +139,9 @@ export default async function PerspectivePage({
               </div>
 
               <div className="rounded-xs border border-border-secondary bg-bg-secondary p-8 shadow-xs max-lg:max-w-md">
-                <div
-                  className="flex size-14 items-center justify-center rounded-xs border border-border-primary bg-bg-primary text-xl text-text-brand-tertiary shadow-xs"
-                  aria-hidden="true"
-                >
-                  →
-                </div>
+                <FeaturedIcon tone="brand">
+                  <Send01 size={24} />
+                </FeaturedIcon>
                 <h2 className="mt-6 text-xl font-semibold text-text-primary">
                   Weekly newsletter
                 </h2>
@@ -181,14 +186,14 @@ export default async function PerspectivePage({
 
               <blockquote className="my-12 border-l-2 border-border-brand pl-5">
                 <p className="text-2xl font-medium italic leading-8 text-text-primary">
-                  “{detail.quote}”
+                  “{article.quote}”
                 </p>
                 <footer className="mt-5 text-base text-text-tertiary">
-                  Sovran Editorial Team
+                  {article.author}
                 </footer>
               </blockquote>
 
-              {detail.sections.map((section) => (
+              {article.sections.map((section) => (
                 <section
                   key={section.id}
                   id={section.id}
@@ -221,7 +226,7 @@ export default async function PerspectivePage({
                 <h2 className="text-xl font-semibold text-text-primary">
                   What this means
                 </h2>
-                <p className="mt-3">{detail.takeaway}</p>
+                <p className="mt-3">{article.takeaway}</p>
                 <div className="mt-6">
                   <Button href="/contact" variant="primary" size="lg">
                     Start a conversation about this issue

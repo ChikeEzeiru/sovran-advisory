@@ -4,13 +4,11 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { SearchLg } from "@untitledui/icons";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { ContentBadge } from "@/components/ui/ContentBadge";
 import { ButtonArrowVisual, ButtonVisual } from "@/components/ui/Button";
-import { PERSPECTIVES, type Perspective } from "@/lib/perspectives";
-import { PERSPECTIVE_DETAILS } from "@/lib/perspective-details";
 
-const FEATURED_SLUG = "the-new-competitive-landscape-for-african-payments";
 const PAGE_SIZE = 6;
-const CATEGORIES = [
+const DEFAULT_CATEGORIES = [
   "View all",
   "Markets",
   "Technology",
@@ -20,50 +18,55 @@ const CATEGORIES = [
   "Logistics",
 ];
 
-function ArticleBadge({ article }: { article: Perspective }) {
-  return (
-    <div className="inline-flex items-center w-fit rounded-xs border border-border-secondary bg-bg-secondary-alt p-1 pr-3 text-xs font-medium leading-4.5 text-text-brand-secondary">
-      <span className="rounded-xs border border-border-secondary bg-bg-primary px-2 py-0.5">
-        {article.topic}
-      </span>
-      <span className="pl-2">{article.type}</span>
-    </div>
-  );
+export type PerspectiveIndexItem = {
+  slug: string;
+  title: string;
+  type: string;
+  topic: string;
+  summary: string;
+  image: string;
+  imageAlt: string;
+  published: string;
+  featured: boolean;
+};
+
+function ArticleBadge({ article }: { article: PerspectiveIndexItem }) {
+  return <ContentBadge label={article.topic} detail={article.type} />;
 }
 
-function ArticleCard({ article }: { article: Perspective }) {
-  const details = PERSPECTIVE_DETAILS[article.slug];
-
+function ArticleCard({ article }: { article: PerspectiveIndexItem }) {
   return (
     <ConditionalLink
       href={`/perspectives/${article.slug}`}
       className="group flex min-w-0 flex-col gap-4"
     >
-      <div className="relative aspect-3/2 w-full overflow-hidden border border-black/10 bg-bg-quaternary">
+      <div className="relative h-80 w-full overflow-hidden rounded-xs border border-black/10 bg-bg-quaternary max-lg:h-64 max-md:aspect-3/2 max-md:h-auto">
         <Image
-          src={details.image}
-          alt=""
+          src={article.image}
+          alt={article.imageAlt}
           fill
-          sizes="(min-width: 1280px) 384px, (min-width: 768px) 40vw, calc(100vw - 48px)"
+          sizes="(min-width: 1344px) 608px, (min-width: 768px) 48vw, calc(100vw - 48px)"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none"
         />
       </div>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">
           <ArticleBadge article={article} />
-          <div className="flex items-start gap-4">
-            <h2 className="min-w-0 flex-1 text-lg font-semibold leading-7 text-text-primary">
-              {article.title}
-            </h2>
-            <ButtonArrowVisual className="mt-1 size-5 text-fg-quaternary" />
+          <div className="flex flex-col gap-1">
+            <div className="flex items-start gap-4">
+              <h2 className="min-w-0 flex-1 text-lg font-semibold leading-7 text-text-primary">
+                {article.title}
+              </h2>
+              <ButtonArrowVisual className="mt-1 size-5 text-fg-quaternary" />
+            </div>
+            <p className="text-base leading-6 text-text-tertiary">
+              {article.summary}
+            </p>
           </div>
-          <p className="text-base leading-6 text-text-tertiary">
-            {article.summary}
-          </p>
         </div>
         <div className="text-sm leading-5">
           <p className="font-semibold text-text-primary">Sovran Advisory</p>
-          <p className="text-text-tertiary">{details.published}</p>
+          <p className="text-text-tertiary">{article.published}</p>
         </div>
       </div>
     </ConditionalLink>
@@ -99,20 +102,34 @@ function PaginationButton({
   );
 }
 
-export function PerspectivesIndex() {
+export function PerspectivesIndex({
+  articles,
+}: {
+  articles: PerspectiveIndexItem[];
+}) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("View all");
   const [page, setPage] = useState(1);
   const isBrowsingAll = category === "View all" && query.trim() === "";
 
-  const featured = PERSPECTIVES.find(
-    (article) => article.slug === FEATURED_SLUG
+  const categories = useMemo(
+    () => [
+      ...DEFAULT_CATEGORIES,
+      ...new Set(
+        articles
+          .map((article) => article.topic)
+          .filter((topic) => !DEFAULT_CATEGORIES.includes(topic))
+      ),
+    ],
+    [articles]
   );
+  const featured =
+    articles.find((article) => article.featured) ?? articles[0];
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
 
-    return PERSPECTIVES.filter((article) => {
+    return articles.filter((article) => {
       const matchesCategory =
         category === "View all" || article.topic === category;
       const matchesQuery =
@@ -122,8 +139,10 @@ export function PerspectivesIndex() {
         );
 
       return matchesCategory && matchesQuery;
-    }).filter((article) => !isBrowsingAll || article.slug !== FEATURED_SLUG);
-  }, [category, isBrowsingAll, query]);
+    }).filter(
+      (article) => !isBrowsingAll || article.slug !== featured?.slug
+    );
+  }, [articles, category, featured?.slug, isBrowsingAll, query]);
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const visibleArticles = filtered.slice(
@@ -138,9 +157,48 @@ export function PerspectivesIndex() {
 
   return (
     <section className="mx-auto w-full max-w-400 px-12 pb-24 max-md:px-6 max-md:pb-16">
-      <div className="flex items-start gap-16 max-lg:flex-col max-lg:gap-12">
-        <aside className="w-70 shrink-0 max-lg:w-full">
-          <label className="flex h-11 items-center gap-2 rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-fg-brand-primary-alt">
+      <div className="flex flex-col gap-16">
+        {isBrowsingAll && featured && (
+          <ConditionalLink
+            href={`/perspectives/${featured.slug}`}
+            className="group flex min-w-0 items-stretch gap-8 max-lg:flex-col"
+          >
+            <div className="relative h-120 w-2/3 shrink-0 overflow-hidden rounded-xs bg-bg-quaternary max-lg:aspect-7/4 max-lg:h-auto max-lg:w-full">
+              <Image
+                src={featured.image}
+                alt={featured.imageAlt}
+                fill
+                priority
+                sizes="(min-width: 1344px) 854px, (min-width: 1024px) 66vw, calc(100vw - 48px)"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none"
+              />
+            </div>
+            <div className="flex min-w-0 max-w-70 flex-1 flex-col justify-between gap-8 max-lg:max-w-3xl">
+              <div className="flex flex-col items-start gap-4">
+                <ArticleBadge article={featured} />
+                <div>
+                  <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary transition-colors group-hover:text-text-brand-secondary">
+                    {featured.title}
+                  </h2>
+                  <p className="mt-2 text-base leading-6 text-text-tertiary">
+                    {featured.summary}
+                  </p>
+                </div>
+              </div>
+              <div className="text-sm leading-5">
+                <p className="font-semibold text-text-primary">
+                  Sovran Advisory
+                </p>
+                <p className="text-text-tertiary">
+                  {featured.published}
+                </p>
+              </div>
+            </div>
+          </ConditionalLink>
+        )}
+
+        <div className="flex items-start justify-between gap-8 max-lg:flex-col">
+          <label className="flex h-11 w-80 shrink-0 items-center gap-2 rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-fg-brand-primary-alt max-lg:w-full">
             <SearchLg
               aria-hidden="true"
               className="size-5 shrink-0 text-fg-quaternary"
@@ -158,78 +216,34 @@ export function PerspectivesIndex() {
             />
           </label>
 
-          <div className="mt-8">
-            <p className="mb-5 text-sm font-semibold leading-5 text-text-brand-secondary">
-              Perspective categories
-            </p>
-            <div
-              className="flex flex-col gap-1 max-lg:grid max-lg:grid-cols-3 max-md:grid-cols-2"
-              aria-label="Perspective categories"
-            >
-              {CATEGORIES.map((item) => {
-                const active = item === category;
-                return (
-                  <button
-                    key={item}
-                    type="button"
-                    aria-pressed={active}
-                    onClick={() => updateCategory(item)}
-                    className={`group h-11 rounded-xs px-3 text-left text-base leading-6 transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] active:duration-100 motion-reduce:transform-none ${
-                      active
-                        ? "border border-border-secondary bg-bg-primary-hover font-medium text-text-secondary"
-                        : "text-text-quaternary hover:bg-bg-primary-hover hover:text-text-secondary"
-                    }`}
-                  >
-                    <ButtonVisual size="lg" showIcon={false}>
-                      {item}
-                    </ButtonVisual>
-                  </button>
-                );
-              })}
-            </div>
+          <div
+            className="flex max-w-full items-center gap-1 overflow-x-auto"
+            aria-label="Perspective categories"
+          >
+            {categories.map((item) => {
+              const active = item === category;
+              return (
+                <button
+                  key={item}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => updateCategory(item)}
+                  className={`group h-11 shrink-0 rounded-xs px-3 text-left text-base leading-6 transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] active:duration-100 motion-reduce:transform-none ${
+                    active
+                      ? "border border-border-secondary bg-bg-primary-hover font-medium text-text-secondary"
+                      : "text-text-quaternary hover:bg-bg-primary-hover hover:text-text-secondary"
+                  }`}
+                >
+                  <ButtonVisual size="lg" showIcon={false}>
+                    {item}
+                  </ButtonVisual>
+                </button>
+              );
+            })}
           </div>
-        </aside>
+        </div>
 
-        <div className="min-w-0 flex-1">
-          {isBrowsingAll && featured && (
-            <ConditionalLink
-              href={`/perspectives/${featured.slug}`}
-              className="group mb-12 grid min-w-0 grid-cols-[minmax(0,2fr)_minmax(14rem,1fr)] gap-8 max-xl:grid-cols-1"
-            >
-              <div className="relative aspect-7/4 min-w-0 overflow-hidden rounded-xs">
-                <Image
-                  src={PERSPECTIVE_DETAILS[featured.slug].image}
-                  alt=""
-                  fill
-                  priority
-                  sizes="(min-width: 1280px) 560px, (min-width: 1024px) 55vw, calc(100vw - 48px)"
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none"
-                />
-              </div>
-              <div className="flex min-w-0 flex-col justify-between gap-8">
-                <div className="flex flex-col items-start gap-4">
-                  <ArticleBadge article={featured} />
-                  <div>
-                    <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary transition-colors group-hover:text-text-brand-secondary">
-                      {featured.title}
-                    </h2>
-                    <p className="mt-2 text-base leading-6 text-text-tertiary">
-                      {featured.summary}
-                    </p>
-                  </div>
-                </div>
-                <div className="text-sm leading-5">
-                  <p className="font-semibold text-text-primary">
-                    Sovran Advisory
-                  </p>
-                  <p className="text-text-tertiary">
-                    {PERSPECTIVE_DETAILS[featured.slug].published}
-                  </p>
-                </div>
-              </div>
-            </ConditionalLink>
-          )}
-
+        <div className="flex min-w-0 flex-col gap-10 border-t border-border-secondary pt-10">
           {visibleArticles.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-8 gap-y-12 max-md:grid-cols-1">
               {visibleArticles.map((article) => (

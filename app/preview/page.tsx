@@ -1,6 +1,6 @@
-import { Button, type ButtonSize } from "@/components/ui/Button"
+import { Button, type ButtonSize } from "@/components/ui/Button";
 
-const SIZES: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"]
+const SIZES: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
 
 function SizeLabel({ size }: { size: ButtonSize }) {
   const meta: Record<ButtonSize, string> = {
@@ -9,12 +9,12 @@ function SizeLabel({ size }: { size: ButtonSize }) {
     md: "md — 40px",
     lg: "lg — 44px",
     xl: "xl — 48px",
-  }
+  };
   return (
-    <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-[#7A7874] w-20 shrink-0">
+    <p className="text-[11px] font-medium tracking-widest uppercase text-[#7A7874] w-20 shrink-0">
       {meta[size]}
     </p>
-  )
+  );
 }
 
 function Row({ size, dark }: { size: ButtonSize; dark?: boolean }) {
@@ -22,16 +22,30 @@ function Row({ size, dark }: { size: ButtonSize; dark?: boolean }) {
     <div className="flex items-center gap-6">
       <SizeLabel size={size} />
       <div className="flex items-center gap-4 flex-wrap">
-        <Button size={size} href="#">Primary</Button>
-        <Button size={size} href="#" variant="primary-alt">Alt</Button>
-        <Button size={size} href="#" variant="secondary">Secondary</Button>
-        <Button size={size} href="#" variant="tertiary">Tertiary</Button>
-        <Button size={size} href="#" variant="link">Link</Button>
-        <Button size={size} href="#" variant="destructive">Destructive</Button>
-        <Button size={size} href="#" variant="destructive-link">Del link</Button>
+        <Button size={size} href="#">
+          Primary
+        </Button>
+        <Button size={size} href="#" variant="primary-alt">
+          Alt
+        </Button>
+        <Button size={size} href="#" variant="secondary">
+          Secondary
+        </Button>
+        <Button size={size} href="#" variant="tertiary">
+          Tertiary
+        </Button>
+        <Button size={size} href="#" variant="link">
+          Link
+        </Button>
+        <Button size={size} href="#" variant="destructive">
+          Destructive
+        </Button>
+        <Button size={size} href="#" variant="destructive-link">
+          Del link
+        </Button>
       </div>
     </div>
-  )
+  );
 }
 
 export default function PreviewPage() {
@@ -48,7 +62,10 @@ export default function PreviewPage() {
       </section>
 
       {/* Dark ground */}
-      <section data-theme="dark" className="flex flex-col gap-8 p-16 bg-[#111111]">
+      <section
+        data-theme="dark"
+        className="flex flex-col gap-8 p-16 bg-[#111111]"
+      >
         <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[#555552]">
           Dark ground
         </p>
@@ -57,5 +74,5 @@ export default function PreviewPage() {
         ))}
       </section>
     </main>
-  )
+  );
 }

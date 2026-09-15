@@ -14,7 +14,6 @@ const STRIP = Array.from({ length: (SPINS + 1) * 10 }, (_, i) => i % 10);
 
 const COL_STYLE: React.CSSProperties = {
   position: "relative",
-  height: CELL_PX,
   overflow: "hidden",
   WebkitMaskImage:
     "linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%)",
@@ -23,15 +22,18 @@ const COL_STYLE: React.CSSProperties = {
 };
 
 interface Props {
-  value: number;
+  value: number | string;
+  size?: "default" | "display";
 }
 
-export function SpinningNumber({ value }: Props) {
+export function SpinningNumber({ value, size = "default" }: Props) {
   const rawId = useId();
   // useId can contain colons which are fine in SVG id attrs and url(#…) inline styles
   const uid = rawId;
 
-  const digits = String(value).split("").map(Number);
+  const valueString = String(value);
+  const characters = valueString.split("");
+  const cellHeight = size === "display" ? "1em" : CELL_PX;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const stripRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -42,6 +44,57 @@ export function SpinningNumber({ value }: Props) {
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
+    const activeRafIds = rafIds.current;
+    const timeoutIds: number[] = [];
+    fired.current = false;
+
+    function trigger() {
+      let digitOrder = 0;
+
+      valueString.split("").forEach((character, col) => {
+        if (!/\d/.test(character)) return;
+
+        const digit = Number(character);
+        const strip = stripRefs.current[col];
+        const blurEl = blurRefs.current[col];
+        if (!strip) return;
+
+        const cells = SPINS * 10 + digit;
+        const delay = digitOrder * STAGGER_MS;
+        const measuredCellHeight =
+          strip.parentElement?.getBoundingClientRect().height ?? CELL_PX;
+        digitOrder += 1;
+
+        // Kick off CSS transform after column's stagger delay
+        timeoutIds.push(
+          window.setTimeout(() => {
+            strip.style.transition = `transform ${DUR_MS}ms ${EASE}`;
+            strip.style.transform = `translateY(-${cells * measuredCellHeight}px)`;
+          }, delay)
+        );
+
+        // Decay vertical blur from MAX_BLUR → 0 via rAF, respecting the same stagger
+        if (!blurEl) return;
+        const t0 = performance.now() + delay;
+        const t1 = t0 + DUR_MS;
+
+        function decay(now: number) {
+          if (now < t0) {
+            activeRafIds[col] = requestAnimationFrame(decay);
+            return;
+          }
+          const progress = Math.min((now - t0) / (t1 - t0), 1);
+          blurEl!.setAttribute(
+            "stdDeviation",
+            `0 ${(MAX_BLUR * (1 - progress)).toFixed(2)}`
+          );
+          if (progress < 1) {
+            activeRafIds[col] = requestAnimationFrame(decay);
+          }
+        }
+        activeRafIds[col] = requestAnimationFrame(decay);
+      });
+    }
 
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -57,45 +110,10 @@ export function SpinningNumber({ value }: Props) {
 
     return () => {
       io.disconnect();
-      rafIds.current.forEach(cancelAnimationFrame);
+      timeoutIds.forEach(clearTimeout);
+      activeRafIds.forEach(cancelAnimationFrame);
     };
-  }, []);
-
-  function trigger() {
-    digits.forEach((digit, col) => {
-      const strip = stripRefs.current[col];
-      const blurEl = blurRefs.current[col];
-      if (!strip) return;
-
-      const cells = SPINS * 10 + digit;
-      const delay = col * STAGGER_MS;
-
-      // Kick off CSS transform after column's stagger delay
-      setTimeout(() => {
-        strip.style.transition = `transform ${DUR_MS}ms ${EASE}`;
-        strip.style.transform = `translateY(-${cells * CELL_PX}px)`;
-      }, delay);
-
-      // Decay vertical blur from MAX_BLUR → 0 via rAF, respecting the same stagger
-      if (!blurEl) return;
-      const t0 = performance.now() + delay;
-      const t1 = t0 + DUR_MS;
-
-      function decay(now: number) {
-        if (now < t0) {
-          rafIds.current[col] = requestAnimationFrame(decay);
-          return;
-        }
-        const progress = Math.min((now - t0) / (t1 - t0), 1);
-        blurEl!.setAttribute(
-          "stdDeviation",
-          `0 ${(MAX_BLUR * (1 - progress)).toFixed(2)}`
-        );
-        if (progress < 1) rafIds.current[col] = requestAnimationFrame(decay);
-      }
-      rafIds.current[col] = requestAnimationFrame(decay);
-    });
-  }
+  }, [valueString]);
 
   return (
     <>
@@ -105,53 +123,60 @@ export function SpinningNumber({ value }: Props) {
         style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
       >
         <defs>
-          {digits.map((_, col) => (
-            <filter key={col} id={`rb${uid}${col}`}>
-              <feGaussianBlur
-                ref={(el) => {
-                  blurRefs.current[col] = el;
-                }}
-                stdDeviation={`0 ${MAX_BLUR}`}
-              />
-            </filter>
-          ))}
+          {characters.map((character, col) =>
+            /\d/.test(character) ? (
+              <filter key={col} id={`rb${uid}${col}`}>
+                <feGaussianBlur
+                  ref={(el) => {
+                    blurRefs.current[col] = el;
+                  }}
+                  stdDeviation={`0 ${MAX_BLUR}`}
+                />
+              </filter>
+            ) : null
+          )}
         </defs>
       </svg>
 
       <div
         ref={rootRef}
         className="inline-flex items-center"
-        style={{ height: CELL_PX, fontVariantNumeric: "tabular-nums" }}
+        style={{ height: cellHeight, fontVariantNumeric: "tabular-nums" }}
       >
-        {digits.map((_, col) => (
-          <div key={col} style={COL_STYLE}>
-            <div
-              ref={(el) => {
-                stripRefs.current[col] = el;
-              }}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                willChange: "transform",
-                filter: `url(#rb${uid}${col})`,
-              }}
-            >
-              {STRIP.map((d, row) => (
-                <div
-                  key={row}
-                  style={{
-                    height: CELL_PX,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {d}
-                </div>
-              ))}
+        {characters.map((character, col) =>
+          /\d/.test(character) ? (
+            <div key={col} style={{ ...COL_STYLE, height: cellHeight }}>
+              <div
+                ref={(el) => {
+                  stripRefs.current[col] = el;
+                }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  willChange: "transform",
+                  filter: `url(#rb${uid}${col})`,
+                }}
+              >
+                {STRIP.map((d, row) => (
+                  <div
+                    key={row}
+                    style={{
+                      height: cellHeight,
+                      display: "flex",
+                      flexShrink: 0,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {d}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ) : (
+            <span key={col}>{character}</span>
+          )
+        )}
       </div>
     </>
   );

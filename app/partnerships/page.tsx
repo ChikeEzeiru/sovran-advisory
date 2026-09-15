@@ -1,92 +1,215 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { Navbar } from "@/components/sections/Navbar";
-import { SiteFooter } from "@/components/sections/SiteFooter";
-import { InternalPageHero } from "@/components/sections/InternalPageHero";
-import { Button } from "@/components/ui/Button";
-import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import type {Metadata} from 'next'
+import Image from 'next/image'
+import {Award03, Globe06, Microscope, ZapFast} from '@untitledui/icons'
+import {Footer} from '@/components/sections/Footer'
+import {FooterCTA} from '@/components/sections/FooterCTA'
+import {Navbar} from '@/components/sections/Navbar'
+import {FeaturedIcon} from '@/components/ui/FeaturedIcon'
+import {SectionEyebrow} from '@/components/ui/SectionEyebrow'
 
 export const metadata: Metadata = {
-  title: "Partners & Institutional Relationships",
-  description: "How Sovran works with specialist partners, institutions and regional networks around complex decisions.",
-};
+  title: 'Partnerships & Institutional Relationships',
+  description:
+    'How Sovran works with specialist partners, research organisations, institutions and regional networks.',
+}
 
-const PARTNER_TYPES = [
-  { number: "01", title: "Specialist expertise", copy: "Independent experts and technical teams who deepen the evidence around a sector, system or operating question." },
-  { number: "02", title: "Institutional relationships", copy: "Public bodies, industry organisations and regional institutions whose mandates shape how work can move forward." },
-  { number: "03", title: "Delivery networks", copy: "Local operators and programme partners able to turn a regional direction into accountable work on the ground." },
-];
+const PARTNER_STRENGTHS = [
+  {
+    title: 'Specialist expertise',
+    copy: 'We work with firms and independent specialists when an engagement requires capabilities beyond our core disciplines.',
+    icon: Award03,
+  },
+  {
+    title: 'Research & knowledge',
+    copy: 'We collaborate with research organisations, academic institutions and subject-matter experts where specialist knowledge is required.',
+    icon: Microscope,
+  },
+  {
+    title: 'Regional capability',
+    copy: 'Local partners can add market knowledge, relationships and operating experience in places where deep context matters.',
+    icon: Globe06,
+  },
+  {
+    title: 'Delivery partners',
+    copy: 'For implementation, we may work alongside technology, operational or programme partners whose capabilities are needed to deliver the project well.',
+    icon: ZapFast,
+  },
+] as const
 
-const PRINCIPLES = [
-  ["Start with the decision", "We assemble relationships around the question to be resolved, not around a fixed roster of names."],
-  ["Make roles explicit", "Every partner should understand the contribution, decision rights, evidence standard and responsibility for delivery."],
-  ["Keep local judgement close", "People working in the market need enough authority to respond when conditions differ from the original plan."],
-  ["Protect independence", "Access is useful only when it supports better evidence and responsible engagement. It does not replace judgement."],
-];
+const SELECTED_PARTNERSHIPS = [
+  {
+    name: 'Westbridge Policy Institute',
+    description:
+      'Supports policy research, regulatory analysis and institutional studies across West Africa.',
+  },
+  {
+    name: 'Kora Digital Systems',
+    description:
+      'Works with Sovran on digital transformation, technology-led change and systems implementation.',
+  },
+  {
+    name: 'East Africa Market Forum',
+    description:
+      'Provides local market insight, operating context and stakeholder intelligence across East Africa.',
+  },
+  {
+    name: 'Amani Research Group',
+    description:
+      'Contributes sector research, field studies and market evidence for complex advisory engagements.',
+  },
+  {
+    name: 'Northstar Infrastructure Partners',
+    description:
+      'Brings technical and commercial expertise to infrastructure and large-scale development programmes.',
+  },
+  {
+    name: 'Meridian Public Affairs',
+    description:
+      'Supports stakeholder engagement, public affairs and regulatory strategy in selected markets.',
+  },
+  {
+    name: 'CivicLab Africa',
+    description:
+      'Works on public-sector reform, institutional capacity and policy implementation programmes.',
+  },
+  {
+    name: 'Frontier Delivery Partners',
+    description:
+      'Supports programme delivery, operational planning and execution across multi-stakeholder initiatives.',
+  },
+] as const
 
 export default function PartnershipsPage() {
   return (
     <>
-      <Navbar theme="light" />
+      <Navbar theme="dark" />
       <main>
-        <InternalPageHero
-          eyebrow="Partners & institutional relationships"
-          title="The right relationship can change what is possible."
-          intro="Complex work often depends on expertise, authority and delivery capacity that sit across several organisations. We bring those contributions together around a clear decision and defined responsibilities."
-          image="/images/sovran photo - partners & intitutional rshps.avif"
-          imageAlt="A working city district shaped by public, commercial and transport infrastructure."
-        />
+        <section
+          data-theme="dark"
+          aria-labelledby="partnerships-heading"
+          className="relative flex min-h-148 items-end overflow-hidden bg-neutral-900 px-12 pt-30 pb-16 max-md:min-h-136 max-md:px-6 max-md:pt-28 max-md:pb-12"
+        >
+          <Image
+            src="/images/partnerships/sovran-partnerships-hero.avif"
+            alt="Professionals from different organisations in discussion."
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div aria-hidden="true" className="absolute inset-0 bg-black/40" />
 
-        <section className="border-y border-border-secondary-alt bg-bg-primary">
-          <div className="mx-auto grid w-full max-w-400 grid-cols-12 gap-8 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
-            <div className="col-span-4">
-              <SectionEyebrow>Why partnerships matter</SectionEyebrow>
-              <h2 className="mt-3 max-w-sm text-3xl font-medium leading-9 tracking-tight text-text-primary">Built around the work, not displayed for effect.</h2>
-            </div>
-            <div className="col-span-8 flex max-w-4xl flex-col gap-6 text-xl leading-8 text-text-tertiary">
-              <p>No single firm holds every form of market knowledge, institutional authority or specialist capability a complex programme may require. The useful question is not how large a network appears, but whether the right people can contribute at the right moment.</p>
-              <p>Sovran defines the decision first, identifies the capabilities and relationships that matter, and gives each participant a clear role. This keeps collaboration focused and makes accountability visible to the client.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto flex w-full max-w-400 flex-col gap-10 px-12 py-24 max-md:px-6 max-md:py-16">
-          <div><SectionEyebrow>Our partnership model</SectionEyebrow><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Different relationships for different conditions.</h2></div>
-          <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-1">
-            {PARTNER_TYPES.map((item) => (
-              <article key={item.number} className="flex min-h-88 flex-col justify-between rounded-xs bg-bg-quaternary p-8 max-md:min-h-72 max-md:p-6">
-                <span className="text-sm tabular-nums text-text-quaternary">{item.number}</span>
-                <div><h3 className="text-2xl font-medium leading-8 text-text-secondary">{item.title}</h3><p className="mt-3 text-base leading-6 text-text-tertiary">{item.copy}</p></div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="bg-utility-neutral-100">
-          <div className="mx-auto grid w-full max-w-400 grid-cols-2 items-stretch gap-6 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
-            <div className="relative min-h-160 overflow-hidden rounded-xs bg-bg-quaternary max-lg:min-h-112">
-              <Image src="/images/about-us/Grid-img_3.avif" alt="Infrastructure connecting institutions, markets and communities." fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-            </div>
-            <div className="flex flex-col justify-between gap-12 rounded-xs bg-bg-primary p-8 max-md:p-6">
-              <div><SectionEyebrow>How we work together</SectionEyebrow><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Clear roles protect the quality of the work.</h2></div>
-              <ol className="border-t border-border-primary">
-                {PRINCIPLES.map(([title, copy], index) => (
-                  <li key={title} className="grid grid-cols-[3rem_1fr] gap-4 border-b border-border-primary py-5">
-                    <span className="text-sm tabular-nums text-text-quaternary">{String(index + 1).padStart(2, "0")}</span>
-                    <div><h3 className="text-lg font-medium text-text-secondary">{title}</h3><p className="mt-1 text-base leading-6 text-text-tertiary">{copy}</p></div>
-                  </li>
-                ))}
-              </ol>
+          <div className="relative mx-auto w-full max-w-400">
+            <div className="flex max-w-192 flex-col items-start gap-3">
+              <SectionEyebrow surface="raised">
+                Partnerships &amp; Institutional Relationships
+              </SectionEyebrow>
+              <div className="flex flex-col gap-2">
+                <h1
+                  id="partnerships-heading"
+                  className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-4xl max-md:leading-11"
+                >
+                  Some projects are stronger when the right organisations come together
+                </h1>
+                <p className="text-xl leading-7.5 text-text-secondary">
+                  We work with specialist firms, research organisations, institutions and
+                  other partners when their knowledge, reach or capabilities strengthen the
+                  work we are doing for clients.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto flex w-full max-w-400 items-end justify-between gap-8 px-12 py-24 max-md:flex-col max-md:items-start max-md:px-6 max-md:py-16">
-          <div className="max-w-2xl"><SectionEyebrow>Work with Sovran</SectionEyebrow><h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">Bring a capability or institutional perspective to the right question.</h2><p className="mt-4 text-base leading-6 text-text-tertiary">All relationships described on this conceptual site are fictional and shown for demonstration purposes.</p></div>
-          <Button href="/contact" variant="secondary" size="lg">Start a conversation</Button>
+        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-6 max-md:py-12">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
+            <div className="flex max-w-222 flex-col gap-4">
+              <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9">
+                Different partners bring different strengths.
+              </h2>
+              <p className="text-xl leading-7.5 text-text-tertiary">
+                We work with specialists, researchers, regional firms and delivery partners
+                when their expertise adds something specific to an engagement.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-4 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-1">
+              {PARTNER_STRENGTHS.map((item) => {
+                const Icon = item.icon
+                return (
+                  <article key={item.title} className="flex min-w-0 flex-col gap-6">
+                    <FeaturedIcon>
+                      <Icon aria-hidden="true" className="size-6" />
+                    </FeaturedIcon>
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary">
+                        {item.title}
+                      </h3>
+                      <p className="text-lg leading-7 text-text-secondary">{item.copy}</p>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-bg-quaternary px-12 pt-24 pb-16 max-md:px-6 max-md:pt-16 max-md:pb-12">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
+            <div className="flex max-w-192 flex-col gap-4">
+              <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+                What makes a good partnership
+              </h2>
+              <p className="text-xl leading-7.5 text-text-tertiary">
+                We look for organisations that are strong at what they do, clear about where
+                they add value and comfortable working as part of one team. The standard of
+                their work matters more to us than the size of the organisation.
+              </p>
+            </div>
+
+            <div className="relative h-70 overflow-hidden bg-bg-primary max-md:h-56">
+              <Image
+                src="/images/partnerships/Sovran what makes a partnership pic.avif"
+                alt="A freight train moving through a forested transport corridor."
+                fill
+                sizes="(min-width: 1440px) 1344px, calc(100vw - 96px)"
+                className="object-cover object-center"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-6 max-md:py-12">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 max-md:gap-10">
+            <h2 className="text-center text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+              Selected partnerships
+            </h2>
+
+            <div className="grid grid-cols-4 gap-2.5 max-lg:grid-cols-2 max-sm:grid-cols-1">
+              {SELECTED_PARTNERSHIPS.map((partner) => (
+                <article
+                  key={partner.name}
+                  className="flex min-h-52 flex-col items-center gap-3 rounded-xs border border-border-secondary p-6 text-center"
+                >
+                  <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary">
+                    {partner.name}
+                  </h3>
+                  <p className="text-lg leading-7 text-text-quaternary">
+                    {partner.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
         </section>
       </main>
-      <SiteFooter />
+
+      <FooterCTA
+        title="Interested in working with Sovran?"
+        description="If your organisation brings expertise or capability that could strengthen the work we do, tell us a little about it."
+        buttonLabel="Discuss a partnership"
+      />
+      <Footer />
     </>
-  );
+  )
 }

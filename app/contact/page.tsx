@@ -1,24 +1,78 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/sections/Navbar";
-import { SiteFooter } from "@/components/sections/SiteFooter";
+import { Globe05 } from "@untitledui/icons";
+import { ContactForm } from "@/components/sections/ContactForm";
+import { Footer } from "@/components/sections/Footer";
 import { InternalPageHero } from "@/components/sections/InternalPageHero";
-import { Button } from "@/components/ui/Button";
+import { Navbar } from "@/components/sections/Navbar";
+import { FeaturedIcon } from "@/components/ui/FeaturedIcon";
 
-export const metadata: Metadata = { title: "Contact", description: "Tell us the market, the decision and what is making it difficult." };
-const inputClass = "w-full rounded-xs border border-border-primary bg-bg-primary px-3.5 py-2.5 text-base text-text-primary shadow-xs outline-none placeholder:text-text-placeholder focus:border-border-brand focus:ring-2 focus:ring-border-brand/20";
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Tell us about the decision, market or programme you are working through.",
+};
+
+const NEXT_STEPS = [
+  "We review your enquiry and route it to the most relevant team.",
+  "A member of our team responds within two business days.",
+  "The initial conversation is confidential and carries no obligation.",
+];
 
 export default function ContactPage() {
-  return <><Navbar theme="light" /><main>
-    <InternalPageHero eyebrow="Contact" title="Have a decision to work through?" intro="Tell us the market, the decision and what is making it difficult. We will respond with the right next conversation." />
-    <section className="mx-auto grid w-full max-w-400 grid-cols-12 gap-12 px-12 pb-24 max-lg:grid-cols-1 max-md:px-6 max-md:pb-16">
-      <aside className="col-span-4"><p className="max-w-sm text-base leading-6 text-text-tertiary">This is a conceptual contact experience. No enquiry will be sent.</p><div className="mt-12 border-t border-border-primary pt-5"><p className="text-sm text-text-quaternary">Conceptual locations</p><p className="mt-2 text-base leading-7 text-text-secondary">Lagos · Nairobi · Accra · Johannesburg</p></div></aside>
-      <form className="col-span-8 grid grid-cols-2 gap-5 rounded-xs bg-bg-primary p-8 max-md:grid-cols-1 max-md:p-6">
-        {[["Name", "Your name", "text"], ["Organisation", "Your organisation", "text"], ["Work email", "you@organisation.com", "email"], ["Role", "Your role", "text"]].map(([label, placeholder, type]) => <label key={label} className="flex flex-col gap-1.5"><span className="text-sm font-medium text-text-secondary">{label}</span><input type={type} placeholder={placeholder} className={inputClass} /></label>)}
-        <label className="col-span-2 flex flex-col gap-1.5 max-md:col-span-1"><span className="text-sm font-medium text-text-secondary">Market(s) involved</span><input type="text" placeholder="For example: Kenya and Nigeria" className={inputClass} /></label>
-        <label className="col-span-2 flex flex-col gap-1.5 max-md:col-span-1"><span className="text-sm font-medium text-text-secondary">What are you working through?</span><textarea rows={6} placeholder="Tell us the decision, what is at stake and where you need clarity." className={`${inputClass} resize-y`} /></label>
-        <label className="col-span-2 flex flex-col gap-1.5 max-md:col-span-1"><span className="text-sm font-medium text-text-secondary">Preferred contact method</span><select className={inputClass} defaultValue="email"><option value="email">Email</option><option value="phone">Phone</option><option value="video">Video call</option></select></label>
-        <div className="col-span-2 mt-2 max-md:col-span-1"><Button type="submit" variant="primary" size="lg">Send enquiry</Button></div>
-      </form>
-    </section>
-  </main><SiteFooter /></>;
+  return (
+    <>
+      <Navbar theme="light" />
+      <main>
+        <InternalPageHero
+          eyebrow="Contact Us"
+          title="Start a conversation with Sovran."
+          intro="Tell us about the decision or programme, the market involved and where you need support. A member of our team will respond within two business days."
+          align="center"
+          spacing="compact"
+        />
+
+        <section className="px-12 pb-24 max-md:px-6 max-md:pb-16">
+          <div className="mx-auto flex w-full max-w-295 items-start gap-16 max-lg:flex-col max-lg:gap-12">
+            <aside className="w-96 shrink-0 max-lg:w-full">
+              <div className="border-t border-border-secondary pt-8">
+                <h2 className="text-2xl font-medium leading-8 tracking-tight text-text-primary">
+                  What happens next
+                </h2>
+                <ol className="mt-4 flex flex-col gap-3">
+                  {NEXT_STEPS.map((step, index) => (
+                    <li key={step} className="grid grid-cols-[auto_1fr] gap-2">
+                      <span className="text-base leading-6 text-text-secondary">
+                        {index + 1}.
+                      </span>
+                      <p className="text-base leading-6 text-text-tertiary">{step}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div className="mt-8 border-t border-border-secondary pt-8">
+                <div className="rounded-xs border border-border-secondary bg-bg-secondary p-6 shadow-xs">
+                  <FeaturedIcon>
+                    <Globe05 aria-hidden="true" className="size-6" />
+                  </FeaturedIcon>
+                  <h3 className="mt-3 text-xl font-medium leading-7.5 tracking-tight text-text-primary">
+                    Where we work
+                  </h3>
+                  <p className="mt-4 text-base leading-6 text-text-tertiary">
+                    Lagos <span className="mx-2 text-text-quaternary">·</span>
+                    Kigali <span className="mx-2 text-text-quaternary">·</span>
+                    Accra <span className="mx-2 text-text-quaternary">·</span>
+                    Nairobi
+                  </p>
+                </div>
+              </div>
+            </aside>
+
+            <ContactForm />
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
 }

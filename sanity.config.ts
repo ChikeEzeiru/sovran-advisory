@@ -6,6 +6,7 @@
 
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
+import {presentationTool} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
@@ -14,6 +15,8 @@ import {schema} from './sanity/schemaTypes'
 import {structure} from './sanity/structure'
 
 export default defineConfig({
+  name: 'sovran',
+  title: 'Sovran Content Studio',
   basePath: '/studio',
   projectId,
   dataset,
@@ -21,6 +24,14 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({structure}),
+    presentationTool({
+      previewUrl: {
+        initial: '/',
+        previewMode: {
+          enable: '/api/draft-mode/enable',
+        },
+      },
+    }),
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({defaultApiVersion: apiVersion}),
