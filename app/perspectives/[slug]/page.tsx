@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { stegaClean } from "next-sanity";
 import { Send01 } from "@untitledui/icons";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -25,8 +26,8 @@ export async function generateMetadata({
   const article = await getPerspectiveBySlug(slug);
   return article
     ? {
-        title: article.seoTitle ?? article.title,
-        description: article.seoDescription ?? article.summary,
+        title: stegaClean(article.seoTitle ?? article.title),
+        description: stegaClean(article.seoDescription ?? article.summary),
       }
     : {};
 }

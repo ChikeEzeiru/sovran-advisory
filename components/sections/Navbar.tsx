@@ -11,6 +11,8 @@ import {
   BookOpen02,
   Users03,
   CalendarCheck02,
+  Menu01,
+  XClose,
 } from "@untitledui/icons";
 import { Button } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
@@ -328,6 +330,125 @@ function DropdownPanel({
   );
 }
 
+interface MobileNavigationProps {
+  expanded: DropdownKey | null;
+  onNavigate: () => void;
+  onToggle: (key: DropdownKey) => void;
+}
+
+function MobileNavigation({
+  expanded,
+  onNavigate,
+  onToggle,
+}: MobileNavigationProps) {
+  return (
+    <div
+      id="mobile-navigation"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site navigation"
+      className="fixed inset-x-0 top-18 bottom-0 overflow-y-auto border-t border-border-secondary bg-bg-primary lg:hidden"
+    >
+      <nav
+        aria-label="Mobile navigation"
+        className="mx-auto flex w-full max-w-400 flex-col px-6 pt-3 pb-[max(2rem,env(safe-area-inset-bottom))]"
+      >
+        {DROPDOWN_ORDER.map((key) => {
+          const panel = PANEL_META[key];
+          const isExpanded = expanded === key;
+
+          return (
+            <div key={key} className="border-b border-border-secondary">
+              <button
+                type="button"
+                aria-expanded={isExpanded}
+                aria-controls={`mobile-${key}-links`}
+                onClick={() => onToggle(key)}
+                className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left text-xl font-medium leading-7 text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+              >
+                <span className="capitalize">{key}</span>
+                <ChevronDown
+                  size={20}
+                  className={`shrink-0 text-text-tertiary transition-transform duration-200 motion-reduce:transition-none ${
+                    isExpanded ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {isExpanded ? (
+                <div
+                  id={`mobile-${key}-links`}
+                  className="flex flex-col gap-1 pb-5"
+                >
+                  <ConditionalLink
+                    href={panel.footer.href}
+                    onClick={onNavigate}
+                    className="rounded-xs px-3 py-3 text-sm font-semibold leading-5 text-text-brand-secondary hover:bg-bg-primary-hover"
+                  >
+                    {key === "expertise" ? "Expertise overview" : "About Sovran"}
+                  </ConditionalLink>
+
+                  {panel.items.map((item) => {
+                    const Icon = item.icon;
+
+                    return (
+                      <ConditionalLink
+                        key={item.href}
+                        href={item.href}
+                        onClick={onNavigate}
+                        className="flex items-start gap-3 rounded-xs px-3 py-3 hover:bg-bg-primary-hover"
+                      >
+                        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xs bg-bg-quaternary text-text-tertiary">
+                          <Icon size={16} />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-base font-medium leading-6 text-text-primary">
+                            {item.title}
+                          </span>
+                          <span className="mt-0.5 block text-sm leading-5 text-text-quaternary">
+                            {item.desc}
+                          </span>
+                        </span>
+                      </ConditionalLink>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
+
+        <div className="flex flex-col border-b border-border-secondary py-2">
+          {[
+            { label: "Case Studies", href: "/case-studies" },
+            { label: "Perspectives", href: "/perspectives" },
+            { label: "Careers", href: "/careers" },
+          ].map((item) => (
+            <ConditionalLink
+              key={item.href}
+              href={item.href}
+              onClick={onNavigate}
+              className="rounded-xs py-3 text-xl font-medium leading-7 text-text-primary hover:text-text-tertiary"
+            >
+              {item.label}
+            </ConditionalLink>
+          ))}
+        </div>
+
+        <Button
+          href="/contact"
+          variant="primary"
+          size="lg"
+          showIcon={false}
+          className="mt-6 w-full justify-center"
+        >
+          Contact Us
+        </Button>
+      </nav>
+    </div>
+  );
+}
+
 // ─── Navbar ──────────────────────────────────────────────────────────────────
 
 interface NavbarProps {
@@ -337,6 +458,8 @@ interface NavbarProps {
 export function Navbar({ theme = "dark" }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<DropdownKey | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<DropdownKey | null>(null);
   const [slideEnabled, setSlideEnabled] = useState(false);
   const [hoveredIdx, setHoveredIdx] = useState<Record<DropdownKey, number>>({
     expertise: 0,
@@ -345,6 +468,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
   );
+  const headerRef = useRef<HTMLElement>(null);
   const [lastIndex, setLastIndex] = useState(0);
   const isLight = theme === "light";
 
@@ -354,6 +478,62 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const pageElements = Array.from(document.body.children).filter(
+      (element): element is HTMLElement =>
+        element instanceof HTMLElement &&
+        !element.contains(headerRef.current) &&
+        element !== headerRef.current
+    );
+    const previousInert = pageElements.map((element) => element.inert);
+
+    document.body.style.overflow = "hidden";
+    pageElements.forEach((element) => {
+      element.inert = true;
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        setMobileExpanded(null);
+        return;
+      }
+
+      if (event.key === "Tab" && headerRef.current) {
+        const focusableElements = Array.from(
+          headerRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((element) => element.offsetParent !== null);
+        const first = focusableElements[0];
+        const last = focusableElements.at(-1);
+
+        if (!first || !last) return;
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      pageElements.forEach((element, index) => {
+        element.inert = previousInert[index];
+      });
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileOpen]);
 
   const handleDropdownEnter = (key: DropdownKey) => {
     clearTimeout(closeTimer.current);
@@ -384,6 +564,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
 
   return (
     <header
+      ref={headerRef}
       data-scroll-lock-fixed
       data-theme={isLight ? undefined : "dark"}
       className="fixed top-0 left-0 right-0 z-50"
@@ -391,19 +572,19 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
     >
       {/* Nav bar */}
       <div
-        className={`h-18 flex items-center justify-center px-4 border-b transition-[background-color,backdrop-filter,border-color] duration-300 ease-out ${
+        className={`h-18 flex items-center justify-center border-b px-4 transition-[background-color,backdrop-filter,border-color] duration-300 ease-out max-lg:bg-black/60 max-lg:px-2 max-lg:backdrop-blur-[2px] ${
           isLight
             ? active
               ? "bg-bg-tertiary border-transparent"
               : scrolled
                 ? "bg-bg-tertiary border-border-primary"
                 : "bg-bg-tertiary border-transparent"
-            : scrolled || active
+            : scrolled || active || mobileOpen
               ? "bg-black/50 backdrop-blur-md border-transparent"
               : "bg-transparent backdrop-blur-none border-transparent"
         }`}
       >
-        <div className="flex items-center justify-between w-full max-w-[1600px] px-8">
+        <div className="flex w-full max-w-[1600px] items-center justify-between px-8 max-lg:px-2">
           <ConditionalLink href="/" className="shrink-0">
             <Image
               src={isLight ? "/sovran-logo-light.svg" : "/sovran-logo.svg"}
@@ -411,10 +592,11 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
               width={121}
               height={40}
               priority
+              className="max-lg:h-[38px] max-lg:w-[114px]"
             />
           </ConditionalLink>
 
-          <nav className="flex items-center">
+          <nav className="flex items-center max-lg:hidden">
             <NavItem
               href="/expertise"
               hasChevron
@@ -461,15 +643,44 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
             size="sm"
             href="/contact"
             showIcon={false}
+            className="max-lg:hidden"
           >
             Contact Us
           </Button>
+
+          <button
+            type="button"
+            aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => {
+              setActive(null);
+              setMobileOpen((open) => !open);
+              if (mobileOpen) setMobileExpanded(null);
+            }}
+            className="hidden h-9 w-11 cursor-pointer items-center justify-center rounded-xs border border-border-primary bg-black/50 text-text-primary shadow-xs-skeuomorphic transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current max-lg:flex"
+          >
+            {mobileOpen ? <XClose size={22} /> : <Menu01 size={22} />}
+          </button>
         </div>
       </div>
 
+      {mobileOpen ? (
+        <MobileNavigation
+          expanded={mobileExpanded}
+          onNavigate={() => {
+            setMobileOpen(false);
+            setMobileExpanded(null);
+          }}
+          onToggle={(key) =>
+            setMobileExpanded((current) => (current === key ? null : key))
+          }
+        />
+      ) : null}
+
       {/* Dropdown panel */}
       <div
-        className={`transition-[grid-template-rows] duration-300 ease-out grid justify-items-center ${
+        className={`grid justify-items-center transition-[grid-template-rows] duration-300 ease-out max-lg:hidden ${
           active ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >

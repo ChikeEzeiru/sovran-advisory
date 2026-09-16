@@ -78,7 +78,7 @@ export function FooterCTA({
     <section
       ref={sectionRef}
       aria-labelledby="footer-cta-heading"
-      className="relative flex min-h-140 items-end justify-center overflow-hidden bg-brand-950 px-6 pt-16 pb-24"
+      className="relative flex min-h-140 items-end justify-center overflow-hidden bg-brand-950 px-6 pt-16 pb-24 max-md:min-h-120 max-md:px-4 max-md:py-12"
       data-theme="dark"
     >
       <video
@@ -103,15 +103,15 @@ export function FooterCTA({
         }`}
       />
 
-      <div className="relative z-10 flex max-w-2xl flex-col items-center gap-5 text-center">
-        <div className="flex flex-col gap-2">
+      <div className="relative z-10 flex max-w-2xl flex-col items-center gap-5 text-center max-md:gap-6">
+        <div className="flex flex-col gap-2 max-md:gap-3">
           <h2
             id="footer-cta-heading"
-            className="text-3xl font-medium leading-10 text-text-primary"
+            className="text-3xl font-medium leading-10 text-text-primary max-md:leading-[38px]"
           >
             {title}
           </h2>
-          <p className="text-base leading-6 text-text-quaternary">
+          <p className="text-base leading-6 text-text-quaternary max-md:text-xl max-md:leading-7.5">
             {description}
           </p>
         </div>

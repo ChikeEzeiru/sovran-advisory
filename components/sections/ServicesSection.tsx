@@ -47,9 +47,9 @@ function ServiceCard({ service }: { service: Service }) {
   return (
     <ConditionalLink
       href={service.href}
-      className="group/service-card block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+      className="group/service-card block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current max-md:pb-1.5"
     >
-      <div className="relative h-95 overflow-hidden rounded-xs bg-bg-quaternary mb-5">
+      <div className="relative mb-5 h-95 overflow-hidden rounded-xs bg-bg-quaternary max-md:mb-3 max-md:h-48">
         <Image
           src={service.image}
           alt=""
@@ -79,7 +79,10 @@ function ServiceCard({ service }: { service: Service }) {
         </p>
         <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium leading-5 text-text-tertiary transition-colors duration-150 group-hover/service-card:text-text-brand-secondary">
           <ButtonVisual size="sm" interaction="service-card">
-            Explore
+            <span className="max-md:hidden">Explore</span>
+            <span className="hidden max-md:inline">
+              Explore {service.title}
+            </span>
           </ButtonVisual>
         </span>
       </div>
@@ -89,37 +92,37 @@ function ServiceCard({ service }: { service: Service }) {
 
 export function ServicesSection() {
   return (
-    <section aria-labelledby="services-heading" className="py-20">
-      <div className="@container mx-auto flex w-full max-w-[1600px] flex-col gap-10 px-12 max-md:px-6">
+    <section aria-labelledby="services-heading" className="py-20 max-md:py-12">
+      <div className="@container mx-auto flex w-full max-w-[1600px] flex-col gap-10 px-12 max-md:gap-12 max-md:px-4">
         <div className="flex max-w-4xl flex-col gap-4">
           {/* Badge + body copy */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 max-md:gap-0">
             <SectionEyebrow>What we do</SectionEyebrow>
 
             <h2
               id="services-heading"
-              className="text-4xl font-medium leading-11 tracking-tight text-text-primary"
+              className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-[38px]"
             >
               Complex markets require more than one perspective.
             </h2>
           </div>
-          <p className="max-w-4xl text-base font-normal leading-6 text-text-tertiary">
-            Our work often begins with a question about a market, an investment,
+          <p className="max-w-4xl text-base font-normal leading-6 text-text-tertiary max-md:text-lg max-md:leading-7">
+            Our work often begins with a question about a market, an investment
             or a policy change. We bring together the research, strategy,
-            institutional knowledge, and delivery expertise needed to take it
-            from question to action.
+            institutional knowledge and delivery expertise needed to take it from
+            question to action.
           </p>
         </div>
 
         <ul
           role="list"
-          className="flex w-full gap-4 overflow-x-auto pb-2"
+          className="flex w-full gap-4 overflow-x-auto pb-2 max-md:grid max-md:grid-cols-2 max-md:gap-x-6 max-md:gap-y-7 max-md:overflow-visible max-md:pb-0"
           style={{ scrollbarWidth: "none" }}
         >
           {SERVICES.map((service) => (
             <li
               key={service.href}
-              className="w-72 shrink-0 transition-[flex-grow,width] duration-500 ease-out sm:w-85 xl:w-auto xl:min-w-0 xl:flex-[1_1_0%] xl:pointer-fine:hover:flex-[1.08_1_0%] motion-reduce:transition-none"
+              className="w-72 shrink-0 transition-[flex-grow,width] duration-500 ease-out max-md:w-auto sm:w-85 xl:w-auto xl:min-w-0 xl:flex-[1_1_0%] xl:pointer-fine:hover:flex-[1.08_1_0%] motion-reduce:transition-none"
             >
               <ServiceCard service={service} />
             </li>

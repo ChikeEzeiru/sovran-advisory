@@ -62,11 +62,11 @@ export function CaseStudiesSection() {
   return (
     <section
       aria-labelledby="case-studies-heading"
-      className="bg-utility-neutral-100 py-20 max-md:px-6"
+      className="bg-utility-neutral-100 py-20 max-md:py-12"
     >
-      <div className="mx-auto flex w-full max-w-400 flex-col px-12 gap-16">
-        <div className="grid grid-cols-2 items-start gap-4 max-md:grid-cols-1 max-md:gap-8">
-          <div className="flex min-w-0 flex-col items-start gap-2">
+      <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-12 max-md:px-4">
+        <div className="grid grid-cols-2 items-start gap-4 max-md:grid-cols-1 max-md:gap-3">
+          <div className="flex min-w-0 flex-col items-start gap-2 max-md:gap-1.5">
             <SectionEyebrow>Case Studies</SectionEyebrow>
             <h2
               id="case-studies-heading"
@@ -76,7 +76,7 @@ export function CaseStudiesSection() {
             </h2>
           </div>
 
-          <div className="flex min-w-0 flex-col items-start gap-5">
+          <div className="flex min-w-0 flex-col items-start gap-5 max-md:gap-4">
             <p className="max-w-2xl text-xl font-normal leading-7.5 text-text-tertiary">
               From entering new markets to delivering complex programmes, our
               work brings together the expertise each challenge requires.
@@ -102,7 +102,7 @@ export function CaseStudiesSection() {
                   className="object-cover"
                 />
               </span>
-              <h3 className="text-xl font-medium leading-7.5 tracking-tight text-text-secondary group-hover/featured:text-text-brand-secondary">
+              <h3 className="text-xl font-medium leading-7.5 tracking-tight text-text-secondary group-hover/featured:text-text-brand-secondary max-md:leading-7">
                 {FEATURED_STUDY.title}
               </h3>
             </ConditionalLink>
@@ -110,7 +110,7 @@ export function CaseStudiesSection() {
             <ConditionalLink
               href={FEATURED_STUDY.href}
               aria-label={FEATURED_STUDY.title}
-              className="relative aspect-10/3 w-full overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+              className="relative aspect-10/3 w-full overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current max-md:aspect-auto max-md:h-[286px]"
             >
               <Image
                 src={FEATURED_STUDY.image}
@@ -126,7 +126,7 @@ export function CaseStudiesSection() {
               />
             </ConditionalLink>
 
-            <div className="flex items-start justify-between gap-8 px-2 pt-3 pb-5 max-md:flex-col max-md:gap-2">
+            <div className="flex items-start justify-between gap-8 px-2 pt-3 pb-5 max-md:flex-col max-md:gap-2 max-md:pt-2 max-md:pb-4">
               {FEATURED_STUDY.metrics.map((metric) => (
                 <Metric key={metric.label} {...metric} />
               ))}
@@ -166,7 +166,7 @@ export function CaseStudiesSection() {
                 </div>
               </ConditionalLink>
 
-              <div className="flex items-start justify-between gap-6 px-2 pt-3 pb-5 max-lg:flex-col max-lg:gap-2">
+              <div className="flex items-start justify-between gap-6 px-2 pt-3 pb-5 max-lg:flex-col max-lg:gap-2 max-md:pt-2 max-md:pb-4">
                 {study.metrics.map((metric) => (
                   <Metric key={metric.label} {...metric} />
                 ))}

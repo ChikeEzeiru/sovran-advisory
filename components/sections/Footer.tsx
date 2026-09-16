@@ -131,17 +131,17 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative flex flex-col items-center gap-8 overflow-hidden bg-neutral-950 min-h-190 pt-12 pb-16 text-text-secondary"
+      className="relative flex min-h-190 flex-col items-center gap-8 overflow-hidden bg-neutral-950 pt-12 pb-16 text-text-secondary max-md:min-h-[1274px] max-md:gap-6 max-md:pb-13"
       data-theme="dark"
     >
       <div className="relative z-10 w-full border-t border-border-secondary" />
 
-      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 max-lg:flex-col max-lg:gap-8 max-md:px-6">
+      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 max-lg:flex-col max-lg:gap-8 max-md:gap-5 max-md:px-4">
         <div className="flex w-108 shrink-0 flex-col items-start gap-2 max-md:w-full">
           <h2 className="text-xl font-semibold leading-7 text-text-primary">
             Stay ahead of changing markets
           </h2>
-          <p className="text-base leading-6 text-text-tertiary">
+          <p className="text-base leading-6 text-text-tertiary max-md:text-sm max-md:leading-5">
             Get Sovran&apos;s latest analysis on markets, policy, investment and
             institutions across Africa.
           </p>
@@ -151,7 +151,7 @@ export function Footer() {
           action="/contact"
           className="flex max-w-127 shrink-0 flex-col items-start gap-2 w-full"
         >
-          <div className="flex w-full items-center gap-2 rounded-xs border border-border-primary bg-white/80 p-1.5 shadow-xs max-sm:flex-col">
+          <div className="flex w-full items-center gap-2 rounded-xs border border-border-primary bg-white/80 p-1.5 shadow-xs">
             <label htmlFor="footer-email" className="sr-only">
               Work email
             </label>
@@ -160,7 +160,7 @@ export function Footer() {
               name="email"
               type="email"
               placeholder="name@company.com"
-              className="min-w-0 flex-1 bg-transparent pl-4 pr-3 text-base leading-6 text-text-primary outline-none placeholder:text-text-placeholder max-sm:h-10 max-sm:w-full"
+              className="min-w-0 flex-1 bg-transparent pr-3 pl-4 text-base leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
             />
             <Button
               type="submit"
@@ -180,7 +180,7 @@ export function Footer() {
 
       <div className="relative z-10 w-full border-t border-border-secondary" />
 
-      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 max-lg:flex-col max-lg:gap-12 max-md:px-6">
+      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 max-lg:flex-col max-lg:gap-12 max-md:gap-6 max-md:px-4">
         <div className="flex w-108 shrink-0 flex-col items-start gap-8 max-md:w-full">
           <ConditionalLink
             href="/"
@@ -206,12 +206,12 @@ export function Footer() {
           </div>
 
           <div
-            className="grid w-full grid-cols-2 gap-x-6 gap-y-3 py-2 max-sm:grid-cols-1"
+            className="grid w-full grid-cols-2 gap-x-6 gap-y-3 py-2 max-md:gap-y-6"
             aria-label="Sovran assurance standards"
           >
             {ASSURANCE_MARKS.map(({ acronym, label, kind }) => (
               <div key={acronym} className="flex min-w-0 items-center gap-2.5">
-                <span className="flex size-10 shrink-0 items-center justify-center text-fg-brand-primary-alt">
+                <span className="flex size-10 shrink-0 items-center justify-center text-fg-brand-primary-alt max-md:size-8">
                   <AssuranceMark kind={kind} className="size-full" />
                 </span>
                 <span className="min-w-0 leading-none">
@@ -229,7 +229,7 @@ export function Footer() {
 
         <nav
           aria-label="Footer"
-          className="flex w-193.5 shrink-0 items-start gap-6 max-lg:w-full max-md:grid max-md:grid-cols-2 max-sm:grid-cols-1"
+          className="flex w-193.5 shrink-0 items-start gap-6 max-lg:w-full max-md:grid max-md:grid-cols-2 max-md:[&>*:last-child]:col-span-2"
         >
           {NAV_COLUMNS.map((column) => (
             <div
@@ -239,7 +239,11 @@ export function Footer() {
               <p className="text-sm font-medium uppercase text-text-placeholder">
                 {column.heading}
               </p>
-              <div className="flex w-full flex-col items-start gap-3">
+              <div
+                className={`flex w-full flex-col items-start gap-3 ${
+                  column.heading === "Company" ? "max-md:gap-1.5" : ""
+                }`}
+              >
                 {column.links.map((link) => (
                   <FooterNavLink
                     key={`${link.href}-${link.label}`}
@@ -256,9 +260,9 @@ export function Footer() {
 
       <div className="relative z-10 w-full border-t border-border-secondary" />
 
-      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 text-base leading-6 max-sm:flex-col max-sm:gap-4 max-md:px-6">
+      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 text-base leading-6 max-md:flex-col max-md:items-center max-md:gap-3 max-md:px-4 max-md:text-center max-md:text-sm max-md:leading-5">
         <p>© 2026 Sovran Advisory. All rights reserved</p>
-        <div className="flex max-w-127 w-full min-w-0 items-start justify-end self-end gap-3">
+        <div className="flex max-w-127 w-full min-w-0 items-start justify-end self-end gap-3 max-md:justify-center max-md:self-center">
           <FooterNavLink href="/legal">Legal</FooterNavLink>
           <span className="text-xl font-medium leading-7.5">・</span>
           <FooterNavLink href="/privacy">Privacy Policy</FooterNavLink>
@@ -273,7 +277,7 @@ export function Footer() {
         width={1440}
         height={188}
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-12 left-1/2 h-47 w-full max-w-400 -translate-x-1/2 object-cover object-top opacity-75"
+        className="pointer-events-none absolute -bottom-12 left-1/2 h-auto w-[calc(100%_-_6rem)] max-w-400 -translate-x-1/2 object-contain object-bottom opacity-75 max-md:bottom-0 max-md:w-full"
       />
     </footer>
   );

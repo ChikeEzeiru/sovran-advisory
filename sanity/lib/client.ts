@@ -8,4 +8,8 @@ export const client = createClient({
   apiVersion,
   perspective: 'published',
   useCdn: true,
+  stega: {
+    // The Studio is embedded at the same origin in every environment.
+    studioUrl: '/studio',
+  },
 })

@@ -78,7 +78,7 @@ export function HomeHero() {
   return (
     <section
       data-theme="dark"
-      className="relative w-full h-[87.5svh] flex flex-col overflow-hidden"
+      className="relative flex h-[87.5svh] w-full flex-col overflow-hidden max-md:h-[810px]"
     >
       {/* Background video */}
       <video
@@ -103,9 +103,9 @@ export function HomeHero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col h-full gap-16 justify-end pb-16 pt-24 px-4">
+      <div className="relative z-10 flex h-full flex-col justify-end gap-16 px-4 pt-24 pb-16 max-md:gap-8">
         {/* Link cards — upper right */}
-        <div className="flex justify-end w-full max-w-[1600px] mx-auto px-8 self-center">
+        <div className="flex w-full max-w-[1600px] justify-end self-center px-8 max-md:hidden">
           <div className="flex flex-col gap-3 w-79.5">
             {CARDS.map((card) => {
               const isOpen = openCard === card.id;
@@ -175,32 +175,56 @@ export function HomeHero() {
         </div>
 
         {/* Hero copy + buttons */}
-        <div className="flex flex-col gap-8 w-full max-w-[1600px] mx-auto px-8">
+        <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-8 px-8 max-md:px-2">
           {/* Headline */}
           <div className="flex flex-col gap-3">
             <div className="self-start border border-border-primary rounded-xs px-3 py-1">
-              <span className="text-base font-normal leading-6 text-white whitespace-nowrap">
-                Policy · Strategy · Technology · Communications
+              <span className="text-base font-normal leading-6 text-white whitespace-nowrap max-md:text-sm max-md:leading-5">
+                Pan-African Strategic Advisory
               </span>
             </div>
-            <h1 className="text-[56px] font-medium leading-16 tracking-[-1.68px] text-white">
-              Delivering outcomes few can match, <br />
-              for political and industry leaders
+            <h1 className="text-[56px] font-medium leading-16 tracking-[-1.68px] text-white max-md:text-4xl max-md:leading-11 max-md:tracking-[-1.44px]">
+              <span className="max-md:hidden">
+                Delivering outcomes few can match, <br />
+                for business and institutional leaders
+              </span>
+              <span className="hidden max-md:inline">
+                Delivering outcomes
+                <br />
+                few can match,
+                <br />
+                for business and
+                <br />
+                institutional leaders
+              </span>
             </h1>
           </div>
 
           {/* CTA row */}
-          <div className="flex items-center justify-between w-full">
+          <div className="flex w-full items-center justify-between">
             {/* Left buttons */}
-            <div className="flex items-center gap-2">
-              <Button variant="primary" size="xl" href="/contact">
-                Contact Us
-              </Button>
+            <div className="flex items-center gap-2 max-md:w-full max-md:flex-col">
+              <span className="hidden md:contents">
+                <Button variant="primary" size="xl" href="/contact">
+                  Talk to Us
+                </Button>
+              </span>
+              <span data-theme="light" className="w-full md:hidden">
+                <Button
+                  variant="secondary"
+                  size="xl"
+                  href="/contact"
+                  className="w-full justify-center"
+                >
+                  Talk to Us
+                </Button>
+              </span>
               <Button
                 variant="tertiary"
                 size="xl"
                 href="/case-studies"
                 showIcon={false}
+                className="max-md:w-full max-md:justify-center max-md:bg-white/25 max-md:text-white max-md:ring-1 max-md:ring-white/15 max-md:ring-inset"
               >
                 See Case Studies
               </Button>
@@ -210,7 +234,7 @@ export function HomeHero() {
             <button
               onClick={toggleVideo}
               aria-label={playing ? "Pause video" : "Play video"}
-              className="relative inline-flex items-center justify-center overflow-hidden rounded-xs border border-[#d4d4d4] p-2 text-[#f1f3f3] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] cursor-pointer select-none"
+              className="relative inline-flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-xs border border-[#d4d4d4] p-2 text-[#f1f3f3] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] max-md:absolute max-md:top-24 max-md:right-4"
             >
               <span
                 aria-hidden

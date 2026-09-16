@@ -89,8 +89,14 @@ const institutionsPageData: PracticePageData = {
     logoAlt: "National Digital Services Office",
     cta: "View case study",
     metrics: [
-      { value: "—", label: "First case-study result" },
-      { value: "—", label: "Second case-study result" },
+      {
+        value: "1",
+        label: "agreed roadmap with shared programme governance",
+      },
+      {
+        value: "4",
+        label: "delivery domains brought into shared governance",
+      },
     ],
   },
 };

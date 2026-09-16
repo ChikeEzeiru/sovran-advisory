@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { stegaClean } from "next-sanity";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Button } from "@/components/ui/Button";
@@ -26,8 +27,8 @@ export async function generateMetadata({
 
   return study
     ? {
-        title: study.seoTitle ?? study.title,
-        description: study.seoDescription ?? study.summary,
+        title: stegaClean(study.seoTitle ?? study.title),
+        description: stegaClean(study.seoDescription ?? study.summary),
       }
     : {};
 }

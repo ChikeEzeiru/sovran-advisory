@@ -57,7 +57,7 @@ export function LogoMarquee() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function setSlotWidth() {
-      const visibleSlots = window.innerWidth >= 1024 ? 5 : window.innerWidth >= 640 ? 3 : 2;
+      const visibleSlots = window.innerWidth >= 1024 ? 5 : 3;
       viewport!.style.setProperty("--proof-slot-width", `${viewport!.clientWidth / visibleSlots}px`);
     }
 
@@ -90,7 +90,7 @@ export function LogoMarquee() {
   }, []);
 
   return (
-    <section aria-label="Selected organisations" className="flex h-28 justify-center border-b border-border-secondary-alt px-4">
+    <section aria-label="Selected organisations" className="flex h-28 justify-center border-b border-border-secondary-alt px-4 max-md:h-26">
       <div
         ref={viewportRef}
         className="h-full w-full max-w-336 overflow-hidden"

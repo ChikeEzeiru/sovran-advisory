@@ -10,8 +10,7 @@ import {
 } from "react";
 import Image from "next/image";
 import { Squircle } from "@squircle-js/react";
-import { ConditionalLink } from "@/components/ui/ConditionalLink";
-import { Button, ButtonVisual } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 
 // Squeezy carousel layout constants (adapted from Stripe's pattern)
 const S_GAP = 8; // gap before small cards (col >= 4)
@@ -311,28 +310,51 @@ export function PerspectivesSection() {
     navigateBy(1);
   }
 
+  function mobilePrev() {
+    if (isNavigating) return;
+    setCurrent((value) => (value - 1 + N) % N);
+  }
+
+  function mobileNext() {
+    if (isNavigating) return;
+    setCurrent((value) => (value + 1) % N);
+  }
+
   return (
-    <section aria-labelledby={headingId} className="py-20">
-      <div className="flex flex-col gap-10 px-12 max-w-[1600px] mx-auto w-full">
+    <section aria-labelledby={headingId} className="py-20 max-md:py-12">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-10 px-12 max-md:gap-12 max-md:px-4">
         {/* Header: stacked heading+subheading left, nav buttons right */}
-        <header className="flex items-start justify-between">
+        <header className="flex items-start justify-between max-md:flex-col max-md:gap-2">
           <div className="flex flex-col gap-3">
             <h2
               id={headingId}
-              className="text-[36px] font-medium leading-11 tracking-[-0.72px] text-text-secondary"
+              className="text-[36px] font-medium leading-11 tracking-[-0.72px] text-text-secondary max-md:text-3xl max-md:leading-[38px]"
             >
-              What&apos;s happening
+              <span className="max-md:hidden">What&apos;s happening</span>
+              <span className="hidden max-md:inline">What we are seeing.</span>
             </h2>
-            <p className="text-[20px] font-normal leading-7.5 text-text-tertiary">
-              Our latest perspectives and analysis.
+            <p className="text-[20px] font-normal leading-7.5 text-text-tertiary max-md:max-w-sm max-md:text-lg max-md:leading-7">
+              <span className="max-md:hidden">
+                Our latest perspectives and analysis.
+              </span>
+              <span className="hidden max-md:inline">
+                Short, useful analysis for people making decisions across
+                changing markets.
+              </span>
             </p>
           </div>
 
-          <div className="hidden md:flex items-center gap-3 shrink-0">
+          <div className="flex shrink-0 items-center gap-3 max-md:self-end">
             <Squircle asChild cornerRadius={2} cornerSmoothing={0.6}>
               <button
                 type="button"
-                onClick={prev}
+                onClick={() => {
+                  if (window.matchMedia("(max-width: 767px)").matches) {
+                    mobilePrev();
+                    return;
+                  }
+                  prev();
+                }}
                 disabled={isNavigating}
                 aria-label="Previous article"
                 className="relative inline-flex items-center justify-center p-3 cursor-pointer bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs-skeuomorphic ring-1 ring-border-primary ring-inset transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
@@ -351,7 +373,13 @@ export function PerspectivesSection() {
             <Squircle asChild cornerRadius={2} cornerSmoothing={0.6}>
               <button
                 type="button"
-                onClick={next}
+                onClick={() => {
+                  if (window.matchMedia("(max-width: 767px)").matches) {
+                    mobileNext();
+                    return;
+                  }
+                  next();
+                }}
                 disabled={isNavigating}
                 aria-label="Next article"
                 className="relative inline-flex items-center justify-center p-3 cursor-pointer bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs-skeuomorphic ring-1 ring-border-primary ring-inset transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
@@ -528,44 +556,64 @@ export function PerspectivesSection() {
           </div>
         </div>
 
-        {/* Mobile: horizontal snap-scroll cards */}
-        <ul
-          role="list"
-          className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-12 px-12 pb-2"
-          style={{ scrollbarWidth: "none" }}
-        >
-          {ARTICLES.map((article) => (
-            <li key={article.href} className="shrink-0 w-72 snap-start">
-              <ConditionalLink
-                href={article.href}
-                className="group flex flex-col gap-4"
-              >
-                <div className="relative h-48 overflow-hidden rounded-xs">
+        {/* Mobile: compact squeezy composition from the mobile design. */}
+        <div className="hidden flex-col gap-12 max-md:flex">
+          <div className="grid h-95 w-full grid-cols-[196fr_88fr_44fr_20fr_8fr] gap-2 overflow-hidden">
+            {Array.from({ length: N }, (_, offset) => {
+              const articleIndex = (current + offset) % N;
+              const article = ARTICLES[articleIndex];
+
+              return (
+                <button
+                  key={article.href}
+                  type="button"
+                  onClick={() => {
+                    if (offset > 0) setCurrent(articleIndex);
+                  }}
+                  aria-label={
+                    offset === 0
+                      ? article.title
+                      : `Show ${article.title}`
+                  }
+                  className="relative min-w-0 cursor-pointer overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                >
                   <Image
                     src={article.image}
-                    alt=""
-                    fill
-                    sizes="288px"
-                    className="object-cover"
+                    alt={offset === 0 ? article.title : ""}
+                    width={2640}
+                    height={1440}
+                    sizes="196px"
+                    className="absolute top-0 left-1/2 h-full w-[196px] max-w-none -translate-x-1/2 object-cover"
                   />
-                </div>
-                <div>
-                  <span className="text-base font-medium leading-snug text-text-primary">
-                    {article.title}{" "}
-                  </span>
-                  <span className="text-base font-normal leading-snug text-text-quaternary">
-                    {article.body}
-                  </span>
-                </div>
-                <span className="relative inline-flex self-start items-center gap-1.5 rounded-xs bg-bg-primary px-3 py-2 text-sm font-medium leading-5 text-text-secondary shadow-xs-skeuomorphic ring-1 ring-border-primary ring-inset transition-colors duration-150 group-hover:bg-bg-primary-hover">
-                  <ButtonVisual size="sm" showIcon={false}>
-                    {article.cta}
-                  </ButtonVisual>
-                </span>
-              </ConditionalLink>
-            </li>
-          ))}
-        </ul>
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-bg-primary-solid"
+                    style={{ opacity: overlayOpacity(offset) }}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <h3 className="text-xl font-medium leading-7.5 text-text-secondary">
+                {ARTICLES[current].title}
+              </h3>
+              <p className="text-base leading-6 text-text-tertiary">
+                {ARTICLES[current].body}
+              </p>
+            </div>
+            <Button
+              href={ARTICLES[current].href}
+              variant="secondary"
+              size="lg"
+              className="w-full justify-center"
+            >
+              View
+            </Button>
+          </div>
+        </div>
 
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           {`Article ${current + 1} of ${N}: ${ARTICLES[current].title}`}
