@@ -28,6 +28,7 @@ export type PerspectiveIndexItem = {
   imageAlt: string;
   published: string;
   featured: boolean;
+  authorName: string;
 };
 
 function ArticleBadge({ article }: { article: PerspectiveIndexItem }) {
@@ -65,7 +66,7 @@ function ArticleCard({ article }: { article: PerspectiveIndexItem }) {
           </div>
         </div>
         <div className="text-sm leading-5">
-          <p className="font-semibold text-text-primary">Sovran Advisory</p>
+          <p className="font-semibold text-text-primary">{article.authorName}</p>
           <p className="text-text-tertiary">{article.published}</p>
         </div>
       </div>
@@ -187,7 +188,7 @@ export function PerspectivesIndex({
               </div>
               <div className="text-sm leading-5">
                 <p className="font-semibold text-text-primary">
-                  Sovran Advisory
+                  {featured.authorName}
                 </p>
                 <p className="text-text-tertiary">
                   {featured.published}

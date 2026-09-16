@@ -20,6 +20,19 @@ export default defineConfig({
   basePath: '/studio',
   projectId,
   dataset,
+  auth: {
+    // Keep one consistent identity per editor and avoid duplicate accounts
+    // created through GitHub or email/password with the same email address.
+    providers: [
+      {
+        name: 'google',
+        title: 'Google',
+        url: 'https://api.sanity.io/v1/auth/login/google',
+      },
+    ],
+    redirectOnSingle: true,
+    loginMethod: 'dual',
+  },
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
   plugins: [

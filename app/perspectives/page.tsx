@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default async function PerspectivesPage() {
   const perspectives = await getPerspectives();
   const indexItems: PerspectiveIndexItem[] = perspectives.map(
-    ({ slug, title, type, topic, summary, image, imageAlt, published, featured }) => ({
+    ({ slug, title, type, topic, summary, image, imageAlt, published, featured, author }) => ({
       slug,
       title,
       type,
@@ -26,6 +26,7 @@ export default async function PerspectivesPage() {
       imageAlt,
       published,
       featured,
+      authorName: author.name,
     })
   );
 

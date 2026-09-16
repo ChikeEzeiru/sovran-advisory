@@ -21,11 +21,31 @@ export const authorType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'role',
+      title: 'Role at Sovran',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'editorialRole',
+      title: 'Editorial responsibility',
+      description: 'The person’s responsibility within the Perspectives publishing team.',
+      type: 'string',
+    }),
+    defineField({
       name: 'image',
       type: 'image',
       options: {
         hotspot: true,
       },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alternative text',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+      ],
     }),
     defineField({
       name: 'bio',
@@ -42,7 +62,16 @@ export const authorType = defineType({
   preview: {
     select: {
       title: 'name',
+      role: 'role',
+      editorialRole: 'editorialRole',
       media: 'image',
+    },
+    prepare({title, role, editorialRole, media}) {
+      return {
+        title,
+        subtitle: editorialRole ? `${editorialRole} · ${role}` : role,
+        media,
+      }
     },
   },
 })

@@ -87,8 +87,11 @@ export default async function PerspectivePage({
                       Written by
                     </dt>
                     <dd className="mt-2 text-lg font-medium text-text-primary">
-                      {article.author}
+                      {article.author.name}
                     </dd>
+                    <p className="mt-1 text-sm leading-5 text-text-tertiary">
+                      {article.author.role}
+                    </p>
                   </div>
                   <div>
                     <dt className="text-sm font-semibold text-text-brand-tertiary">
@@ -189,7 +192,7 @@ export default async function PerspectivePage({
                   “{article.quote}”
                 </p>
                 <footer className="mt-5 text-base text-text-tertiary">
-                  {article.author}
+                  {article.author.name}
                 </footer>
               </blockquote>
 

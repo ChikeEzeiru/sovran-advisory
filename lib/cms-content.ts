@@ -3,11 +3,22 @@ import {sanityFetch} from '@/sanity/lib/live'
 import {CASE_STUDIES, type CaseStudy} from '@/lib/case-studies'
 import {PERSPECTIVE_DETAILS, type PerspectiveDetail} from '@/lib/perspective-details'
 import {PERSPECTIVES, type Perspective} from '@/lib/perspectives'
+import {
+  EDITORIAL_AUTHOR,
+  getLocalPerspectiveAuthor,
+} from '@/lib/perspective-authors'
+
+export type PerspectiveAuthor = {
+  name: string
+  role: string
+  image?: string
+  imageAlt: string
+}
 
 export type PerspectiveContent = Perspective &
   PerspectiveDetail & {
     id: string
-    author: string
+    author: PerspectiveAuthor
     featured: boolean
     imageAlt: string
     seoTitle?: string
@@ -40,7 +51,7 @@ type CmsPerspective = {
   image: string
   imageAlt: string
   publishedAt: string
-  author?: string
+  author?: PerspectiveAuthor
   featured?: boolean
   sections: PerspectiveDetail['sections']
   quote: string
@@ -77,7 +88,12 @@ const PERSPECTIVES_QUERY = `{
     "image": mainImage.asset->url,
     "imageAlt": coalesce(mainImage.alt, ""),
     publishedAt,
-    "author": coalesce(author->name, "Sovran Editorial Team"),
+    "author": {
+      "name": coalesce(author->name, "Sovran Editorial Team"),
+      "role": coalesce(author->role, "Editorial team"),
+      "image": author->image.asset->url,
+      "imageAlt": coalesce(author->image.alt, "")
+    },
     "featured": coalesce(featured, false),
     sections[]{id, title, paragraphs, bullets},
     quote,
@@ -149,7 +165,7 @@ function getFallbackPerspectives(): PerspectiveContent[] {
       ...article,
       ...detail,
       id: `local-${article.slug}`,
-      author: 'Sovran Editorial Team',
+      author: getLocalPerspectiveAuthor(article.slug),
       featured: article.slug === 'the-new-competitive-landscape-for-african-payments',
       imageAlt: '',
     }
@@ -169,7 +185,7 @@ function normalizePerspective(item: CmsPerspective): PerspectiveContent {
     image: item.image,
     imageAlt: item.imageAlt ?? '',
     published: formatPublishedDate(item.publishedAt),
-    author: item.author ?? 'Sovran Editorial Team',
+    author: item.author ?? EDITORIAL_AUTHOR,
     featured: item.featured ?? false,
     sections: item.sections ?? [],
     quote: item.quote,
