@@ -27,12 +27,44 @@ const SQZ_F = [-0.12, 0.59, 0.28, 0.13]; // squeezed (another col is hovered)
 const ANIM_DUR = 1000; // ms
 const EASE = "cubic-bezier(0.19,1,0.22,1)";
 const SLOT_OVERLAY_OPACITY = [0, 0, 0.2, 0.48, 0.85];
+const MOBILE_ANIM_DUR = 700;
+const MOBILE_GAP = 8;
+const MOBILE_SLOT_WEIGHTS = [196, 88, 44, 20, 8] as const;
+const MOBILE_TOTAL_SLOT_WIDTH = MOBILE_SLOT_WEIGHTS.reduce(
+  (total, width) => total + width,
+  0
+);
 
 function overlayOpacity(columnIndex: number) {
   if (columnIndex < 0) return 0;
   return SLOT_OVERLAY_OPACITY[
     Math.min(columnIndex, SLOT_OVERLAY_OPACITY.length - 1)
   ];
+}
+
+function mobileOverlayOpacity(columnIndex: number) {
+  return columnIndex < 0 ? SLOT_OVERLAY_OPACITY.at(-1)! : overlayOpacity(columnIndex);
+}
+
+function computeMobileSlotLayout(rowWidth: number) {
+  const availableWidth = Math.max(
+    rowWidth - MOBILE_GAP * (MOBILE_SLOT_WEIGHTS.length - 1),
+    0
+  );
+  const scale = availableWidth / MOBILE_TOTAL_SLOT_WIDTH;
+  const widths = MOBILE_SLOT_WEIGHTS.map((width) => width * scale);
+  const positions = widths.reduce<number[]>((result, width, index) => {
+    const previousX = result[index - 1];
+    const previousWidth = widths[index - 1];
+    result.push(
+      index === 0
+        ? 0
+        : previousX + previousWidth + MOBILE_GAP
+    );
+    return result;
+  }, []);
+
+  return { positions, widths };
 }
 
 const ARTICLES = [
@@ -91,6 +123,37 @@ type RenderCard = {
   columnIndex: number;
 };
 
+function MobileArticleDetails({
+  article,
+  className = "",
+  style,
+}: {
+  article: (typeof ARTICLES)[number];
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div className={`flex flex-col gap-4 ${className}`} style={style}>
+      <div className="flex flex-col gap-2">
+        <h3 className="text-xl font-medium leading-7.5 text-text-secondary">
+          {article.title}
+        </h3>
+        <p className="text-base leading-6 text-text-tertiary">
+          {article.body}
+        </p>
+      </div>
+      <Button
+        href={article.href}
+        variant="secondary"
+        size="lg"
+        className="w-full justify-center"
+      >
+        View
+      </Button>
+    </div>
+  );
+}
+
 function computeWidths(
   colOneBaseW: number,
   totalMedW: number,
@@ -123,13 +186,31 @@ export function PerspectivesSection() {
   const [cardsOffset, setCardsOffset] = useState(0);
   const [transitionCards, setTransitionCards] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [mobileCards, setMobileCards] = useState<RenderCard[]>(() =>
+    ARTICLES.map((_, index) => ({
+      instanceId: index,
+      articleIndex: index,
+      columnIndex: index,
+    }))
+  );
+  const [mobileRowWidth, setMobileRowWidth] = useState(0);
+  const [transitionMobileCards, setTransitionMobileCards] = useState(true);
+  const [isMobileNavigating, setIsMobileNavigating] = useState(false);
+  const [previousMobileArticle, setPreviousMobileArticle] = useState<
+    number | null
+  >(null);
+  const [showMobileArticle, setShowMobileArticle] = useState(true);
   const headingId = useId();
 
   const rowRef = useRef<HTMLDivElement>(null);
+  const mobileRowRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const nextInstanceId = useRef(N);
+  const nextMobileInstanceId = useRef(N);
   const navigationFrames = useRef<number[]>([]);
+  const mobileNavigationFrames = useRef<number[]>([]);
   const navigationTimer = useRef<number | null>(null);
+  const mobileNavigationTimer = useRef<number | null>(null);
   const [dims, setDims] = useState<{
     colOneBaseW: number;
     totalMedW: number;
@@ -169,6 +250,18 @@ export function PerspectivesSection() {
     return () => ro.disconnect();
   }, []);
 
+  useEffect(() => {
+    const row = mobileRowRef.current;
+    if (!row) return;
+
+    const update = () => setMobileRowWidth(row.getBoundingClientRect().width);
+    const observer = new ResizeObserver(update);
+    observer.observe(row);
+    update();
+
+    return () => observer.disconnect();
+  }, []);
+
   const dur = reduced ? 0 : ANIM_DUR;
   // hoveredCol: column position of the hovered article relative to current
   const hovCol = hoveredArt >= 0 ? (hoveredArt - current + N) % N : -1;
@@ -195,6 +288,37 @@ export function PerspectivesSection() {
         []
       )
     : null;
+
+  const mobileSlotLayout = computeMobileSlotLayout(mobileRowWidth);
+  const mobileBaseWidth = mobileSlotLayout.widths[0] ?? 0;
+  const mobileDur = reduced ? 0 : MOBILE_ANIM_DUR;
+
+  const getMobileCardLayout = (columnIndex: number) => {
+    const lastColumn = MOBILE_SLOT_WEIGHTS.length - 1;
+    const smallWidth = mobileSlotLayout.widths[lastColumn] ?? 0;
+
+    if (columnIndex < 0) {
+      return {
+        x: columnIndex * (smallWidth + MOBILE_GAP),
+        width: smallWidth,
+      };
+    }
+
+    if (columnIndex > lastColumn) {
+      return {
+        x:
+          mobileRowWidth +
+          MOBILE_GAP +
+          (columnIndex - lastColumn - 1) * (smallWidth + MOBILE_GAP),
+        width: smallWidth,
+      };
+    }
+
+    return {
+      x: mobileSlotLayout.positions[columnIndex] ?? 0,
+      width: mobileSlotLayout.widths[columnIndex] ?? smallWidth,
+    };
+  };
 
   const handlePointerMove = useCallback(
     (event: PointerEvent<HTMLDivElement>) => {
@@ -287,6 +411,71 @@ export function PerspectivesSection() {
     [dims, dur, isNavigating, renderCards]
   );
 
+  const navigateMobileBy = useCallback(
+    (direction: 1 | -1, requestedSteps = 1) => {
+      if (isMobileNavigating || mobileRowWidth === 0) return;
+
+      const steps = Math.max(1, Math.min(requestedSteps, N - 1));
+      const edgeCards =
+        direction === 1
+          ? mobileCards.slice(0, steps)
+          : mobileCards.slice(-steps);
+      const clones = edgeCards.map((card, index) => ({
+        instanceId: nextMobileInstanceId.current++,
+        articleIndex: card.articleIndex,
+        columnIndex: direction === 1 ? N + index : -steps + index,
+      }));
+      const stagedCards =
+        direction === 1
+          ? [...mobileCards, ...clones]
+          : [...clones, ...mobileCards];
+
+      setIsMobileNavigating(true);
+      setTransitionMobileCards(false);
+      setMobileCards(stagedCards);
+      setPreviousMobileArticle(current);
+      setShowMobileArticle(false);
+      setCurrent((value) => (value + direction * steps + N) % N);
+
+      const firstFrame = window.requestAnimationFrame(() => {
+        const secondFrame = window.requestAnimationFrame(() => {
+          setTransitionMobileCards(true);
+          setShowMobileArticle(true);
+          setMobileCards((cards) =>
+            cards.map((card, index) => ({
+              ...card,
+              columnIndex: direction === 1 ? index - steps : index,
+            }))
+          );
+
+          mobileNavigationTimer.current = window.setTimeout(() => {
+            setTransitionMobileCards(false);
+            setMobileCards((cards) => {
+              const visibleCards =
+                direction === 1
+                  ? cards.slice(steps)
+                  : cards.slice(0, -steps);
+              return visibleCards.map((card, index) => ({
+                ...card,
+                columnIndex: index,
+              }));
+            });
+            setIsMobileNavigating(false);
+            setPreviousMobileArticle(null);
+
+            const normalizationFrame = window.requestAnimationFrame(() => {
+              setTransitionMobileCards(true);
+            });
+            mobileNavigationFrames.current.push(normalizationFrame);
+          }, mobileDur);
+        });
+        mobileNavigationFrames.current.push(secondFrame);
+      });
+      mobileNavigationFrames.current.push(firstFrame);
+    },
+    [current, isMobileNavigating, mobileCards, mobileDur, mobileRowWidth]
+  );
+
   const handleCarouselClick = useCallback(() => {
     const clickedCol =
       hoveredArt >= 0 ? (hoveredArt - current + N) % N : -1;
@@ -295,10 +484,15 @@ export function PerspectivesSection() {
 
   useEffect(() => {
     const frames = navigationFrames.current;
+    const mobileFrames = mobileNavigationFrames.current;
     return () => {
       frames.forEach(window.cancelAnimationFrame);
+      mobileFrames.forEach(window.cancelAnimationFrame);
       if (navigationTimer.current !== null) {
         window.clearTimeout(navigationTimer.current);
+      }
+      if (mobileNavigationTimer.current !== null) {
+        window.clearTimeout(mobileNavigationTimer.current);
       }
     };
   }, []);
@@ -308,16 +502,6 @@ export function PerspectivesSection() {
   }
   function next() {
     navigateBy(1);
-  }
-
-  function mobilePrev() {
-    if (isNavigating) return;
-    setCurrent((value) => (value - 1 + N) % N);
-  }
-
-  function mobileNext() {
-    if (isNavigating) return;
-    setCurrent((value) => (value + 1) % N);
   }
 
   return (
@@ -350,14 +534,14 @@ export function PerspectivesSection() {
                 type="button"
                 onClick={() => {
                   if (window.matchMedia("(max-width: 767px)").matches) {
-                    mobilePrev();
+                    navigateMobileBy(-1);
                     return;
                   }
                   prev();
                 }}
-                disabled={isNavigating}
+                disabled={isNavigating || isMobileNavigating}
                 aria-label="Previous article"
-                className="relative inline-flex items-center justify-center p-3 cursor-pointer bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs-skeuomorphic ring-1 ring-border-primary ring-inset transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                className="relative inline-flex items-center justify-center p-3 cursor-pointer bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs ring-1 ring-border-primary ring-inset transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
               >
                 <svg
                   width="20"
@@ -375,14 +559,14 @@ export function PerspectivesSection() {
                 type="button"
                 onClick={() => {
                   if (window.matchMedia("(max-width: 767px)").matches) {
-                    mobileNext();
+                    navigateMobileBy(1);
                     return;
                   }
                   next();
                 }}
-                disabled={isNavigating}
+                disabled={isNavigating || isMobileNavigating}
                 aria-label="Next article"
-                className="relative inline-flex items-center justify-center p-3 cursor-pointer bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs-skeuomorphic ring-1 ring-border-primary ring-inset transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                className="relative inline-flex items-center justify-center p-3 cursor-pointer bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs ring-1 ring-border-primary ring-inset transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
               >
                 <svg
                   width="20"
@@ -489,7 +673,7 @@ export function PerspectivesSection() {
           </div>
 
           {/* Stripe-style details: overlapping panels crossfade as one unit */}
-          <div className="relative">
+          <div className="relative min-h-44">
             {/* Spacer: holds height from tallest article */}
             <div
               className="invisible pointer-events-none flex items-center justify-between gap-8"
@@ -558,60 +742,98 @@ export function PerspectivesSection() {
 
         {/* Mobile: compact squeezy composition from the mobile design. */}
         <div className="hidden flex-col gap-12 max-md:flex">
-          <div className="grid h-95 w-full grid-cols-[196fr_88fr_44fr_20fr_8fr] gap-2 overflow-hidden">
-            {Array.from({ length: N }, (_, offset) => {
-              const articleIndex = (current + offset) % N;
-              const article = ARTICLES[articleIndex];
+          <div
+            ref={mobileRowRef}
+            className="relative h-95 w-full overflow-hidden"
+          >
+            {mobileRowWidth > 0 &&
+              mobileCards.map((card) => {
+              const article = ARTICLES[card.articleIndex];
+              const { x, width } = getMobileCardLayout(card.columnIndex);
+              const rightInset = Math.max(mobileBaseWidth - width, 0);
 
               return (
                 <button
-                  key={article.href}
+                  key={card.instanceId}
                   type="button"
                   onClick={() => {
-                    if (offset > 0) setCurrent(articleIndex);
+                    if (
+                      card.columnIndex > 0 &&
+                      card.columnIndex < N &&
+                      !isMobileNavigating
+                    ) {
+                      navigateMobileBy(1, card.columnIndex);
+                    }
                   }}
                   aria-label={
-                    offset === 0
+                    card.columnIndex === 0
                       ? article.title
                       : `Show ${article.title}`
                   }
-                  className="relative min-w-0 cursor-pointer overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                  aria-hidden={
+                    card.columnIndex < 0 || card.columnIndex >= N
+                      ? true
+                      : undefined
+                  }
+                  tabIndex={
+                    card.columnIndex < 0 || card.columnIndex >= N ? -1 : 0
+                  }
+                  className="absolute top-0 left-0 h-full cursor-pointer overflow-hidden rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                  style={{
+                    width: `${mobileBaseWidth}px`,
+                    clipPath: `inset(0 ${rightInset}px 0 0)`,
+                    transform: `translate3d(${x}px, 0, 0)`,
+                    transition: transitionMobileCards
+                      ? `transform ${mobileDur}ms ${EASE}, clip-path ${mobileDur}ms ${EASE}`
+                      : "none",
+                    willChange: "transform, clip-path",
+                  }}
                 >
                   <Image
                     src={article.image}
-                    alt={offset === 0 ? article.title : ""}
+                    alt={card.columnIndex === 0 ? article.title : ""}
                     width={2640}
                     height={1440}
                     sizes="196px"
-                    className="absolute top-0 left-1/2 h-full w-[196px] max-w-none -translate-x-1/2 object-cover"
+                    className="absolute inset-0 h-full w-full max-w-none object-cover"
                   />
                   <span
                     aria-hidden="true"
                     className="absolute inset-0 bg-bg-primary-solid"
-                    style={{ opacity: overlayOpacity(offset) }}
+                    style={{
+                      opacity: mobileOverlayOpacity(card.columnIndex),
+                      transition: transitionMobileCards
+                        ? `opacity ${mobileDur}ms ${EASE}`
+                        : "none",
+                    }}
                   />
                 </button>
               );
             })}
           </div>
 
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <h3 className="text-xl font-medium leading-7.5 text-text-secondary">
-                {ARTICLES[current].title}
-              </h3>
-              <p className="text-base leading-6 text-text-tertiary">
-                {ARTICLES[current].body}
-              </p>
-            </div>
-            <Button
-              href={ARTICLES[current].href}
-              variant="secondary"
-              size="lg"
-              className="w-full justify-center"
-            >
-              View
-            </Button>
+          <div className="relative">
+            <MobileArticleDetails
+              article={ARTICLES[current]}
+              style={{
+                opacity: showMobileArticle ? 1 : 0,
+                transition: reduced
+                  ? "none"
+                  : `opacity 240ms cubic-bezier(0.23,1,0.32,1)`,
+              }}
+            />
+            {previousMobileArticle !== null ? (
+              <MobileArticleDetails
+                article={ARTICLES[previousMobileArticle]}
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  opacity: showMobileArticle ? 0 : 1,
+                  transition: reduced
+                    ? "none"
+                    : `opacity 180ms cubic-bezier(0.23,1,0.32,1)`,
+                }}
+              />
+            ) : null}
           </div>
         </div>
 

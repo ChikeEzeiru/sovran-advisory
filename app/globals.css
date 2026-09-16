@@ -4,13 +4,11 @@
 :root {
   /* Shadows */
   --sovran-shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  --sovran-shadow-xs-skeuomorphic: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), inset 0px 0px 0px 1px rgba(16, 24, 40, 0.18), inset 0px -2px 0px 0px rgba(16, 24, 40, 0.05);
 }
 
 @theme inline {
   --font-sans: var(--font-archivo);
   --shadow-xs: var(--sovran-shadow-xs);
-  --shadow-xs-skeuomorphic: var(--sovran-shadow-xs-skeuomorphic);
 }
 
 @keyframes marquee-scroll {

@@ -347,78 +347,85 @@ function MobileNavigation({
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
-      className="fixed inset-x-0 top-18 bottom-0 overflow-y-auto border-t border-border-secondary bg-bg-primary lg:hidden"
+      className="fixed inset-x-0 top-18 bottom-0 overflow-y-auto bg-bg-secondary-alt lg:hidden"
     >
       <nav
         aria-label="Mobile navigation"
-        className="mx-auto flex w-full max-w-400 flex-col px-6 pt-3 pb-[max(2rem,env(safe-area-inset-bottom))]"
+        className="mx-auto flex w-full max-w-400 flex-col gap-8 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
       >
-        {DROPDOWN_ORDER.map((key) => {
-          const panel = PANEL_META[key];
-          const isExpanded = expanded === key;
+        <div className="flex flex-col">
+          {DROPDOWN_ORDER.map((key) => {
+            const panel = PANEL_META[key];
+            const isExpanded = expanded === key;
 
-          return (
-            <div key={key} className="border-b border-border-secondary">
-              <button
-                type="button"
-                aria-expanded={isExpanded}
-                aria-controls={`mobile-${key}-links`}
-                onClick={() => onToggle(key)}
-                className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left text-xl font-medium leading-7 text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
-              >
-                <span className="capitalize">{key}</span>
-                <ChevronDown
-                  size={20}
-                  className={`shrink-0 text-text-tertiary transition-transform duration-200 motion-reduce:transition-none ${
-                    isExpanded ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {isExpanded ? (
-                <div
-                  id={`mobile-${key}-links`}
-                  className="flex flex-col gap-1 pb-5"
+            return (
+              <div key={key} className="flex flex-col">
+                <button
+                  type="button"
+                  aria-expanded={isExpanded}
+                  aria-controls={`mobile-${key}-links`}
+                  onClick={() => onToggle(key)}
+                  className="flex w-full cursor-pointer items-center justify-between gap-2 p-3 text-left text-base font-medium leading-6 text-text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
                 >
-                  <ConditionalLink
-                    href={panel.footer.href}
-                    onClick={onNavigate}
-                    className="rounded-xs px-3 py-3 text-sm font-semibold leading-5 text-text-brand-secondary hover:bg-bg-primary-hover"
+                  <span className="capitalize">{key}</span>
+                  <ChevronDown
+                    size={20}
+                    className={`shrink-0 text-text-quaternary transition-transform duration-200 motion-reduce:transition-none ${
+                      isExpanded ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {isExpanded ? (
+                  <div
+                    id={`mobile-${key}-links`}
+                    className="overflow-hidden rounded-xs bg-bg-primary-alt"
                   >
-                    {key === "expertise" ? "Expertise overview" : "About Sovran"}
-                  </ConditionalLink>
+                    <div className="flex flex-col gap-0.5 p-1">
+                      {panel.items.map((item) => {
+                        const Icon = item.icon;
 
-                  {panel.items.map((item) => {
-                    const Icon = item.icon;
+                        return (
+                          <ConditionalLink
+                            key={item.href}
+                            href={item.href}
+                            onClick={onNavigate}
+                            className="flex items-start gap-3 rounded-xs px-2 py-4 transition-colors duration-150 hover:bg-bg-primary-hover"
+                          >
+                            <span className="flex size-8 shrink-0 items-center justify-center rounded-xs border border-border-primary bg-bg-primary text-fg-secondary shadow-xs">
+                              <Icon size={16} />
+                            </span>
+                            <span className="min-w-0">
+                              <span className="block text-sm font-medium leading-5 text-text-secondary">
+                                {item.title}
+                              </span>
+                              <span className="mt-1 block text-sm leading-5 text-text-quaternary">
+                                {item.desc}
+                              </span>
+                            </span>
+                          </ConditionalLink>
+                        );
+                      })}
+                    </div>
 
-                    return (
-                      <ConditionalLink
-                        key={item.href}
-                        href={item.href}
-                        onClick={onNavigate}
-                        className="flex items-start gap-3 rounded-xs px-3 py-3 hover:bg-bg-primary-hover"
+                    <div className="px-6 py-4">
+                      <Button
+                        href={panel.footer.href}
+                        variant="secondary"
+                        size="md"
+                        className="w-full justify-center"
                       >
-                        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xs bg-bg-quaternary text-text-tertiary">
-                          <Icon size={16} />
-                        </span>
-                        <span className="min-w-0">
-                          <span className="block text-base font-medium leading-6 text-text-primary">
-                            {item.title}
-                          </span>
-                          <span className="mt-0.5 block text-sm leading-5 text-text-quaternary">
-                            {item.desc}
-                          </span>
-                        </span>
-                      </ConditionalLink>
-                    );
-                  })}
-                </div>
-              ) : null}
-            </div>
-          );
-        })}
+                        {key === "expertise"
+                          ? "See Expertise Overview"
+                          : "See Our Full History"}
+                      </Button>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
 
-        <div className="flex flex-col border-b border-border-secondary py-2">
           {[
             { label: "Case Studies", href: "/case-studies" },
             { label: "Perspectives", href: "/perspectives" },
@@ -428,7 +435,7 @@ function MobileNavigation({
               key={item.href}
               href={item.href}
               onClick={onNavigate}
-              className="rounded-xs py-3 text-xl font-medium leading-7 text-text-primary hover:text-text-tertiary"
+              className="rounded-xs p-3 text-base font-medium leading-6 text-text-secondary transition-colors duration-150 hover:bg-bg-primary-hover"
             >
               {item.label}
             </ConditionalLink>
@@ -440,7 +447,7 @@ function MobileNavigation({
           variant="primary"
           size="lg"
           showIcon={false}
-          className="mt-6 w-full justify-center"
+          className="w-full justify-center"
         >
           Contact Us
         </Button>
@@ -572,15 +579,15 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
     >
       {/* Nav bar */}
       <div
-        className={`h-18 flex items-center justify-center border-b px-4 transition-[background-color,backdrop-filter,border-color] duration-300 ease-out max-lg:bg-black/60 max-lg:px-2 max-lg:backdrop-blur-[2px] ${
+        className={`h-18 flex items-center justify-center border-b px-4 transition-[background-color,backdrop-filter,border-color] duration-300 ease-out max-lg:px-2 ${
           isLight
             ? active
-              ? "bg-bg-tertiary border-transparent"
+              ? "bg-bg-tertiary border-transparent max-lg:bg-bg-secondary-alt-2 max-lg:backdrop-blur-[2px]"
               : scrolled
-                ? "bg-bg-tertiary border-border-primary"
-                : "bg-bg-tertiary border-transparent"
+                ? "bg-bg-tertiary border-border-primary max-lg:bg-bg-secondary-alt-2 max-lg:border-transparent max-lg:backdrop-blur-[2px]"
+                : "bg-bg-tertiary border-transparent max-lg:bg-bg-secondary-alt-2 max-lg:backdrop-blur-[2px]"
             : scrolled || active || mobileOpen
-              ? "bg-black/50 backdrop-blur-md border-transparent"
+              ? "bg-black/50 backdrop-blur-md border-transparent max-lg:bg-black/60 max-lg:backdrop-blur-[2px]"
               : "bg-transparent backdrop-blur-none border-transparent"
         }`}
       >
@@ -592,7 +599,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
               width={121}
               height={40}
               priority
-              className="max-lg:h-[38px] max-lg:w-[114px]"
+              className="max-lg:h-10 max-lg:w-[121px]"
             />
           </ConditionalLink>
 
@@ -658,7 +665,11 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
               setMobileOpen((open) => !open);
               if (mobileOpen) setMobileExpanded(null);
             }}
-            className="hidden h-9 w-11 cursor-pointer items-center justify-center rounded-xs border border-border-primary bg-black/50 text-text-primary shadow-xs-skeuomorphic transition-colors hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current max-lg:flex"
+            className={`hidden size-10 cursor-pointer items-center justify-center rounded-xs border shadow-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current max-lg:flex ${
+              isLight
+                ? "border-border-primary bg-bg-primary text-text-secondary hover:bg-bg-primary-hover"
+                : "border-border-primary bg-black/50 text-text-primary hover:bg-black/60"
+            }`}
           >
             {mobileOpen ? <XClose size={22} /> : <Menu01 size={22} />}
           </button>

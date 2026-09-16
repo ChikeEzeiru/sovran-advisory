@@ -49,16 +49,13 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-// Inner top-highlight border for dark-bg variants (fades top→bottom)
-const innerHighlight = "before:absolute before:inset-px before:rounded-[1px] before:border before:border-white/[0.12] before:[mask-image:linear-gradient(to_bottom,black,transparent)] before:pointer-events-none";
-
 const variantCls: Record<ButtonVariant, string> = {
-  primary:          `bg-bg-brand-solid hover:bg-bg-brand-solid-hover text-text-primary-on-brand shadow-xs-skeuomorphic active:shadow-xs ${innerHighlight}`,
-  "primary-alt":    `bg-bg-primary-solid hover:bg-bg-secondary-solid text-text-primary-on-brand shadow-xs-skeuomorphic active:shadow-xs ${innerHighlight}`,
-  secondary:        "bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs-skeuomorphic active:shadow-xs ring-1 ring-border-primary ring-inset",
+  primary:          "bg-bg-brand-solid hover:bg-bg-brand-solid-hover text-text-primary-on-brand shadow-xs",
+  "primary-alt":    "bg-bg-primary-solid hover:bg-bg-secondary-solid text-text-primary-on-brand shadow-xs",
+  secondary:        "bg-bg-primary hover:bg-bg-primary-hover text-text-secondary shadow-xs ring-1 ring-border-primary ring-inset",
   tertiary:         "bg-bg-tertiary hover:bg-bg-secondary-hover text-text-tertiary",
   link:             "text-text-tertiary hover:text-text-tertiary-hover",
-  destructive:      `bg-bg-error-solid hover:bg-bg-error-solid-hover text-text-primary-on-brand shadow-xs-skeuomorphic active:shadow-xs ${innerHighlight}`,
+  destructive:      "bg-bg-error-solid hover:bg-bg-error-solid-hover text-text-primary-on-brand shadow-xs",
   "destructive-link": "text-text-error-primary hover:text-text-error-primary-hover",
 };
 
@@ -215,8 +212,7 @@ export function Button({
     );
   }
 
-  // Keep the 2px geometry on the shadow-bearing element. A clip-path here
-  // would also clip the external portion of the skeuomorphic box shadow.
+  // Keep the 2px geometry on the shadow-bearing element.
   return href ? (
     <Link href={href} className={base}>
       {inner}
