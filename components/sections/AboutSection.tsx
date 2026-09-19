@@ -10,10 +10,12 @@ type GridItem =
       value: number;
       suffix: string;
       label: string;
+      desktopOrder: string;
     }
   | {
       type: "image";
       src: string;
+      desktopOrder: string;
     };
 
 const GRID_ITEMS: GridItem[] = [
@@ -22,28 +24,48 @@ const GRID_ITEMS: GridItem[] = [
     value: 12,
     suffix: "+ years",
     label: "advising across\ncomplex markets",
+    desktopOrder: "md:order-1",
   },
-  { type: "image", src: "/images/about-us/Grid-img_1.avif" },
-  { type: "image", src: "/images/about-us/Grid-img_2.avif" },
+  {
+    type: "image",
+    src: "/images/about-us/Grid-img_1.avif",
+    desktopOrder: "md:order-2",
+  },
+  {
+    type: "image",
+    src: "/images/about-us/Grid-img_2.avif",
+    desktopOrder: "md:order-4",
+  },
   {
     type: "stat",
     value: 450,
     suffix: "+ staff",
     label: "across our teams and\nspecialist network",
+    desktopOrder: "md:order-3",
   },
   {
     type: "stat",
     value: 20,
     suffix: "+ markets",
     label: "supported across\nthe continent",
+    desktopOrder: "md:order-6",
   },
-  { type: "image", src: "/images/about-us/Grid-img_3.avif" },
-  { type: "image", src: "/images/about-us/Grid-img_4.avif" },
+  {
+    type: "image",
+    src: "/images/about-us/Grid-img_3.avif",
+    desktopOrder: "md:order-5",
+  },
+  {
+    type: "image",
+    src: "/images/about-us/Grid-img_4.avif",
+    desktopOrder: "md:order-7",
+  },
   {
     type: "stat",
     value: 96,
     suffix: "% repeat",
     label: "or referred engagements",
+    desktopOrder: "md:order-8",
   },
 ];
 
@@ -69,7 +91,7 @@ export function AboutSection() {
             return (
               <div
                 key={item.src}
-                className="relative min-h-80 overflow-hidden rounded-xs bg-bg-quaternary max-md:min-h-60"
+                className={`relative min-h-80 overflow-hidden rounded-xs bg-bg-quaternary max-md:min-h-60 ${item.desktopOrder}`}
               >
                 <Image
                   src={item.src}
@@ -85,7 +107,7 @@ export function AboutSection() {
           return (
             <div
               key={`${item.value}-${index}`}
-              className="flex min-h-80 flex-col items-center justify-center gap-3 p-6 text-center max-md:min-h-60 max-md:px-4"
+              className={`flex min-h-80 flex-col items-center justify-center gap-3 p-6 text-center max-md:min-h-60 max-md:px-4 ${item.desktopOrder}`}
             >
               <p className="sr-only">
                 {item.value}
