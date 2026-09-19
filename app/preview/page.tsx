@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { Button, type ButtonSize } from "@/components/ui/Button";
+
+export const metadata: Metadata = {
+  title: "Component preview",
+  robots: { index: false, follow: false, nocache: true },
+};
 
 const SIZES: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
 
@@ -17,7 +23,7 @@ function SizeLabel({ size }: { size: ButtonSize }) {
   );
 }
 
-function Row({ size, dark }: { size: ButtonSize; dark?: boolean }) {
+function Row({ size }: { size: ButtonSize }) {
   return (
     <div className="flex items-center gap-6">
       <SizeLabel size={size} />
@@ -70,7 +76,7 @@ export default function PreviewPage() {
           Dark ground
         </p>
         {SIZES.map((size) => (
-          <Row key={size} size={size} dark />
+          <Row key={size} size={size} />
         ))}
       </section>
     </main>

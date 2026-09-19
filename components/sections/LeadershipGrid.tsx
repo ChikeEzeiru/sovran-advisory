@@ -189,6 +189,7 @@ export function LeadershipGrid({leaders}: {leaders: Leader[]}) {
 
               <button
                 type="button"
+                autoFocus
                 onClick={closeDialog}
                 aria-label="Close profile"
                 className="group flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-xs bg-bg-primary text-fg-secondary shadow-xs transition-[transform,background-color] duration-150 hover:bg-bg-primary-hover active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transform-none"

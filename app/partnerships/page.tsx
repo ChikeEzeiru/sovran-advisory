@@ -1,4 +1,3 @@
-import type {Metadata} from 'next'
 import Image from 'next/image'
 import {Award03, Globe06, Microscope, ZapFast} from '@untitledui/icons'
 import {Footer} from '@/components/sections/Footer'
@@ -6,12 +5,14 @@ import {FooterCTA} from '@/components/sections/FooterCTA'
 import {Navbar} from '@/components/sections/Navbar'
 import {FeaturedIcon} from '@/components/ui/FeaturedIcon'
 import {SectionEyebrow} from '@/components/ui/SectionEyebrow'
+import {createPageMetadata} from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: 'Partnerships & Institutional Relationships',
   description:
-    'How Sovran works with specialist partners, research organisations, institutions and regional networks.',
-}
+    'How Sovran works with specialist firms, research organisations, public institutions and regional networks to extend expertise and delivery capability.',
+  path: '/partnerships',
+})
 
 const PARTNER_STRENGTHS = [
   {

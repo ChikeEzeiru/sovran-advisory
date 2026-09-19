@@ -21,6 +21,8 @@ export type PerspectiveContent = Perspective &
     author: PerspectiveAuthor
     featured: boolean
     imageAlt: string
+    publishedAt: string
+    updatedAt?: string
     seoTitle?: string
     seoDescription?: string
   }
@@ -34,6 +36,7 @@ export type CaseStudyContent = CaseStudy & {
   id: string
   conceptWork: boolean
   imageAlt: string
+  updatedAt?: string
   relatedPerspective?: RelatedPerspective
   seoTitle?: string
   seoDescription?: string
@@ -51,6 +54,7 @@ type CmsPerspective = {
   image: string
   imageAlt: string
   publishedAt: string
+  updatedAt?: string
   author?: PerspectiveAuthor
   featured?: boolean
   sections: PerspectiveDetail['sections']
@@ -60,9 +64,14 @@ type CmsPerspective = {
   seoDescription?: string
 }
 
-type CmsCaseStudy = Omit<CaseStudyContent, 'practices' | 'related'> & {
+type CmsCaseStudy = Omit<
+  CaseStudyContent,
+  'practices' | 'related' | 'metric' | 'secondaryMetric'
+> & {
   practices: string[]
   related?: string
+  metric?: CaseStudyContent['metric']
+  secondaryMetric?: CaseStudyContent['secondaryMetric']
 }
 
 type CmsResponse<T> = {
@@ -78,6 +87,7 @@ const PERSPECTIVES_QUERY = `{
     publishedAt desc
   ) {
     "id": _id,
+    "updatedAt": _updatedAt,
     "slug": slug.current,
     title,
     "type": perspectiveType,
@@ -110,6 +120,7 @@ const CASE_STUDIES_QUERY = `{
     title asc
   ) {
     "id": _id,
+    "updatedAt": _updatedAt,
     "slug": slug.current,
     client,
     sector,
@@ -126,7 +137,7 @@ const CASE_STUDIES_QUERY = `{
     outcomeDetails,
     insight{title, body},
     pullQuote,
-    "image": mainImage.asset->url,
+    "image": coalesce(mainImage.asset->url, "/images/case-studies/case-study-card-texture.png"),
     "imageAlt": coalesce(mainImage.alt, ""),
     "logo": logo.asset->url,
     logoAlt,
@@ -157,6 +168,11 @@ function formatPublishedDate(value: string) {
   return Number.isNaN(date.getTime()) ? value : dateFormatter.format(date)
 }
 
+function toIsoDate(value: string) {
+  const date = new Date(`${value} UTC`)
+  return Number.isNaN(date.getTime()) ? value : date.toISOString()
+}
+
 function getFallbackPerspectives(): PerspectiveContent[] {
   return PERSPECTIVES.map((article) => {
     const detail = PERSPECTIVE_DETAILS[article.slug]
@@ -167,7 +183,8 @@ function getFallbackPerspectives(): PerspectiveContent[] {
       id: `local-${article.slug}`,
       author: getLocalPerspectiveAuthor(article.slug),
       featured: article.slug === 'the-new-competitive-landscape-for-african-payments',
-      imageAlt: '',
+      imageAlt: `${article.title} perspective cover image`,
+      publishedAt: toIsoDate(detail.published),
     }
   })
 }
@@ -185,6 +202,8 @@ function normalizePerspective(item: CmsPerspective): PerspectiveContent {
     image: item.image,
     imageAlt: item.imageAlt ?? '',
     published: formatPublishedDate(item.publishedAt),
+    publishedAt: item.publishedAt,
+    updatedAt: item.updatedAt,
     author: item.author ?? EDITORIAL_AUTHOR,
     featured: item.featured ?? false,
     sections: item.sections ?? [],
@@ -220,6 +239,8 @@ function normalizeCaseStudy(item: CmsCaseStudy): CaseStudyContent {
     ...item,
     practices: item.practices.join(' + '),
     related: item.related ?? '',
+    metric: item.metric ?? {value: '', label: ''},
+    secondaryMetric: item.secondaryMetric ?? {value: '', label: ''},
   }
 }
 
@@ -228,7 +249,7 @@ export const getPerspectives = cache(async (): Promise<PerspectiveContent[]> => 
     const {data} = await sanityFetch({query: PERSPECTIVES_QUERY})
     const result = data as CmsResponse<CmsPerspective>
 
-    return result.documentCount === 0
+    return result.documentCount === 0 || result.items.length === 0
       ? getFallbackPerspectives()
       : result.items.map(normalizePerspective)
   } catch (error) {
@@ -252,7 +273,7 @@ export const getCaseStudies = cache(async (): Promise<CaseStudyContent[]> => {
     const {data} = await sanityFetch({query: CASE_STUDIES_QUERY})
     const result = data as CmsResponse<CmsCaseStudy>
 
-    return result.documentCount === 0
+    return result.documentCount === 0 || result.items.length === 0
       ? getFallbackCaseStudies()
       : result.items.map(normalizeCaseStudy)
   } catch (error) {

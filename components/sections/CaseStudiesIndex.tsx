@@ -200,14 +200,16 @@ export function CaseStudiesIndex({
                     </div>
                   </div>
 
-                  <p className="flex items-baseline gap-1 px-2 pt-3 pb-5 text-base leading-6">
-                    <span className="shrink-0 font-semibold text-text-secondary">
-                      {study.metric.value}
-                    </span>
-                    <span className="text-text-quaternary">
-                      {study.metric.label}
-                    </span>
-                  </p>
+                  {study.metric.value && study.metric.label ? (
+                    <p className="flex items-baseline gap-1 px-2 pt-3 pb-5 text-base leading-6">
+                      <span className="shrink-0 font-semibold text-text-secondary">
+                        {study.metric.value}
+                      </span>
+                      <span className="text-text-quaternary">
+                        {study.metric.label}
+                      </span>
+                    </p>
+                  ) : null}
                 </ConditionalLink>
               </article>
             ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { XClose } from "@untitledui/icons";
 import { Button } from "@/components/ui/Button";
@@ -32,6 +32,11 @@ export function ContactForm() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [formError, setFormError] = useState("");
+  const successRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "success") successRef.current?.focus();
+  }, [status]);
 
   const validate = (formData: FormData) => {
     const errors: FieldErrors = {};
@@ -63,6 +68,15 @@ export function ContactForm() {
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setStatus("idle");
+      const firstInvalidField = Object.keys(errors)[0] as keyof FieldErrors;
+      const target =
+        firstInvalidField === "markets"
+          ? form.querySelector<HTMLElement>("#contact-markets")
+          : form.elements.namedItem(firstInvalidField);
+
+      if (target instanceof HTMLElement) {
+        window.requestAnimationFrame(() => target.focus());
+      }
       return;
     }
 
@@ -159,7 +173,12 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="min-w-0 flex-1 border-t border-border-secondary pt-8">
+      <div
+        ref={successRef}
+        role="status"
+        tabIndex={-1}
+        className="min-w-0 flex-1 border-t border-border-secondary pt-8 outline-none"
+      >
         <p className="text-sm font-semibold text-text-brand-tertiary">Enquiry received</p>
         <h2 className="mt-3 text-3xl font-medium leading-9.5 tracking-tight text-text-primary">
           Thank you for getting in touch.

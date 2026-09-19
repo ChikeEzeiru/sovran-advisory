@@ -101,6 +101,7 @@ export const caseStudyType = defineType({
     defineField({name: 'pullQuote', type: 'text', rows: 3, validation: (rule) => rule.required()}),
     defineField({
       name: 'mainImage',
+      description: 'Optional. The site uses the approved case-study texture when no image is supplied.',
       type: 'image',
       options: {hotspot: true},
       fields: [
@@ -111,7 +112,6 @@ export const caseStudyType = defineType({
           validation: (rule) => rule.required(),
         }),
       ],
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'logo',

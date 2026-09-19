@@ -132,6 +132,10 @@ interface NavItemProps {
   theme?: "dark" | "light";
   dropdownOpen?: boolean;
   onMouseEnter?: () => void;
+  onFocus?: () => void;
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+  controls?: string;
+  dropdownKey?: DropdownKey;
 }
 
 function NavItem({
@@ -141,11 +145,21 @@ function NavItem({
   theme = "dark",
   dropdownOpen = false,
   onMouseEnter,
+  onFocus,
+  onKeyDown,
+  controls,
+  dropdownKey,
 }: NavItemProps) {
   return (
     <ConditionalLink
       href={href}
       onMouseEnter={onMouseEnter}
+      onFocus={onFocus}
+      onKeyDown={onKeyDown}
+      data-dropdown-trigger={dropdownKey}
+      aria-haspopup={hasChevron ? true : undefined}
+      aria-expanded={hasChevron ? dropdownOpen : undefined}
+      aria-controls={hasChevron ? controls : undefined}
       className={`group inline-flex items-center gap-1 px-3 py-2 text-base font-medium cursor-pointer select-none rounded-xs transition-colors duration-150 ${
         theme === "light"
           ? "text-text-secondary hover:bg-bg-primary-hover"
@@ -476,6 +490,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
     undefined
   );
   const headerRef = useRef<HTMLElement>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
   const [lastIndex, setLastIndex] = useState(0);
   const isLight = theme === "light";
 
@@ -507,6 +522,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
       if (event.key === "Escape") {
         setMobileOpen(false);
         setMobileExpanded(null);
+        window.requestAnimationFrame(() => mobileToggleRef.current?.focus());
         return;
       }
 
@@ -566,6 +582,17 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
 
   const handlePanelEnter = () => clearTimeout(closeTimer.current);
 
+  const focusDropdown = (key: DropdownKey) => {
+    handleDropdownEnter(key);
+    window.requestAnimationFrame(() => {
+      document
+        .querySelector<HTMLElement>(
+          `#desktop-${key}-panel a[href], #desktop-${key}-panel button:not([disabled])`
+        )
+        ?.focus();
+    });
+  };
+
   const displayIndex =
     active !== null ? DROPDOWN_ORDER.indexOf(active) : lastIndex;
 
@@ -576,6 +603,22 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
       data-theme={isLight ? undefined : "dark"}
       className="fixed top-0 left-0 right-0 z-50"
       onMouseLeave={handleLeave}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          setActive(null);
+          setSlideEnabled(false);
+        }
+      }}
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || active === null) return;
+        event.preventDefault();
+        const trigger = headerRef.current?.querySelector<HTMLElement>(
+          `[data-dropdown-trigger="${active}"]`
+        );
+        setActive(null);
+        setSlideEnabled(false);
+        trigger?.focus();
+      }}
     >
       {/* Nav bar */}
       <div
@@ -610,6 +653,15 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
               theme={theme}
               dropdownOpen={active === "expertise"}
               onMouseEnter={() => handleDropdownEnter("expertise")}
+              onFocus={() => handleDropdownEnter("expertise")}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowDown") {
+                  event.preventDefault();
+                  focusDropdown("expertise");
+                }
+              }}
+              controls="desktop-expertise-panel"
+              dropdownKey="expertise"
             >
               Expertise
             </NavItem>
@@ -619,6 +671,15 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
               theme={theme}
               dropdownOpen={active === "about"}
               onMouseEnter={() => handleDropdownEnter("about")}
+              onFocus={() => handleDropdownEnter("about")}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowDown") {
+                  event.preventDefault();
+                  focusDropdown("about");
+                }
+              }}
+              controls="desktop-about-panel"
+              dropdownKey="about"
             >
               About
             </NavItem>
@@ -656,6 +717,7 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
           </Button>
 
           <button
+            ref={mobileToggleRef}
             type="button"
             aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={mobileOpen}
@@ -691,6 +753,9 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
 
       {/* Dropdown panel */}
       <div
+        id="desktop-navigation-dropdown"
+        aria-hidden={active === null}
+        inert={active === null}
         className={`grid justify-items-center transition-[grid-template-rows] duration-300 ease-out max-lg:hidden ${
           active ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
@@ -709,7 +774,12 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
                 transition: slideEnabled ? `transform 380ms ${EASE}` : "none",
               }}
             >
-              <div style={{ width: "50%" }}>
+              <div
+                id="desktop-expertise-panel"
+                style={{ width: "50%" }}
+                aria-hidden={active !== "expertise"}
+                inert={active !== "expertise"}
+              >
                 <DropdownPanel
                   panelKey="expertise"
                   theme={theme}
@@ -719,7 +789,12 @@ export function Navbar({ theme = "dark" }: NavbarProps) {
                   }
                 />
               </div>
-              <div style={{ width: "50%" }}>
+              <div
+                id="desktop-about-panel"
+                style={{ width: "50%" }}
+                aria-hidden={active !== "about"}
+                inert={active !== "about"}
+              >
                 <DropdownPanel
                   panelKey="about"
                   theme={theme}

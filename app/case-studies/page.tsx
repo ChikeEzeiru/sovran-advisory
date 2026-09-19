@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import {
   CaseStudiesIndex,
@@ -8,12 +7,15 @@ import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { getCaseStudies } from "@/lib/cms-content";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Case studies",
+export const metadata = createPageMetadata({
+  title: "African Markets Advisory Case Studies",
   description:
-    "See how Sovran helps businesses, investors and institutions make clearer choices and turn them into action.",
-};
+    "See how Sovran helps businesses, investors and public institutions evaluate opportunities, navigate complexity and deliver programmes across Africa.",
+  path: "/case-studies",
+  image: "/images/case-studies/case-studies-hero.png",
+});
 
 export default async function CaseStudiesPage() {
   const studies = await getCaseStudies();

@@ -4,6 +4,8 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Button } from "@/components/ui/Button";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { SpinningNumber } from "@/components/ui/SpinningNumber";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 type Metric = {
   value: string;
@@ -54,8 +56,17 @@ export type PracticePageData = {
 };
 
 export function PracticePage({ data }: { data: PracticePageData }) {
+  const canonicalPath = `/expertise/${data.name.toLowerCase()}`;
+
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Expertise", path: "/expertise" },
+          { name: data.name, path: canonicalPath },
+        ])}
+      />
       <Navbar theme="dark" />
       <main>
         <section

@@ -7,11 +7,18 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Button } from "@/components/ui/Button";
 import { ContentBadge } from "@/components/ui/ContentBadge";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import { JsonLd } from "@/components/seo/JsonLd";
 import {
   getCaseStudies,
   getCaseStudyBySlug,
   getCaseStudySlugs,
 } from "@/lib/cms-content";
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  createPageMetadata,
+  toMetaDescription,
+} from "@/lib/seo";
 
 export async function generateStaticParams() {
   return getCaseStudySlugs();
@@ -26,10 +33,16 @@ export async function generateMetadata({
   const study = await getCaseStudyBySlug(slug);
 
   return study
-    ? {
+    ? createPageMetadata({
         title: stegaClean(study.seoTitle ?? study.title),
-        description: stegaClean(study.seoDescription ?? study.summary),
-      }
+        description: toMetaDescription(
+          stegaClean(study.seoDescription ?? study.summary),
+        ),
+        path: `/case-studies/${study.slug}`,
+        image: study.image,
+        imageAlt: study.imageAlt || `${study.client} case study`,
+        type: "article",
+      })
     : {};
 }
 
@@ -61,9 +74,32 @@ export default async function CaseStudyPage({
   const nextStudy = studies[(studyIndex + 1) % studies.length];
   const perspective = study.relatedPerspective;
   const practices = study.practices.split(" + ");
+  const canonicalPath = `/case-studies/${study.slug}`;
+  const caseStudyJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": absoluteUrl(`${canonicalPath}#article`),
+    mainEntityOfPage: absoluteUrl(canonicalPath),
+    headline: stegaClean(study.title),
+    description: stegaClean(study.summary),
+    image: absoluteUrl(study.image),
+    author: {"@id": absoluteUrl("/#organization")},
+    publisher: {"@id": absoluteUrl("/#organization")},
+    about: [study.sector, study.market, ...practices],
+    inLanguage: "en",
+    ...(study.updatedAt ? {dateModified: study.updatedAt} : {}),
+  };
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: "Home", path: "/"},
+          {name: "Case Studies", path: "/case-studies"},
+          {name: study.title, path: canonicalPath},
+        ])}
+      />
+      <JsonLd data={caseStudyJsonLd} />
       <Navbar theme="light" />
       <main>
         <article>

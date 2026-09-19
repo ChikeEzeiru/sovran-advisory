@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import {
   PracticePage,
   type PracticePageData,
 } from "@/components/pages/PracticePage";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Intelligence",
+export const metadata = createPageMetadata({
+  title: "Market Intelligence & Commercial Insight",
   description:
-    "Understand the market before you commit with clear commercial, competitor, policy and operating intelligence.",
-};
+    "Market intelligence for African growth, investment and entry decisions, covering customers, competitors, policy, political economy and operating conditions.",
+  path: "/expertise/intelligence",
+  image: "/images/services/sovran photo - Intelligence.avif",
+});
 
 const intelligencePageData: PracticePageData = {
   name: "Intelligence",

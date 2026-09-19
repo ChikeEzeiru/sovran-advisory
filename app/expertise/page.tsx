@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -7,12 +6,14 @@ import { ExpertiseWhyUsSection } from "@/components/sections/ExpertiseWhyUsSecti
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
 import { ButtonVisual } from "@/components/ui/Button";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Expertise",
+export const metadata = createPageMetadata({
+  title: "Advisory Expertise Across African Markets",
   description:
-    "Strategy, policy, technology and communications expertise for consequential decisions in complex markets.",
-};
+    "Explore Sovran’s market intelligence, strategy, institutional advisory and programme delivery capabilities for consequential decisions across Africa.",
+  path: "/expertise",
+});
 
 const PRACTICES = [
   {

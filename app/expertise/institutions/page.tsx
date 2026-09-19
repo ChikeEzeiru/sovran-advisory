@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import {
   PracticePage,
   type PracticePageData,
 } from "@/components/pages/PracticePage";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Institutions",
+export const metadata = createPageMetadata({
+  title: "Institutional, Policy & Regulatory Advisory",
   description:
-    "Navigate the regulators, public bodies, partners and communities around the work.",
-};
+    "Institutional advisory for organisations navigating regulators, public bodies, policy, stakeholder relationships and multi-party programmes across Africa.",
+  path: "/expertise/institutions",
+  image: "/images/services/sovran photo - policy and govt relations.avif",
+});
 
 const institutionsPageData: PracticePageData = {
   name: "Institutions",

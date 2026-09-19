@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import {
   PracticePage,
   type PracticePageData,
 } from "@/components/pages/PracticePage";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Strategy",
+export const metadata = createPageMetadata({
+  title: "Market Entry & Growth Strategy",
   description:
-    "Choose a route to market, investment or growth that can work in the real world.",
-};
+    "Strategy advisory for market entry, growth, investment and operating-model decisions grounded in the realities of African markets.",
+  path: "/expertise/strategy",
+  image: "/images/services/sovran photo - comms and stakeholder eng.avif",
+});
 
 const strategyPageData: PracticePageData = {
   name: "Strategy",

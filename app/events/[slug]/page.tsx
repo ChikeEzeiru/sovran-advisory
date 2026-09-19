@@ -1,36 +1,82 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText, type PortableTextBlock } from "next-sanity";
+import { cache } from "react";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/live";
 import { urlFor } from "@/sanity/lib/image";
+import { breadcrumbJsonLd, createPageMetadata, toMetaDescription } from "@/lib/seo";
 import RegistrationForm from "./RegistrationForm";
 
 const EVENT_QUERY = `*[_type == "event" && slug.current == $slug][0] {
-  _id, title, description, startDate, endDate, location, price, coverImage
+  _id, title, "slug": slug.current, description, "summary": pt::text(description),
+  startDate, endDate, location, price, coverImage,
+  "coverImageAlt": coalesce(coverImage.alt, ""), "updatedAt": _updatedAt
 }`;
 
 type EventDetail = {
   _id: string;
+  slug: string;
   title: string;
   description?: PortableTextBlock[];
+  summary?: string;
   startDate: string;
   endDate?: string;
   location?: string;
   price?: number;
   coverImage?: Parameters<typeof urlFor>[0];
+  coverImageAlt?: string;
+  updatedAt?: string;
 };
+
+const getEvent = cache(async (slug: string) => {
+  const { data } = await sanityFetch({ query: EVENT_QUERY, params: { slug } });
+  return (data as EventDetail | null) ?? null;
+});
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const event = await getEvent(slug);
+  if (!event) return {};
+
+  const image = event.coverImage
+    ? urlFor(event.coverImage).width(1200).height(630).url()
+    : undefined;
+
+  return createPageMetadata({
+    title: event.title,
+    description:
+      (event.summary ? toMetaDescription(event.summary) : undefined) ||
+      `Event details and registration information for ${event.title}.`,
+    path: `/events/${event.slug}`,
+    image,
+    imageAlt: event.coverImageAlt || event.title,
+  });
+}
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const { data: event } = await sanityFetch({ query: EVENT_QUERY, params: { slug } });
+  const event = await getEvent(slug);
   if (!event) notFound();
-  const typedEvent = event as EventDetail;
+  const typedEvent = event;
   const date = new Date(typedEvent.startDate).toLocaleString(undefined, { dateStyle: "full", timeStyle: "short" });
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: "Home", path: "/"},
+          {name: "Events", path: "/events"},
+          {name: typedEvent.title, path: `/events/${typedEvent.slug}`},
+        ])}
+      />
       <Navbar theme="light" />
       <main>
         <article>

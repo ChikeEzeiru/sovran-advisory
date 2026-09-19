@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { Calendar } from "@untitledui/icons";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Button } from "@/components/ui/Button";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Events",
+export const metadata = createPageMetadata({
+  title: "African Markets Events & Executive Briefings",
   description:
-    "Sovran roundtables, briefings and working sessions for leaders making decisions across complex markets.",
-};
+    "Sovran roundtables, executive briefings and working sessions for leaders making decisions across African markets, institutions and infrastructure.",
+  path: "/events",
+});
 
 const PAST_EVENTS = [
   {

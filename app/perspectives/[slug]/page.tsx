@@ -8,10 +8,17 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Button } from "@/components/ui/Button";
 import { ArticleShareActions } from "@/components/ui/ArticleShareActions";
 import { FeaturedIcon } from "@/components/ui/FeaturedIcon";
+import { JsonLd } from "@/components/seo/JsonLd";
 import {
   getPerspectiveBySlug,
   getPerspectiveSlugs,
 } from "@/lib/cms-content";
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  createPageMetadata,
+  toMetaDescription,
+} from "@/lib/seo";
 
 export async function generateStaticParams() {
   return getPerspectiveSlugs();
@@ -24,12 +31,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = await getPerspectiveBySlug(slug);
-  return article
-    ? {
-        title: stegaClean(article.seoTitle ?? article.title),
-        description: stegaClean(article.seoDescription ?? article.summary),
-      }
-    : {};
+  if (!article) return {};
+
+  const metadata = createPageMetadata({
+    title: stegaClean(article.seoTitle ?? article.title),
+    description: toMetaDescription(
+      stegaClean(article.seoDescription ?? article.summary),
+    ),
+    path: `/perspectives/${article.slug}`,
+    image: article.image,
+    imageAlt: article.imageAlt || article.title,
+    type: "article",
+  });
+
+  return {
+    ...metadata,
+    openGraph: {
+      ...metadata.openGraph,
+      type: "article",
+      publishedTime: article.publishedAt,
+      modifiedTime: article.updatedAt,
+      section: article.topic,
+      tags: [article.type, article.topic, article.audience],
+    },
+  };
 }
 
 export default async function PerspectivePage({
@@ -42,9 +67,38 @@ export default async function PerspectivePage({
   if (!article) notFound();
 
   const readingTime = `${Math.max(7, article.sections.length * 3)} min read`;
+  const canonicalPath = `/perspectives/${article.slug}`;
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": absoluteUrl(`${canonicalPath}#article`),
+    mainEntityOfPage: absoluteUrl(canonicalPath),
+    headline: stegaClean(article.title),
+    description: stegaClean(article.summary),
+    image: absoluteUrl(article.image),
+    datePublished: article.publishedAt,
+    ...(article.updatedAt ? {dateModified: article.updatedAt} : {}),
+    author: {
+      "@type": "Person",
+      name: article.author.name,
+      jobTitle: article.author.role,
+    },
+    publisher: {"@id": absoluteUrl("/#organization")},
+    articleSection: article.topic,
+    keywords: [article.type, article.topic, article.audience],
+    inLanguage: "en",
+  };
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: "Home", path: "/"},
+          {name: "Perspectives", path: "/perspectives"},
+          {name: article.title, path: canonicalPath},
+        ])}
+      />
+      <JsonLd data={articleJsonLd} />
       <Navbar theme="light" />
       <main>
         <article>

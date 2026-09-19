@@ -1,4 +1,10 @@
+import type {Metadata} from 'next'
 import { AnimatedLink } from '@/components/ui/AnimatedLink'
+
+export const metadata: Metadata = {
+  title: 'Registration cancelled',
+  robots: {index: false, follow: false, nocache: true},
+}
 
 export default async function RegistrationCancelledPage({
   params,

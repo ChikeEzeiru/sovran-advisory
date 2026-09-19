@@ -1,4 +1,3 @@
-import type {Metadata} from 'next'
 import Image from 'next/image'
 import {Suspense} from 'react'
 import {CareerRoleCard} from '@/components/sections/CareerRoleCard'
@@ -6,11 +5,15 @@ import {Navbar} from '@/components/sections/Navbar'
 import {SiteFooter} from '@/components/sections/SiteFooter'
 import {SectionEyebrow} from '@/components/ui/SectionEyebrow'
 import {getCareerRoles, type CareerRole} from '@/lib/career-roles'
+import {createPageMetadata} from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Careers',
-  description: 'Do work that has to hold up in the real world.',
-}
+export const metadata = createPageMetadata({
+  title: 'Careers in African Markets Advisory',
+  description:
+    'Explore open roles at Sovran and join a multidisciplinary team working across African markets, strategy, policy, institutions and delivery.',
+  path: '/careers',
+  image: '/images/about-us/Careers section image.avif',
+})
 
 function groupRoles(roles: CareerRole[]) {
   return roles.reduce<Map<string, CareerRole[]>>((groups, role) => {

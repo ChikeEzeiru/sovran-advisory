@@ -234,7 +234,7 @@ export function HomeHero() {
             <button
               onClick={toggleVideo}
               aria-label={playing ? "Pause video" : "Play video"}
-              className="relative inline-flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-xs border border-[#d4d4d4] p-2 text-[#f1f3f3] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] max-md:absolute max-md:top-24 max-md:right-4"
+              className="relative inline-flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-xs border border-[#d4d4d4] p-2 text-[#f1f3f3] shadow-xs max-md:absolute max-md:top-24 max-md:right-4"
             >
               <span
                 aria-hidden
@@ -247,10 +247,6 @@ export function HomeHero() {
                   <PlayIcon />
                 )}
               </span>
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0px_0px_0px_1px_rgba(0,0,0,0.18),inset_0px_-2px_0px_0px_rgba(0,0,0,0.05)]"
-              />
             </button>
           </div>
         </div>

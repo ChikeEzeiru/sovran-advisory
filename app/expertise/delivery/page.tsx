@@ -1,13 +1,16 @@
-import type { Metadata } from "next";
 import {
   PracticePage,
   type PracticePageData,
 } from "@/components/pages/PracticePage";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Delivery",
-  description: "Turn approved strategy into coordinated, measurable progress.",
-};
+export const metadata = createPageMetadata({
+  title: "Programme Delivery & Transformation",
+  description:
+    "Programme delivery and transformation support that turns approved strategy into coordinated implementation, accountable ownership and measurable progress.",
+  path: "/expertise/delivery",
+  image: "/images/services/sovran photo - digital and tech advisory 2.avif",
+});
 
 const deliveryPageData: PracticePageData = {
   name: "Delivery",

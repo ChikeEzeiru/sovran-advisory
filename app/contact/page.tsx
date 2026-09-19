@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import { Globe05 } from "@untitledui/icons";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Footer } from "@/components/sections/Footer";
 import { InternalPageHero } from "@/components/sections/InternalPageHero";
 import { Navbar } from "@/components/sections/Navbar";
 import { FeaturedIcon } from "@/components/ui/FeaturedIcon";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
+export const metadata = createPageMetadata({
+  title: "Contact Our Advisory Team",
   description:
-    "Tell us about the decision, market or programme you are working through.",
-};
+    "Contact Sovran about a market decision, investment, institutional challenge or delivery programme in Africa. Our team responds within two business days.",
+  path: "/contact",
+});
 
 const NEXT_STEPS = [
   "We review your enquiry and route it to the most relevant team.",

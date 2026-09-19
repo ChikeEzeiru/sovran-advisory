@@ -1,4 +1,10 @@
+import type {Metadata} from 'next'
 import { AnimatedLink } from '@/components/ui/AnimatedLink'
+
+export const metadata: Metadata = {
+  title: 'Registration confirmed',
+  robots: {index: false, follow: false, nocache: true},
+}
 
 export default function RegistrationSuccessPage() {
   return (

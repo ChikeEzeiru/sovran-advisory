@@ -1,14 +1,16 @@
-import type {Metadata} from 'next'
 import {LeadershipGrid} from '@/components/sections/LeadershipGrid'
 import {Navbar} from '@/components/sections/Navbar'
 import {SiteFooter} from '@/components/sections/SiteFooter'
 import {LEADERS} from '@/lib/leadership'
+import {createPageMetadata} from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Leadership',
+export const metadata = createPageMetadata({
+  title: 'Leadership & Advisory Team',
   description:
-    'Meet the senior team leading Sovran’s work across African markets and institutions.',
-}
+    'Meet the senior team leading Sovran’s strategy, market intelligence, institutional advisory and programme delivery work across Africa.',
+  path: '/leadership',
+  image: '/images/sovran photo - leadership & team.avif',
+})
 
 export default function LeadershipPage() {
   return (

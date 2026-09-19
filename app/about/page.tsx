@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -7,12 +6,14 @@ import { AboutLeadershipSection } from "@/components/sections/AboutLeadershipSec
 import { AboutRegionalPresenceSection } from "@/components/sections/AboutRegionalPresenceSection";
 import { AboutEvolutionSection } from "@/components/sections/AboutEvolutionSection";
 import { AboutPointOfViewSection } from "@/components/sections/AboutPointOfViewSection";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About Sovran",
+export const metadata = createPageMetadata({
+  title: "About Our African Advisory Firm",
   description:
-    "Built for decisions that cannot be separated from their context.",
-};
+    "Learn how Sovran combines local market knowledge, regional perspective and senior advisory experience across business and public institutions in Africa.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import {
@@ -6,12 +5,14 @@ import {
   type PerspectiveIndexItem,
 } from "@/components/sections/PerspectivesIndex";
 import { getPerspectives } from "@/lib/cms-content";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Perspectives",
+export const metadata = createPageMetadata({
+  title: "Insights on African Markets & Institutions",
   description:
-    "Short, useful analysis for people making decisions across changing markets.",
-};
+    "Read Sovran’s analysis of African markets, regulation, payments, infrastructure, technology and the institutions shaping consequential decisions.",
+  path: "/perspectives",
+});
 
 export default async function PerspectivesPage() {
   const perspectives = await getPerspectives();

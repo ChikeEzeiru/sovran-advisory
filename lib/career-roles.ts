@@ -118,6 +118,6 @@ export async function getCareerRoles() {
     return result.documentCount === 0 ? INITIAL_CAREER_ROLES : result.roles
   } catch (error) {
     console.error('Unable to load career roles from Sanity.', error)
-    return []
+    return INITIAL_CAREER_ROLES
   }
 }

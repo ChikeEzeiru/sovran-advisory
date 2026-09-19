@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import { Navbar } from "@/components/sections/Navbar";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { InternalPageHero } from "@/components/sections/InternalPageHero";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Legal",
   description: "Sovran Advisory legal information, privacy policy and terms of use.",
-};
+  path: "/legal",
+});
 
 const DOCUMENTS = [
   {
@@ -32,12 +33,12 @@ export default function LegalPage() {
           title="Legal information and policies."
           intro="Review the policies that govern this conceptual website and explain how information is treated."
         />
-        <section className="mx-auto grid w-full max-w-400 grid-cols-2 gap-6 px-12 pb-24 max-md:grid-cols-1 max-md:px-6 max-md:pb-16">
+        <section className="mx-auto grid w-full max-w-400 grid-cols-2 gap-6 px-12 pb-24 max-md:grid-cols-1 max-md:px-4 max-md:pb-16">
           {DOCUMENTS.map((document) => (
             <ConditionalLink
               key={document.href}
               href={document.href}
-              className="group flex min-h-72 flex-col justify-between rounded-xs border border-border-primary bg-bg-primary p-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current max-md:min-h-60 max-md:p-6"
+              className="group flex min-h-72 flex-col justify-between rounded-xs border border-border-primary bg-bg-primary p-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current max-md:min-h-56 max-md:p-6"
             >
               <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Policy</p>
               <div>
