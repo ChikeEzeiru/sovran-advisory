@@ -31,8 +31,8 @@ export default function ContactPage() {
           spacing="compact"
         />
 
-        <section className="px-12 pb-24 max-md:px-6 max-md:pb-16">
-          <div className="mx-auto flex w-full max-w-295 items-start gap-16 max-lg:flex-col max-lg:gap-12">
+        <section className="px-12 pb-24 max-md:px-4 max-md:pb-16">
+          <div className="mx-auto flex w-full max-w-295 items-start gap-16 max-lg:flex-col-reverse max-lg:gap-12">
             <aside className="w-96 shrink-0 max-lg:w-full">
               <div className="border-t border-border-secondary pt-8">
                 <h2 className="text-2xl font-medium leading-8 tracking-tight text-text-primary">
@@ -52,13 +52,13 @@ export default function ContactPage() {
 
               <div className="mt-8 border-t border-border-secondary pt-8">
                 <div className="rounded-xs border border-border-secondary bg-bg-secondary p-6 shadow-xs">
-                  <FeaturedIcon>
-                    <Globe05 aria-hidden="true" className="size-6" />
+                  <FeaturedIcon className="max-md:size-8">
+                    <Globe05 aria-hidden="true" className="size-6 max-md:size-4" />
                   </FeaturedIcon>
-                  <h3 className="mt-3 text-xl font-medium leading-7.5 tracking-tight text-text-primary">
+                  <h3 className="mt-3 text-xl font-medium leading-7.5 tracking-tight text-text-primary max-md:text-base max-md:leading-6">
                     Where we work
                   </h3>
-                  <p className="mt-4 text-base leading-6 text-text-tertiary">
+                  <p className="mt-3 text-base leading-6 text-text-tertiary max-md:text-sm max-md:leading-5">
                     Lagos <span className="mx-2 text-text-quaternary">·</span>
                     Kigali <span className="mx-2 text-text-quaternary">·</span>
                     Accra <span className="mx-2 text-text-quaternary">·</span>

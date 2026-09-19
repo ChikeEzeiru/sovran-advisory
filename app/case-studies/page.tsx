@@ -67,16 +67,16 @@ export default async function CaseStudiesPage() {
             className="absolute inset-0 bg-linear-to-b from-black/35 via-black/45 to-black/75"
           />
 
-          <div className="relative z-10 mx-auto flex w-full max-w-400 flex-col items-start gap-2 px-12 max-md:px-6">
+          <div className="relative z-10 mx-auto flex w-full max-w-400 flex-col items-start gap-2 px-12 max-md:px-4">
             <SectionEyebrow surface="raised">Case Studies</SectionEyebrow>
             <div className="flex max-w-4xl flex-col gap-2">
               <h1
                 id="case-studies-heading"
-                className="text-6xl font-medium leading-16 tracking-tight text-text-primary max-md:text-4xl max-md:leading-11"
+                className="text-6xl font-medium leading-16 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
               >
                 Work shaped by real decisions.
               </h1>
-              <p className="max-w-4xl text-xl leading-7.5 text-text-secondary">
+              <p className="max-w-4xl text-xl leading-7.5 text-text-secondary max-md:text-base max-md:leading-6">
                 See how we help businesses, investors and institutions
                 understand complex environments, make clearer choices and turn
                 those choices into action.

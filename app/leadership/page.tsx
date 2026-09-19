@@ -17,18 +17,18 @@ export default function LeadershipPage() {
       <main>
         <section
           data-theme="dark"
-          className="bg-neutral-900 px-12 pt-30 pb-24 max-md:px-6 max-md:pt-26 max-md:pb-16"
+          className="bg-neutral-900 px-12 pt-30 pb-24 max-md:px-4 max-md:pt-24 max-md:pb-16"
           aria-labelledby="leadership-heading"
         >
           <div className="mx-auto w-full max-w-400">
             <div className="flex max-w-214 flex-col gap-3">
               <h1
                 id="leadership-heading"
-                className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-4xl max-md:leading-11"
+                className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
               >
                 Leadership shaped by experience across markets and institutions.
               </h1>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 Sovran is led by people with experience across business,
                 government and advisory work in African markets. Our senior team
                 remains involved in the engagements where their judgement and
@@ -39,13 +39,13 @@ export default function LeadershipPage() {
         </section>
 
         <section
-          className="mx-auto w-full max-w-400 px-12 py-16 max-md:px-6 max-md:py-12"
+          className="mx-auto w-full max-w-400 px-12 py-16 max-md:px-4 max-md:py-12"
           aria-label="Sovran leadership team"
         >
           <LeadershipGrid leaders={LEADERS} />
         </section>
 
-        <section className="mx-auto w-full max-w-400 px-12 pb-16 max-md:px-6 max-md:pb-12">
+        <section className="mx-auto w-full max-w-400 px-12 pb-16 max-md:px-4 max-md:pb-12">
           <div className="border-t border-border-primary pt-16">
             <div className="max-w-3xl">
               <h2 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary">

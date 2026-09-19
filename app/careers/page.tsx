@@ -91,20 +91,20 @@ export default function CareersPage() {
       <main>
         <section
           data-theme="dark"
-          className="bg-neutral-900 px-12 pt-30 pb-24 max-md:px-6 max-md:pt-26 max-md:pb-16"
+          className="bg-neutral-900 px-12 pt-30 pb-24 max-md:px-4 max-md:pt-24 max-md:pb-16"
           aria-labelledby="careers-heading"
         >
-          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 max-md:gap-10">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 max-md:gap-8">
             <div className="flex max-w-214 flex-col items-start gap-2">
               <SectionEyebrow surface="raised">Careers</SectionEyebrow>
               <div className="flex flex-col gap-3">
                 <h1
                   id="careers-heading"
-                  className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-4xl max-md:leading-11"
+                  className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
                 >
                   Do work that has to hold up in the real world.
                 </h1>
-                <p className="text-xl leading-7.5 text-text-tertiary">
+                <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                   We bring together people who ask better questions, work across
                   different perspectives and stay close to the practical work
                   after a decision is made.
@@ -112,7 +112,7 @@ export default function CareersPage() {
               </div>
             </div>
 
-            <div className="relative h-95 w-full max-w-336 overflow-hidden bg-bg-quaternary max-md:h-64">
+            <div className="relative h-95 w-full max-w-336 overflow-hidden bg-bg-quaternary max-md:h-44">
               <Image
                 src="/images/about-us/Careers section image.avif"
                 alt="Sovran colleagues in conversation during a working session."
@@ -127,7 +127,7 @@ export default function CareersPage() {
 
         <section
           id="open-roles"
-          className="scroll-mt-18 px-12 pt-16 pb-24 max-md:px-6 max-md:pt-12 max-md:pb-16"
+          className="scroll-mt-18 px-12 pt-16 pb-24 max-md:px-4 max-md:pt-12 max-md:pb-16"
         >
           <div className="mx-auto flex w-full max-w-336 flex-col gap-6 border-t border-border-secondary pt-6">
             <SectionEyebrow>Open roles</SectionEyebrow>

@@ -58,10 +58,10 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
         aria-haspopup="dialog"
         aria-label={`View details for ${role.title}`}
         onClick={() => setIsOpen(true)}
-        className="group min-h-42 w-full cursor-pointer rounded-xs border border-border-secondary bg-bg-primary p-6 text-left transition-[border-color,background-color] duration-200 hover:border-border-primary hover:bg-bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+        className="group min-h-42 w-full cursor-pointer rounded-xs border border-border-secondary bg-bg-primary p-6 text-left transition-[border-color,background-color] duration-200 hover:border-border-primary hover:bg-bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring max-md:min-h-0 max-md:p-4"
       >
-        <span className="flex min-h-30 flex-col">
-          <span className="flex items-start justify-between gap-5 max-sm:flex-col max-sm:gap-3">
+        <span className="flex min-h-30 flex-col max-md:min-h-0">
+          <span className="flex items-start justify-between gap-5 max-md:gap-3">
             <span className="min-w-0 text-base font-semibold leading-6 text-text-primary">
               {role.title}
             </span>
@@ -76,11 +76,11 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
             </BadgeWithFlag>
           </span>
 
-          <span className="mt-2 max-w-182.5 text-base leading-6 text-text-tertiary">
+          <span className="mt-2 max-w-182.5 text-base leading-6 text-text-tertiary max-md:text-sm max-md:leading-5">
             {role.summary}
           </span>
 
-          <span className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-5 text-sm font-semibold leading-5 text-text-tertiary">
+          <span className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-5 text-sm font-semibold leading-5 text-text-tertiary max-md:justify-between max-md:gap-x-3">
             <span className="inline-flex items-center gap-1.5">
               <Clock aria-hidden="true" className="size-5" />
               {role.employmentType}
@@ -109,10 +109,10 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
         onClick={(event) => {
           if (event.target === event.currentTarget) closeDialog()
         }}
-        className="m-auto max-h-[calc(100svh-3rem)] w-[min(calc(100%-3rem),64rem)] overflow-y-auto rounded-xs bg-bg-primary p-0 text-text-primary shadow-2xl backdrop:bg-black/55 max-md:max-h-[calc(100svh-1.5rem)] max-md:w-[calc(100%-1.5rem)]"
+        className="m-auto max-h-[calc(100svh-3rem)] w-[min(calc(100%-3rem),64rem)] overflow-y-auto rounded-xs bg-bg-primary p-0 text-text-primary shadow-2xl backdrop:bg-black/55 max-md:m-0 max-md:h-svh max-md:max-h-none max-md:w-full max-md:rounded-none"
       >
-        <div className="flex flex-col gap-8 px-8 py-16 max-md:px-6 max-md:py-8">
-          <div className="flex items-start justify-between gap-6">
+        <div className="flex flex-col gap-8 px-8 py-16 max-md:px-4 max-md:py-12">
+          <div className="flex items-start justify-between gap-6 max-md:px-4">
             <div className="flex min-w-0 max-w-3xl flex-col gap-2">
               <h2
                 id={titleId}

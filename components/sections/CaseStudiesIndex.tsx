@@ -45,12 +45,14 @@ function PaginationButton({
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none"
+      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none max-sm:size-9 max-sm:justify-center max-sm:px-0"
     >
       {direction === "previous" && <ButtonArrowVisual direction="left" />}
-      <ButtonVisual size="sm" showIcon={false}>
-        {children}
-      </ButtonVisual>
+      <span className="max-sm:hidden">
+        <ButtonVisual size="sm" showIcon={false}>
+          {children}
+        </ButtonVisual>
+      </span>
       {direction === "next" && <ButtonArrowVisual />}
     </button>
   );
@@ -95,7 +97,7 @@ export function CaseStudiesIndex({
 
   return (
     <section className="bg-bg-secondary-alt-2 py-16">
-      <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-12 max-md:px-6">
+      <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-12 max-md:px-4">
         <div className="flex w-full items-center justify-between max-lg:flex-col max-lg:items-stretch max-lg:gap-4">
           <label className="flex h-11 w-100 shrink-0 items-center gap-2 rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-fg-brand-primary-alt max-lg:w-full">
             <SearchLg
@@ -116,7 +118,7 @@ export function CaseStudiesIndex({
           </label>
 
           <div
-            className="flex min-w-0 items-center gap-1 overflow-x-auto"
+            className="flex min-w-0 items-center gap-1 overflow-x-auto max-md:hidden"
             aria-label="Case-study practices"
           >
             {CATEGORIES.map((item) => {
@@ -141,6 +143,23 @@ export function CaseStudiesIndex({
               );
             })}
           </div>
+
+          <label className="hidden h-11 w-full items-center rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs max-md:flex">
+            <span className="sr-only">Case-study practice</span>
+            <select
+              value={category}
+              onChange={(event) =>
+                updateCategory(event.target.value as (typeof CATEGORIES)[number])
+              }
+              className="w-full bg-transparent text-base leading-6 text-text-secondary outline-none"
+            >
+              {CATEGORIES.map((item) => (
+                <option key={item} value={item}>
+                  {item === "All" ? "All categories" : item}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
         {visibleStudies.length > 0 ? (
@@ -237,6 +256,10 @@ export function CaseStudiesIndex({
                 )
               )}
             </div>
+
+            <p className="hidden text-sm font-medium leading-5 text-text-secondary max-sm:block">
+              Page {page} of {pageCount}
+            </p>
 
             <PaginationButton
               direction="next"

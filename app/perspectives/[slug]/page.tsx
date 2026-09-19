@@ -48,7 +48,7 @@ export default async function PerspectivePage({
       <Navbar theme="light" />
       <main>
         <article>
-          <header className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-8 pt-40 pb-24 max-md:gap-10 max-md:px-6 max-md:pt-32 max-md:pb-16">
+          <header className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-8 pt-40 pb-24 max-md:gap-8 max-md:px-4 max-md:pt-24 max-md:pb-12">
             <div className="flex max-w-3xl flex-col items-start gap-6">
               <div className="flex items-center gap-2 rounded-xs border border-utility-neutral-300 bg-bg-secondary-alt py-1 pr-3 pl-1">
                 <span className="rounded-xs border border-utility-neutral-300 bg-bg-primary px-2 py-0.5 text-xs font-medium leading-4.5 text-text-brand-tertiary">
@@ -58,10 +58,10 @@ export default async function PerspectivePage({
                   {readingTime}
                 </span>
               </div>
-              <h1 className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-4xl max-md:leading-11">
+              <h1 className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
                 {article.title}
               </h1>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 {article.summary}
               </p>
             </div>
@@ -108,9 +108,9 @@ export default async function PerspectivePage({
             </div>
           </header>
 
-          <section className="mx-auto grid w-full max-w-295 grid-cols-[20rem_minmax(0,45rem)] items-start gap-16 px-8 pb-24 max-lg:grid-cols-1 max-md:px-6 max-md:pb-16">
-            <aside className="sticky top-32 flex flex-col gap-8 max-lg:static">
-              <div className="border-y border-border-primary py-8">
+          <section className="mx-auto grid w-full max-w-295 grid-cols-[20rem_minmax(0,45rem)] items-start gap-16 px-8 pb-24 max-lg:grid-cols-1 max-lg:gap-12 max-md:px-4 max-md:pb-16">
+            <aside className="sticky top-32 flex flex-col gap-8 max-lg:contents">
+              <div className="border-y border-border-primary py-8 max-lg:hidden">
                 <p className="font-semibold text-text-brand-tertiary">
                   Table of contents
                 </p>
@@ -142,7 +142,7 @@ export default async function PerspectivePage({
                 </nav>
               </div>
 
-              <div className="rounded-xs border border-border-secondary bg-bg-secondary p-8 shadow-xs max-lg:max-w-md">
+              <div className="rounded-xs border border-border-secondary bg-bg-secondary p-8 shadow-xs max-lg:order-2 max-lg:max-w-none max-md:p-6">
                 <FeaturedIcon tone="brand">
                   <Send01 size={24} />
                 </FeaturedIcon>
@@ -176,7 +176,7 @@ export default async function PerspectivePage({
               </div>
             </aside>
 
-            <div className="min-w-0 text-lg leading-7 text-text-tertiary">
+            <div className="min-w-0 text-lg leading-7 text-text-tertiary max-lg:order-1 max-md:text-base max-md:leading-6">
               <section id="introduction" className="scroll-mt-32">
                 <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary">
                   Introduction
@@ -189,7 +189,7 @@ export default async function PerspectivePage({
               </section>
 
               <blockquote className="my-12 border-l-2 border-border-brand pl-5">
-                <p className="text-2xl font-medium italic leading-8 text-text-primary">
+                <p className="text-2xl font-medium italic leading-8 text-text-primary max-md:text-xl max-md:leading-7.5">
                   “{article.quote}”
                 </p>
                 <footer className="mt-5 text-base text-text-tertiary">

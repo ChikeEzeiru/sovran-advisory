@@ -6,14 +6,14 @@ import { INITIAL_CAREER_ROLES } from "@/lib/career-roles";
 
 export function AboutCareersSection() {
   return (
-    <section className="px-12 pt-24 pb-16 max-md:px-6 max-md:pt-16 max-md:pb-12">
+    <section className="px-12 pt-24 pb-16 max-md:px-4 max-md:pt-16 max-md:pb-12">
       <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
         <div className="mx-auto flex max-w-222 flex-col items-center gap-3 text-center">
           <SectionEyebrow>Careers</SectionEyebrow>
           <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
             Build your career at Sovran
           </h2>
-          <p className="text-xl leading-7.5 text-text-tertiary">
+          <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
             The problems we work on rarely come with obvious answers. They
             require people who are curious, rigorous and comfortable working
             across disciplines; people who can move from research to strategy,
@@ -23,7 +23,7 @@ export function AboutCareersSection() {
           </p>
         </div>
 
-        <div className="relative h-95 w-full overflow-hidden rounded-xs bg-bg-quaternary max-md:h-64">
+        <div className="relative h-95 w-full overflow-hidden rounded-xs bg-bg-quaternary max-md:h-56">
           <Image
             src="/images/about-us/Careers section image.avif"
             alt="Sovran colleagues collaborating around a table."

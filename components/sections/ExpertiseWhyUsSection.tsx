@@ -40,10 +40,10 @@ export function ExpertiseWhyUsSection() {
   return (
     <section
       aria-labelledby="client-reasons-heading"
-      className="bg-neutral-900 py-20"
+      className="bg-neutral-900 py-20 max-md:py-16"
       data-theme="dark"
     >
-      <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-6">
+      <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-4">
         <div className="flex max-w-3xl flex-col gap-4">
           <h2
             id="client-reasons-heading"
@@ -51,7 +51,7 @@ export function ExpertiseWhyUsSection() {
           >
             Why Clients come to us
           </h2>
-          <p className="text-xl leading-7.5 text-text-tertiary">
+          <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
             Clients usually come to us when the answer is not obvious, the
             environment is changing or a decision carries consequences beyond
             the immediate problem.

@@ -101,8 +101,8 @@ export default function ExpertisePage() {
           align="center"
         />
 
-        <section aria-labelledby="disciplines-heading" className="py-20">
-          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-6">
+        <section aria-labelledby="disciplines-heading" className="py-20 max-md:py-16">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-4">
             <div className="flex max-w-3xl flex-col gap-4">
               <h2
                 id="disciplines-heading"
@@ -110,7 +110,7 @@ export default function ExpertisePage() {
               >
                 Different disciplines, one view of the problem.
               </h2>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 Clients rarely come to us with problems that fit neatly into one
                 category. We bring together strategy, policy, technology and
                 communications to address each challenge in context.
@@ -124,7 +124,7 @@ export default function ExpertisePage() {
                   href={practice.href}
                   className="group/service-card flex min-w-0 flex-col gap-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
                 >
-                  <div className="relative h-95 overflow-hidden rounded-xs bg-bg-quaternary max-sm:h-72">
+                  <div className="relative h-95 overflow-hidden rounded-xs bg-bg-quaternary max-sm:h-64">
                     <Image
                       src={practice.image}
                       alt=""
@@ -139,7 +139,7 @@ export default function ExpertisePage() {
                       <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary">
                         {practice.title}
                       </h3>
-                      <p className="text-lg leading-7 text-text-secondary">
+                      <p className="text-lg leading-7 text-text-secondary max-md:text-base max-md:leading-6">
                         {practice.copy}
                       </p>
                     </div>
@@ -159,9 +159,9 @@ export default function ExpertisePage() {
 
         <section
           aria-labelledby="how-we-work-heading"
-          className="bg-utility-neutral-100 py-20"
+          className="bg-utility-neutral-100 py-20 max-md:py-16"
         >
-          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-6">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-4">
             <div className="flex max-w-225 flex-col items-start gap-6">
               <div className="flex flex-col items-start gap-2">
                 <SectionEyebrow>How We Work</SectionEyebrow>
@@ -172,7 +172,7 @@ export default function ExpertisePage() {
                   Working through complexity
                 </h2>
               </div>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 We start by studying the environment around the question: the
                 market, institutions, stakeholders and constraints. From there,
                 we work with clients to determine what matters, what is possible
@@ -211,9 +211,9 @@ export default function ExpertisePage() {
 
         <section
           aria-labelledby="expertise-cases-heading"
-          className="bg-utility-neutral-100 py-20"
+          className="bg-utility-neutral-100 py-20 max-md:py-16"
         >
-          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-6">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-4">
             <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
               <div className="flex flex-col items-start gap-2">
                 <SectionEyebrow>Case Studies</SectionEyebrow>
@@ -224,7 +224,7 @@ export default function ExpertisePage() {
                   What our work looks like in practice
                 </h2>
               </div>
-              <p className="max-w-2xl text-xl leading-7.5 text-text-tertiary md:self-end">
+              <p className="max-w-2xl text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6 md:self-end">
                 From entering new markets to delivering complex programmes, our
                 work brings together the expertise each challenge requires.
               </p>

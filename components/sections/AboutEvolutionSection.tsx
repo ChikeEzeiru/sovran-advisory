@@ -21,7 +21,7 @@ const MILESTONES = [
 
 export function AboutEvolutionSection() {
   return (
-    <section aria-label="Sovran's evolution" className="px-12 py-8 max-md:px-6">
+    <section aria-label="Sovran's evolution" className="px-12 py-8 max-md:px-4">
       <div className="mx-auto flex h-76 w-full max-w-400 gap-6 overflow-hidden">
         <article className="relative flex h-full w-79 min-w-79 shrink-0 flex-col justify-end gap-2 overflow-hidden rounded-xs p-4 text-text-primary-on-brand max-md:w-56 max-md:min-w-56">
           <Image

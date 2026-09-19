@@ -90,14 +90,16 @@ function PaginationButton({
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none"
+      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none max-sm:size-9 max-sm:justify-center max-sm:px-0"
     >
       {direction === "previous" && (
         <ButtonArrowVisual direction="left" />
       )}
-      <ButtonVisual size="sm" showIcon={false}>
-        {children}
-      </ButtonVisual>
+      <span className="max-sm:hidden">
+        <ButtonVisual size="sm" showIcon={false}>
+          {children}
+        </ButtonVisual>
+      </span>
       {direction === "next" && <ButtonArrowVisual />}
     </button>
   );
@@ -157,14 +159,14 @@ export function PerspectivesIndex({
   };
 
   return (
-    <section className="mx-auto w-full max-w-400 px-12 pb-24 max-md:px-6 max-md:pb-16">
-      <div className="flex flex-col gap-16">
+    <section className="mx-auto w-full max-w-400 px-12 pb-24 max-md:px-4 max-md:pb-16">
+      <div className="flex flex-col gap-16 max-md:gap-12">
         {isBrowsingAll && featured && (
           <ConditionalLink
             href={`/perspectives/${featured.slug}`}
             className="group flex min-w-0 items-stretch gap-8 max-lg:flex-col"
           >
-            <div className="relative h-120 w-2/3 shrink-0 overflow-hidden rounded-xs bg-bg-quaternary max-lg:aspect-7/4 max-lg:h-auto max-lg:w-full">
+            <div className="relative h-120 w-2/3 shrink-0 overflow-hidden rounded-xs bg-bg-quaternary max-lg:aspect-7/4 max-lg:h-auto max-lg:w-full max-md:aspect-2/1">
               <Image
                 src={featured.image}
                 alt={featured.imageAlt}
@@ -178,7 +180,7 @@ export function PerspectivesIndex({
               <div className="flex flex-col items-start gap-4">
                 <ArticleBadge article={featured} />
                 <div>
-                  <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary transition-colors group-hover:text-text-brand-secondary">
+                  <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary transition-colors group-hover:text-text-brand-secondary max-md:text-xl max-md:leading-7.5">
                     {featured.title}
                   </h2>
                   <p className="mt-2 text-base leading-6 text-text-tertiary">
@@ -218,7 +220,7 @@ export function PerspectivesIndex({
           </label>
 
           <div
-            className="flex max-w-full items-center gap-1 overflow-x-auto"
+            className="flex max-w-full items-center gap-1 overflow-x-auto max-md:hidden"
             aria-label="Perspective categories"
           >
             {categories.map((item) => {
@@ -242,6 +244,21 @@ export function PerspectivesIndex({
               );
             })}
           </div>
+
+          <label className="hidden h-11 w-full items-center rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs max-md:flex">
+            <span className="sr-only">Perspective category</span>
+            <select
+              value={category}
+              onChange={(event) => updateCategory(event.target.value)}
+              className="w-full bg-transparent text-base leading-6 text-text-secondary outline-none"
+            >
+              {categories.map((item) => (
+                <option key={item} value={item}>
+                  {item === "View all" ? "All categories" : item}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
         <div className="flex min-w-0 flex-col gap-10 border-t border-border-secondary pt-10">
@@ -295,6 +312,10 @@ export function PerspectivesIndex({
                   )
                 )}
               </div>
+
+              <p className="hidden text-sm font-medium leading-5 text-text-secondary max-sm:block">
+                Page {page} of {pageCount}
+              </p>
 
               <PaginationButton
                 direction="next"

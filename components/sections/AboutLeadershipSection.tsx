@@ -5,7 +5,7 @@ import { LEADERS } from "@/lib/leadership";
 
 export function AboutLeadershipSection() {
   return (
-    <section className="px-12 pt-24 pb-16 max-md:px-6 max-md:pt-16 max-md:pb-12">
+    <section className="px-12 pt-24 pb-16 max-md:px-4 max-md:pt-16 max-md:pb-12">
       <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
         <div className="flex items-start justify-between gap-12 max-md:flex-col max-md:gap-6">
           <div className="flex max-w-194 flex-col items-start gap-4">
@@ -15,7 +15,7 @@ export function AboutLeadershipSection() {
                 Experience across the markets we advise on.
               </h2>
             </div>
-            <p className="text-xl leading-7.5 text-text-tertiary">
+            <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
               Our partners bring backgrounds in market intelligence, strategy,
               institutional advisory and delivery. They lead engagements
               directly, bringing together the people and expertise each

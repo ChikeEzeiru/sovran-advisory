@@ -19,10 +19,10 @@ export default function AboutPage() {
     <>
       <Navbar theme="light" />
       <main>
-        <section className="px-12 pt-26 pb-16 max-md:px-6 max-md:pt-26 max-md:pb-12">
+        <section className="px-12 pt-26 pb-16 max-md:px-4 max-md:pt-22 max-md:pb-12">
           <div
             data-theme="dark"
-            className="relative mx-auto flex min-h-[calc(100svh-11.5rem)] w-full items-end overflow-hidden rounded-xs bg-bg-quaternary py-8 max-md:min-h-[70svh]"
+            className="relative mx-auto flex min-h-[calc(100svh-11.5rem)] w-full items-end overflow-hidden rounded-xs bg-bg-quaternary py-8 max-md:min-h-[70svh] max-md:py-6"
           >
             <Image
               src="/images/sovran photo - our storyII.avif"
@@ -37,7 +37,7 @@ export default function AboutPage() {
               className="absolute inset-0 bg-linear-to-b from-black/10 to-black/60"
             />
 
-            <div className="relative mx-auto w-full max-w-400 px-8 max-md:px-6">
+            <div className="relative mx-auto w-full max-w-400 px-8 max-md:px-4">
               <div className="flex max-w-214 flex-col items-start gap-2 text-white">
                 <div className="rounded-xs border border-fg-brand-primary-alt px-3 py-1">
                   <p className="whitespace-nowrap text-base leading-6">
@@ -45,11 +45,11 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <h1 className="text-5xl font-medium leading-15 tracking-tight max-md:text-4xl max-md:leading-11">
+                  <h1 className="text-5xl font-medium leading-15 tracking-tight max-md:text-3xl max-md:leading-9">
                     We advise organisations making high-stakes decisions in
                     complex markets.
                   </h1>
-                  <p className="text-xl leading-7.5">
+                  <p className="text-xl leading-7.5 max-md:text-base max-md:leading-6">
                     Since 2012, we have helped businesses, investors and public
                     institutions understand unfamiliar markets, make sound
                     strategic choices and turn those choices into practical
@@ -62,15 +62,15 @@ export default function AboutPage() {
         </section>
 
         <section className="flex flex-col items-center justify-center">
-          <div className="grid w-full grid-cols-2 gap-16 px-12 py-16 max-lg:grid-cols-1 max-lg:gap-10 max-w-400">
+          <div className="grid w-full max-w-400 grid-cols-2 gap-16 px-12 py-16 max-lg:grid-cols-1 max-lg:gap-10 max-md:px-4 max-md:py-12">
             <div className="flex flex-col gap-6 max-w-336">
-              <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary">
+              <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
                 Our story{" "}
                 <span className="text-text-quaternary">
                   started with market intelligence
                 </span>
               </h2>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 Sovran began as a small market-intelligence practice. Our early
                 work focused on helping clients understand new markets before
                 committing capital, entering partnerships or expanding
@@ -78,7 +78,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-5 text-xl leading-7.5 text-text-tertiary">
+            <div className="flex flex-col gap-5 text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
               <p>
                 But the questions rarely ended with the research. Clients needed
                 to know what to do next, how to enter, who to work with, which

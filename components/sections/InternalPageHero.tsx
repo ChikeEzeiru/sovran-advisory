@@ -25,8 +25,8 @@ export function InternalPageHero({
 
   return (
     <section
-      className={`mx-auto w-full max-w-400 px-12 pb-24 max-md:px-6 max-md:pb-16 ${
-        spacing === "compact" ? "pt-30 max-md:pt-28" : "pt-40 max-md:pt-32"
+      className={`mx-auto w-full max-w-400 px-12 pb-24 max-md:px-4 max-md:pb-16 ${
+        spacing === "compact" ? "pt-30 max-md:pt-30" : "pt-40 max-md:pt-24"
       }`}
     >
       <div
@@ -48,11 +48,11 @@ export function InternalPageHero({
               {eyebrow}
             </p>
           </div>
-          <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary max-md:text-4xl max-md:leading-11">
+          <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
             {title}
           </h1>
           {intro && (
-            <p className="max-w-3xl text-xl leading-7.5 text-text-tertiary">
+            <p className="max-w-3xl text-xl leading-7.5 text-text-tertiary max-md:text-lg max-md:leading-7">
               {intro}
             </p>
           )}

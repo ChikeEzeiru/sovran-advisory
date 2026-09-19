@@ -34,7 +34,7 @@ export default async function PerspectivesPage() {
     <>
       <Navbar theme="light" />
       <main>
-        <section className="mx-auto w-full max-w-400 px-12 pt-24 pb-16 max-md:px-6 max-md:pt-20">
+        <section className="mx-auto w-full max-w-400 px-12 pt-24 pb-16 max-md:px-4 max-md:pt-22 max-md:pb-12">
           <div className="flex max-w-3xl flex-col items-start gap-4">
             <div className="flex flex-col items-start gap-2">
               <div className="rounded-xs border border-border-secondary bg-bg-secondary px-3 py-1">
@@ -42,12 +42,12 @@ export default async function PerspectivesPage() {
                   Perspectives
                 </p>
               </div>
-              <h1 className="text-5xl font-medium leading-15 tracking-tight text-text-primary text-balance max-md:text-4xl max-md:leading-11">
+              <h1 className="text-5xl font-medium leading-15 tracking-tight text-text-primary text-balance max-md:text-3xl max-md:leading-9">
                 Understanding what is changing,
                 <br className="max-sm:hidden" /> and what it means.
               </h1>
             </div>
-            <p className="text-xl leading-7.5 text-text-tertiary text-balance">
+            <p className="text-xl leading-7.5 text-text-tertiary text-balance max-md:text-base max-md:leading-6">
               Analysis and perspectives on the market, regulatory,
               infrastructure and competitive shifts affecting businesses,
               investors and public institutions.

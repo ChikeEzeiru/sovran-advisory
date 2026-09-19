@@ -59,25 +59,25 @@ export function PracticePage({ data }: { data: PracticePageData }) {
       <Navbar theme="dark" />
       <main>
         <section
-          className="bg-neutral-900 pt-40 pb-16 max-md:pt-32 max-md:pb-12"
+          className="bg-neutral-900 pt-40 pb-16 max-md:pt-24 max-md:pb-12"
           data-theme="dark"
           aria-labelledby="practice-page-heading"
         >
-          <div className="mx-auto flex w-full max-w-400 flex-col gap-10 px-12 max-md:gap-8 max-md:px-6">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-10 px-12 max-md:gap-8 max-md:px-4">
             <div className="flex max-w-3xl flex-col items-start gap-3">
               <SectionEyebrow surface="raised">{data.name}</SectionEyebrow>
               <h1
                 id="practice-page-heading"
-                className="text-5xl font-medium text-balance leading-tight tracking-tight text-text-primary max-md:text-4xl max-md:leading-11"
+                className="text-5xl font-medium text-balance leading-tight tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
               >
                 {data.hero.title}
               </h1>
-              <p className="max-w-3xl text-xl leading-7.5 text-text-tertiary">
+              <p className="max-w-3xl text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 {data.hero.body}
               </p>
             </div>
 
-            <div className="relative h-80 min-h-80 overflow-hidden rounded-xs bg-bg-quaternary max-md:h-64 max-md:min-h-64">
+            <div className="relative h-80 min-h-80 overflow-hidden rounded-xs bg-bg-quaternary max-md:h-48 max-md:min-h-48">
               <Image
                 src={data.hero.image}
                 alt={data.hero.imageAlt}
@@ -95,10 +95,10 @@ export function PracticePage({ data }: { data: PracticePageData }) {
         </section>
 
         <section
-          className="bg-bg-secondary-alt-2 py-24 max-md:py-20"
+          className="bg-bg-secondary-alt-2 py-24 max-md:py-16"
           aria-labelledby="practice-intro-heading"
         >
-          <div className="mx-auto flex w-full max-w-400 flex-col items-center gap-14 px-12 max-md:gap-10 max-md:px-6">
+          <div className="mx-auto flex w-full max-w-400 flex-col items-center gap-14 px-12 max-md:gap-10 max-md:px-4">
             <div className="flex max-w-3xl flex-col items-center gap-4 text-center">
               <div className="flex flex-col items-center gap-2">
                 <SectionEyebrow>{data.intro.eyebrow}</SectionEyebrow>
@@ -109,16 +109,16 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                   {data.intro.title}
                 </h2>
               </div>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 {data.intro.body}
               </p>
             </div>
 
-            <dl className="grid w-full max-w-4xl grid-cols-3 max-md:grid-cols-1 max-md:divide-y max-md:divide-border-secondary-alt">
+            <dl className="grid w-full max-w-4xl grid-cols-3 max-md:grid-cols-1">
               {data.intro.metrics.map((metric, index) => (
                 <div
                   key={`${metric.value}-${metric.label}`}
-                  className={`flex min-w-0 flex-col items-center gap-2 px-8 text-center max-md:py-6 ${
+                  className={`flex min-w-0 flex-col items-center gap-2 px-8 text-center max-md:px-0 max-md:py-6 ${
                     index > 0
                       ? "border-l border-border-secondary-alt max-md:border-l-0"
                       : ""
@@ -143,10 +143,10 @@ export function PracticePage({ data }: { data: PracticePageData }) {
         </section>
 
         <section
-          className="bg-bg-secondary-alt-2 py-20"
+          className="bg-bg-secondary-alt-2 py-20 max-md:py-16"
           aria-labelledby="practice-capabilities-heading"
         >
-          <div className="mx-auto grid w-full max-w-400 grid-cols-2 gap-16 px-12 max-lg:grid-cols-1 max-lg:gap-10 max-md:px-6">
+          <div className="mx-auto grid w-full max-w-400 grid-cols-2 gap-16 px-12 max-lg:grid-cols-1 max-lg:gap-10 max-md:px-4">
             <div className="flex max-w-xl flex-col items-start gap-5">
               <div className="flex flex-col items-start gap-2">
                 <SectionEyebrow>{data.capabilities.eyebrow}</SectionEyebrow>
@@ -157,7 +157,7 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                   {data.capabilities.title}
                 </h2>
               </div>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 {data.capabilities.body}
               </p>
             </div>
@@ -181,10 +181,10 @@ export function PracticePage({ data }: { data: PracticePageData }) {
         </section>
 
         <section
-          className="py-16 bg-bg-quaternary"
+          className="bg-bg-quaternary py-16"
           aria-labelledby="practice-case-study-heading"
         >
-          <div className="mx-auto grid w-full max-w-400 grid-cols-2 items-start gap-16 px-12 max-lg:grid-cols-1 max-lg:gap-10 max-md:px-6">
+          <div className="mx-auto grid w-full max-w-400 grid-cols-2 items-start gap-16 px-12 max-lg:grid-cols-1 max-lg:gap-10 max-md:px-4">
             <div className="flex max-w-xl flex-col items-start gap-5">
               <div className="flex flex-col items-start gap-2">
                 <SectionEyebrow>{data.caseStudy.eyebrow}</SectionEyebrow>
@@ -195,7 +195,7 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                   {data.caseStudy.title}
                 </h2>
               </div>
-              <p className="line-clamp-3 text-xl leading-7.5 text-text-tertiary">
+              <p className="line-clamp-3 text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 {data.caseStudy.body}
               </p>
               <Button href={data.caseStudy.href} variant="primary" size="md">
@@ -203,9 +203,9 @@ export function PracticePage({ data }: { data: PracticePageData }) {
               </Button>
             </div>
 
-            <div className="flex min-w-0 flex-col pt-10">
+            <div className="flex min-w-0 flex-col pt-10 max-lg:pt-0">
               <div className="flex flex-col min-w-0 overflow-hidden rounded-xs gap-6">
-                <div className="relative h-80 overflow-hidden bg-bg-quaternary max-md:h-64">
+                <div className="relative h-80 overflow-hidden bg-bg-quaternary max-md:h-48">
                   <Image
                     src={
                       data.caseStudy.image ??

@@ -165,11 +165,11 @@ export function LeadershipGrid({leaders}: {leaders: Leader[]}) {
         onClick={(event) => {
           if (event.target === event.currentTarget) closeDialog()
         }}
-        className="m-auto max-h-[calc(100svh-3rem)] w-[min(calc(100%-3rem),64rem)] overflow-y-auto rounded-xs bg-bg-primary p-0 text-text-primary shadow-2xl backdrop:bg-black/55 max-md:max-h-[calc(100svh-1.5rem)] max-md:w-[calc(100%-1.5rem)]"
+        className="m-auto max-h-[calc(100svh-3rem)] w-[min(calc(100%-3rem),64rem)] overflow-y-auto rounded-xs bg-bg-primary p-0 text-text-primary shadow-2xl backdrop:bg-black/55 max-md:m-0 max-md:h-svh max-md:max-h-none max-md:w-full max-md:rounded-none"
       >
         {activeLeader && (
-          <div className="flex flex-col gap-8 px-8 py-16 max-md:px-6 max-md:py-8">
-            <div className="flex items-start justify-between gap-6">
+          <div className="flex flex-col gap-8 px-8 py-16 max-md:px-4 max-md:py-12">
+            <div className="flex items-start justify-between gap-6 max-md:px-4">
               <div className="flex min-w-0 flex-col gap-2">
                 <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
                   <h2
@@ -198,12 +198,12 @@ export function LeadershipGrid({leaders}: {leaders: Leader[]}) {
             </div>
 
             <div className="grid grid-cols-[23.75rem_minmax(0,1fr)] items-start gap-6 max-lg:grid-cols-1">
-              <div className="relative aspect-square w-full overflow-hidden rounded-xs bg-bg-quaternary max-lg:max-w-95">
+              <div className="relative aspect-square w-full overflow-hidden rounded-xs bg-bg-quaternary max-lg:max-w-95 max-md:h-70 max-md:aspect-auto max-md:max-w-none">
                 <LeaderPortrait leader={activeLeader} modal />
               </div>
               <div
                 id={`leader-bio-${activeLeader.id}`}
-                className="flex flex-col gap-4 p-2 text-xl leading-7.5 text-text-secondary max-lg:p-0"
+                className="flex flex-col gap-4 p-2 text-xl leading-7.5 text-text-secondary max-lg:p-0 max-md:px-2 max-md:text-lg max-md:leading-7"
               >
                 {activeLeader.bio.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>

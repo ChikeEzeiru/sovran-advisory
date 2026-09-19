@@ -87,7 +87,7 @@ export default function PartnershipsPage() {
         <section
           data-theme="dark"
           aria-labelledby="partnerships-heading"
-          className="relative flex min-h-148 items-end overflow-hidden bg-neutral-900 px-12 pt-30 pb-16 max-md:min-h-136 max-md:px-6 max-md:pt-28 max-md:pb-12"
+          className="relative flex min-h-148 items-end overflow-hidden bg-neutral-900 px-12 pt-30 pb-16 max-md:min-h-136 max-md:px-4 max-md:pt-24 max-md:pb-12"
         >
           <Image
             src="/images/partnerships/sovran-partnerships-hero.avif"
@@ -107,11 +107,11 @@ export default function PartnershipsPage() {
               <div className="flex flex-col gap-2">
                 <h1
                   id="partnerships-heading"
-                  className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-4xl max-md:leading-11"
+                  className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
                 >
                   Some projects are stronger when the right organisations come together
                 </h1>
-                <p className="text-xl leading-7.5 text-text-secondary">
+                <p className="text-xl leading-7.5 text-text-secondary max-md:text-base max-md:leading-6">
                   We work with specialist firms, research organisations, institutions and
                   other partners when their knowledge, reach or capabilities strengthen the
                   work we are doing for clients.
@@ -121,13 +121,13 @@ export default function PartnershipsPage() {
           </div>
         </section>
 
-        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-6 max-md:py-12">
+        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-4 max-md:py-12">
           <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
             <div className="flex max-w-222 flex-col gap-4">
               <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9">
                 Different partners bring different strengths.
               </h2>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 We work with specialists, researchers, regional firms and delivery partners
                 when their expertise adds something specific to an engagement.
               </p>
@@ -142,10 +142,10 @@ export default function PartnershipsPage() {
                       <Icon aria-hidden="true" className="size-6" />
                     </FeaturedIcon>
                     <div className="flex flex-col gap-2">
-                      <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary">
+                      <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary max-md:text-xl max-md:leading-7.5">
                         {item.title}
                       </h3>
-                      <p className="text-lg leading-7 text-text-secondary">{item.copy}</p>
+                      <p className="text-lg leading-7 text-text-secondary max-md:text-base max-md:leading-6">{item.copy}</p>
                     </div>
                   </article>
                 )
@@ -154,13 +154,13 @@ export default function PartnershipsPage() {
           </div>
         </section>
 
-        <section className="bg-bg-quaternary px-12 pt-24 pb-16 max-md:px-6 max-md:pt-16 max-md:pb-12">
+        <section className="bg-bg-quaternary px-12 pt-24 pb-16 max-md:px-4 max-md:pt-16 max-md:pb-12">
           <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
             <div className="flex max-w-192 flex-col gap-4">
               <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
                 What makes a good partnership
               </h2>
-              <p className="text-xl leading-7.5 text-text-tertiary">
+              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
                 We look for organisations that are strong at what they do, clear about where
                 they add value and comfortable working as part of one team. The standard of
                 their work matters more to us than the size of the organisation.
@@ -179,9 +179,9 @@ export default function PartnershipsPage() {
           </div>
         </section>
 
-        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-6 max-md:py-12">
+        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-4 max-md:py-12">
           <div className="mx-auto flex w-full max-w-400 flex-col gap-16 max-md:gap-10">
-            <h2 className="text-center text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+            <h2 className="text-center text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-left max-md:text-3xl max-md:leading-9">
               Selected partnerships
             </h2>
 
@@ -189,12 +189,12 @@ export default function PartnershipsPage() {
               {SELECTED_PARTNERSHIPS.map((partner) => (
                 <article
                   key={partner.name}
-                  className="flex min-h-52 flex-col items-center gap-3 rounded-xs border border-border-secondary p-6 text-center"
+                  className="flex min-h-52 flex-col items-center gap-3 rounded-xs border border-border-secondary p-6 text-center max-sm:min-h-0 max-sm:items-start max-sm:border-0 max-sm:p-0 max-sm:text-left"
                 >
-                  <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary">
+                  <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary max-md:text-xl max-md:leading-7.5">
                     {partner.name}
                   </h3>
-                  <p className="text-lg leading-7 text-text-quaternary">
+                  <p className="text-lg leading-7 text-text-quaternary max-md:text-base max-md:leading-6">
                     {partner.description}
                   </p>
                 </article>

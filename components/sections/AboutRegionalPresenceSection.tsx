@@ -15,7 +15,7 @@ export function AboutRegionalPresenceSection() {
   return (
     <section
       aria-labelledby="regional-presence-heading"
-      className="px-12 py-16 max-md:px-6"
+      className="px-12 py-16 max-md:px-4"
     >
       <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
         <div className="flex max-w-3xl flex-col items-start gap-4">
@@ -28,7 +28,7 @@ export function AboutRegionalPresenceSection() {
               Our work is grounded in the markets we operate in.
             </h2>
           </div>
-          <p className="text-xl leading-7.5 text-text-tertiary">
+          <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
             Across our offices and wider network, we combine local knowledge
             with a regional view of Sub-Saharan Africa, helping clients
             understand the relationships, regulations and market realities
@@ -65,7 +65,7 @@ export function AboutRegionalPresenceSection() {
             </address>
           </div>
 
-          <div className="relative h-full min-w-0 flex-1 overflow-visible max-lg:h-112 max-lg:w-full max-lg:flex-none">
+          <div className="relative h-full min-w-0 flex-1 overflow-visible max-lg:h-112 max-lg:w-full max-lg:flex-none max-md:h-96">
             <div className="absolute -top-48 left-1/2 h-149 w-full -translate-x-1/2 max-lg:inset-0 max-lg:size-full max-lg:translate-x-0">
               <RegionalPresenceMap
                 locations={SOVRAN_LOCATIONS}
