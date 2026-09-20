@@ -41,7 +41,7 @@ export default function InternalContactEnquiryEmail({
   submittedAt,
   reference,
   logoSrc = absoluteUrl("/images/emails/sovran-logo-dark.png"),
-  heroImageSrc = absoluteUrl("/images/emails/internal-contact-email-hero.jpg"),
+  heroImageSrc = absoluteUrl("/images/emails/internal-contact-email-hero-composite.jpg"),
 }: InternalContactEnquiryEmailProps) {
   return (
     <Html>
@@ -63,13 +63,10 @@ export default function InternalContactEnquiryEmail({
             <Img
               src={heroImageSrc}
               width="568"
-              height="174"
-              alt="Lagos cityscape"
+              height="262"
+              alt="New website enquiry"
               style={internalHeroImageStyle}
             />
-            <Section style={heroTitleStyle}>
-              <Heading as="h1" style={headingStyle}>New website enquiry</Heading>
-            </Section>
           </Section>
 
           <Section style={contentStyle}>
@@ -164,22 +161,9 @@ const heroOuterStyle = {padding: "16px", paddingTop: "0"};
 const internalHeroImageStyle = {
   display: "block",
   width: "100%",
-  height: "174px",
+  height: "auto",
   objectFit: "cover" as const,
-  borderRadius: "2px 2px 0 0",
-};
-const heroTitleStyle = {
-  padding: "18px 16px 24px",
-  borderRadius: "0 0 2px 2px",
-  backgroundColor: "#44504e",
-};
-const headingStyle = {
-  margin: "0",
-  color: "#ffffff",
-  fontSize: "36px",
-  fontWeight: "500",
-  lineHeight: "44px",
-  letterSpacing: "-1.44px",
+  borderRadius: "2px",
 };
 const contentStyle = {padding: "32px 24px 20px"};
 const paragraphStyle = {

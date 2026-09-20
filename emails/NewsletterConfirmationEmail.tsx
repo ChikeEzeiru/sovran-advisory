@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Head,
-  Heading,
   Html,
   Img,
   Preview,
@@ -15,15 +14,13 @@ import { absoluteUrl } from "@/lib/seo";
 type NewsletterConfirmationEmailProps = {
   email: string;
   confirmationUrl: string;
-  logoSrc?: string;
   heroImageSrc?: string;
 };
 
 export default function NewsletterConfirmationEmail({
   email,
   confirmationUrl,
-  logoSrc = absoluteUrl("/images/emails/sovran-logo-light.png"),
-  heroImageSrc = absoluteUrl("/images/emails/newsletter-email-hero.jpg"),
+  heroImageSrc = absoluteUrl("/images/emails/newsletter-email-hero-composite.jpg"),
 }: NewsletterConfirmationEmailProps) {
   return (
     <Html>
@@ -31,29 +28,13 @@ export default function NewsletterConfirmationEmail({
       <Preview>Confirm your email to receive Sovran&apos;s perspectives and reports.</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
-          <Section style={heroHeaderStyle}>
-            <Img
-              src={logoSrc}
-              width="121"
-              height="40"
-              alt="Sovran Advisory"
-              style={newsletterLogoStyle}
-            />
-          </Section>
           <Img
             src={heroImageSrc}
             width="600"
-            height="206"
-            alt="Lagos cityscape"
-            style={externalHeroImageStyle}
+            height="350"
+            alt="Sovran Advisory — Confirm your subscription"
+            style={heroImageStyle}
           />
-          <Section style={heroTitleStyle}>
-            <Heading as="h1" style={headingStyle}>
-              Confirm your
-              <br />
-              subscription
-            </Heading>
-          </Section>
 
           <Section style={contentStyle}>
             <Text style={paragraphStyle}>
@@ -96,32 +77,11 @@ const containerStyle = {
   backgroundColor: "#f3f5f4",
 };
 
-const heroHeaderStyle = {
-  height: "56px",
-  backgroundColor: "#333b3c",
-};
-
-const externalHeroImageStyle = {
+const heroImageStyle = {
   display: "block",
   width: "100%",
-  height: "206px",
+  height: "auto",
   objectFit: "cover" as const,
-};
-
-const heroTitleStyle = {
-  padding: "18px 16px 24px",
-  backgroundColor: "#333b3c",
-};
-
-const newsletterLogoStyle = {margin: "8px 16px 0 auto"};
-
-const headingStyle = {
-  margin: "0",
-  color: "#ffffff",
-  fontSize: "36px",
-  fontWeight: "500",
-  lineHeight: "44px",
-  letterSpacing: "-1.44px",
 };
 
 const contentStyle = {padding: "32px 24px 20px"};

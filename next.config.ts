@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/api/contact": ["public/images/emails/**/*"],
+    "/api/newsletter/*": ["public/images/emails/**/*"],
+  },
   images: {
     remotePatterns: [
       {

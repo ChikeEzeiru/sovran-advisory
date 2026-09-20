@@ -1,4 +1,6 @@
 import { randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { Resend } from "resend";
 import ContactAcknowledgementEmail from "@/emails/ContactAcknowledgementEmail";
 import InternalContactEnquiryEmail from "@/emails/InternalContactEnquiryEmail";
@@ -29,14 +31,8 @@ function getInternalRecipient() {
   );
 }
 
-function emailAssetUrl(path: string) {
-  const configuredBaseUrl = process.env.EMAIL_ASSET_BASE_URL?.trim();
-  if (!configuredBaseUrl) return absoluteUrl(path);
-
-  const baseUrl = configuredBaseUrl.startsWith("http")
-    ? configuredBaseUrl
-    : `https://${configuredBaseUrl}`;
-  return new URL(path, baseUrl).toString();
+function readEmailAsset(filename: string) {
+  return readFile(path.join(process.cwd(), "public", "images", "emails", filename));
 }
 
 function formatEmailTimestamp(date: Date) {
@@ -118,8 +114,12 @@ export async function sendContactEnquiry(params: {
   const firstName = params.name.trim().split(/\s+/)[0] || params.name;
   const internalLogoContentId = "sovran-internal-contact-logo";
   const internalHeroContentId = "sovran-internal-contact-hero";
-  const acknowledgementLogoContentId = "sovran-contact-logo";
   const acknowledgementHeroContentId = "sovran-contact-hero";
+  const [internalLogo, internalHero, acknowledgementHero] = await Promise.all([
+    readEmailAsset("sovran-logo-dark.png"),
+    readEmailAsset("internal-contact-email-hero-composite.jpg"),
+    readEmailAsset("contact-email-hero-composite.jpg"),
+  ]);
 
   const [internalEmail, acknowledgementEmail] = await Promise.all([
     resend.emails.send(
@@ -146,14 +146,14 @@ export async function sendContactEnquiry(params: {
         text: lines.join("\n"),
         attachments: [
           {
-            path: emailAssetUrl("/images/emails/sovran-logo-dark.png"),
+            content: internalLogo,
             filename: "sovran-logo-dark.png",
             contentType: "image/png",
             contentId: internalLogoContentId,
           },
           {
-            path: emailAssetUrl("/images/emails/internal-contact-email-hero.jpg"),
-            filename: "internal-contact-email-hero.jpg",
+            content: internalHero,
+            filename: "internal-contact-email-hero-composite.jpg",
             contentType: "image/jpeg",
             contentId: internalHeroContentId,
           },
@@ -175,19 +175,12 @@ export async function sendContactEnquiry(params: {
           timeframe: params.timeframe,
           message: params.message,
           reference,
-          logoSrc: `cid:${acknowledgementLogoContentId}`,
           heroImageSrc: `cid:${acknowledgementHeroContentId}`,
         }),
         attachments: [
           {
-            path: emailAssetUrl("/images/emails/sovran-logo-light.png"),
-            filename: "sovran-logo-light.png",
-            contentType: "image/png",
-            contentId: acknowledgementLogoContentId,
-          },
-          {
-            path: emailAssetUrl("/images/emails/contact-email-hero.jpg"),
-            filename: "contact-email-hero.jpg",
+            content: acknowledgementHero,
+            filename: "contact-email-hero-composite.jpg",
             contentType: "image/jpeg",
             contentId: acknowledgementHeroContentId,
           },
@@ -208,8 +201,8 @@ export async function sendNewsletterConfirmation(params: {
   token: string;
 }) {
   const resend = getEmailClient();
-  const logoContentId = "sovran-newsletter-confirmation-logo";
   const heroContentId = "sovran-newsletter-confirmation-hero";
+  const heroImage = await readEmailAsset("newsletter-email-hero-composite.jpg");
   const confirmationUrl = absoluteUrl(
     `/api/newsletter/confirm?token=${encodeURIComponent(params.token)}`,
   );
@@ -221,19 +214,12 @@ export async function sendNewsletterConfirmation(params: {
     react: NewsletterConfirmationEmail({
       email: params.email,
       confirmationUrl,
-      logoSrc: `cid:${logoContentId}`,
       heroImageSrc: `cid:${heroContentId}`,
     }),
     attachments: [
       {
-        path: emailAssetUrl("/images/emails/sovran-logo-light.png"),
-        filename: "sovran-logo-light.png",
-        contentType: "image/png",
-        contentId: logoContentId,
-      },
-      {
-        path: emailAssetUrl("/images/emails/newsletter-email-hero.jpg"),
-        filename: "newsletter-email-hero.jpg",
+        content: heroImage,
+        filename: "newsletter-email-hero-composite.jpg",
         contentType: "image/jpeg",
         contentId: heroContentId,
       },
@@ -283,6 +269,10 @@ export async function confirmNewsletterSubscription(email: string) {
     const consentVersion = "2026-09";
     const logoContentId = "sovran-internal-newsletter-logo";
     const heroContentId = "sovran-internal-newsletter-hero";
+    const [logoImage, heroImage] = await Promise.all([
+      readEmailAsset("sovran-logo-dark.png"),
+      readEmailAsset("internal-newsletter-email-hero-composite.jpg"),
+    ]);
     const {error} = await resend.emails.send({
       from: getFromAddress(),
       to: recipient,
@@ -307,14 +297,14 @@ export async function confirmNewsletterSubscription(email: string) {
       ].join("\n"),
       attachments: [
         {
-          path: emailAssetUrl("/images/emails/sovran-logo-dark.png"),
+          content: logoImage,
           filename: "sovran-logo-dark.png",
           contentType: "image/png",
           contentId: logoContentId,
         },
         {
-          path: emailAssetUrl("/images/emails/internal-newsletter-email-hero.jpg"),
-          filename: "internal-newsletter-email-hero.jpg",
+          content: heroImage,
+          filename: "internal-newsletter-email-hero-composite.jpg",
           contentType: "image/jpeg",
           contentId: heroContentId,
         },
