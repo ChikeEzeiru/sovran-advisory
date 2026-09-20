@@ -19,8 +19,8 @@ const LOGOS = [
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
   return (
-    <span className="relative block h-10 w-48 max-md:w-40">
-      <Image src={src} alt={alt} fill unoptimized sizes="192px" className="object-contain" />
+    <span className="relative mx-auto block h-10 w-full max-w-48">
+      <Image src={src} alt={alt} fill unoptimized sizes="(max-width: 639px) calc(50vw - 32px), 192px" className="object-contain" />
     </span>
   );
 }
@@ -28,7 +28,7 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
 function LogoItem({ logo, slotWidth }: { logo: (typeof LOGOS)[number]; slotWidth: string }) {
   return (
     <div className="group/logo flex h-full shrink-0 items-center justify-center overflow-hidden border-r border-border-secondary-alt px-4" style={{ width: slotWidth }}>
-      <div className="h-10 overflow-hidden">
+      <div className="h-10 w-full overflow-hidden">
         <div className="transition-transform duration-380 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover/logo:-translate-y-full motion-reduce:transition-none motion-reduce:transform-none">
           <LogoImage src={logo.src} alt={logo.name} />
         </div>

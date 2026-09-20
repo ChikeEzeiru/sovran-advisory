@@ -74,7 +74,7 @@ const ARTICLES = [
     title: "Nigeria’s next digital infrastructure cycle.",
     body: "A new cycle emerging around identity, payments, connectivity and the systems",
     cta: "Read the report",
-    href: "/perspectives/cross-border-settlement-interoperability",
+    href: "/perspectives/nigerias-next-digital-infrastructure-cycle",
   },
   {
     image: "/images/intelligence/Blog thumbnail-Cross border.avif",
@@ -82,7 +82,7 @@ const ARTICLES = [
     title: "What regulatory fragmentation means for cross-border growth.",
     body: "The next phase of digital finance growth will be shaped by the ability to manage data minimisation and trust.",
     cta: "Read the report",
-    href: "/perspectives/data-minimisation-trust-strategy",
+    href: "/perspectives/regulatory-fragmentation-cross-border-growth",
   },
   {
     image: "/images/intelligence/Blog thumbnail-Market entry.avif",
@@ -90,7 +90,7 @@ const ARTICLES = [
     title: "Why market entry fails after the strategy is approved.",
     body: "Regulatory arbitrage is a key driver of digital finance growth, but it is not a sustainable strategy.",
     cta: "Read the analysis",
-    href: "/perspectives/regulatory-arbitrage-digital-finance",
+    href: "/perspectives/why-market-entry-fails-after-strategy",
   },
   {
     image: "/images/intelligence/Blog thumbnail-Payments.avif",
@@ -98,7 +98,7 @@ const ARTICLES = [
     title: "The new competitive landscape for African payments.",
     body: "The architecture of trust is the new battleground for cross-border payments.",
     cta: "Read the brief",
-    href: "/perspectives/architecture-of-trust",
+    href: "/perspectives/the-new-competitive-landscape-for-african-payments",
   },
   {
     image: "/images/intelligence/Blog thumbnail-Single market.avif",
@@ -106,7 +106,7 @@ const ARTICLES = [
     title: "The cost of treating Africa as a single market.",
     body: "A new report from the Digital Finance Institute explores the challenges of cross-border payments in Africa.",
     cta: "Read the report",
-    href: "/perspectives/cbdc-deployment-patterns",
+    href: "/perspectives/cost-of-treating-africa-as-a-single-market",
   },
 ];
 
