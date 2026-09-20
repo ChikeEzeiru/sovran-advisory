@@ -49,8 +49,8 @@ export default function PrivacyPage() {
               },
             ].map((section) => (
               <div key={section.heading} className="flex flex-col gap-3">
-                <h2 className="text-xl font-semibold text-text-primary max-md:text-lg max-md:leading-7">{section.heading}</h2>
-                <p className="text-base font-normal leading-7 text-text-tertiary max-md:leading-6">{section.body}</p>
+                <h2 className="text-xl max-md:text-lg max-md:leading-7 font-semibold text-text-primary ">{section.heading}</h2>
+                <p className="text-base max-md:text-sm max-md:leading-5 font-normal leading-7 text-text-tertiary ">{section.body}</p>
               </div>
             ))}
           </div>

@@ -160,7 +160,7 @@ function NavItem({
       aria-haspopup={hasChevron ? true : undefined}
       aria-expanded={hasChevron ? dropdownOpen : undefined}
       aria-controls={hasChevron ? controls : undefined}
-      className={`group inline-flex items-center gap-1 px-3 py-2 text-base font-medium cursor-pointer select-none rounded-xs transition-colors duration-150 ${
+      className={`group inline-flex items-center gap-1 rounded-xs px-3 py-2 text-base font-medium transition-colors duration-150 select-none cursor-pointer max-md:text-sm max-md:leading-5 ${
         theme === "light"
           ? "text-text-secondary hover:bg-bg-primary-hover"
           : "text-text-secondary hover:bg-bg-primary-hover"
@@ -245,10 +245,10 @@ function DropdownPanel({
                   <Icon size={16} className={descCls} />
                 </span>
                 <div className="flex flex-col gap-0.5">
-                  <p className={`text-sm font-medium leading-5 ${titleCls}`}>
+                  <p className={`text-sm max-md:text-xs max-md:leading-4 font-medium leading-5 ${titleCls}`}>
                     {item.title}
                   </p>
-                  <p className={`text-sm leading-5 text-pretty ${descCls}`}>
+                  <p className={`text-sm max-md:text-xs max-md:leading-4 leading-5 text-pretty ${descCls}`}>
                     {item.desc}
                   </p>
                 </div>
@@ -324,10 +324,10 @@ function DropdownPanel({
             <FooterIcon size={16} className={descCls} />
           </span>
           <div className="flex flex-col gap-0.5">
-            <p className={`text-sm font-medium leading-5 ${titleCls}`}>
+            <p className={`text-sm max-md:text-xs max-md:leading-4 font-medium leading-5 ${titleCls}`}>
               {footer.title}
             </p>
-            <p className={`text-sm leading-5 ${descCls}`}>{footer.desc}</p>
+            <p className={`text-sm max-md:text-xs max-md:leading-4 leading-5 ${descCls}`}>{footer.desc}</p>
           </div>
         </div>
         <Button
@@ -379,7 +379,7 @@ function MobileNavigation({
                   aria-expanded={isExpanded}
                   aria-controls={`mobile-${key}-links`}
                   onClick={() => onToggle(key)}
-                  className="flex w-full cursor-pointer items-center justify-between gap-2 p-3 text-left text-base font-medium leading-6 text-text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                  className="flex w-full cursor-pointer items-center justify-between gap-2 p-3 text-left text-base max-md:text-sm max-md:leading-5 font-medium leading-6 text-text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
                 >
                   <span className="capitalize">{key}</span>
                   <ChevronDown
@@ -410,10 +410,10 @@ function MobileNavigation({
                               <Icon size={16} />
                             </span>
                             <span className="min-w-0">
-                              <span className="block text-sm font-medium leading-5 text-text-secondary">
+                              <span className="block text-sm max-md:text-xs max-md:leading-4 font-medium leading-5 text-text-secondary">
                                 {item.title}
                               </span>
-                              <span className="mt-1 block text-sm leading-5 text-text-quaternary">
+                              <span className="mt-1 block text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
                                 {item.desc}
                               </span>
                             </span>
@@ -449,7 +449,7 @@ function MobileNavigation({
               key={item.href}
               href={item.href}
               onClick={onNavigate}
-              className="rounded-xs p-3 text-base font-medium leading-6 text-text-secondary transition-colors duration-150 hover:bg-bg-primary-hover"
+              className="rounded-xs p-3 text-base max-md:text-sm max-md:leading-5 font-medium leading-6 text-text-secondary transition-colors duration-150 hover:bg-bg-primary-hover"
             >
               {item.label}
             </ConditionalLink>

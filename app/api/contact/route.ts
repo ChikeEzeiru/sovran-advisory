@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendContactEnquiry } from "@/lib/email";
+import { isValidEmail, normalizeEmail } from "@/lib/email-address";
 import { parseApprovedMarkets } from "@/lib/markets";
 
 type ContactRequest = {
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
   const enquiry = {
     name: textValue(body.name, 100),
     organisation: textValue(body.organisation, 160),
-    email: textValue(body.email, 254),
+    email: normalizeEmail(textValue(body.email, 254)),
     markets: approvedMarkets?.join(", ") ?? "",
     message: textValue(body.message, 3000),
     timeframe: textValue(body.timeframe, 80),
@@ -46,7 +47,7 @@ export async function POST(request: Request) {
   if (
     !enquiry.name ||
     !enquiry.organisation ||
-    !/^\S+@\S+\.\S+$/.test(enquiry.email) ||
+    !isValidEmail(enquiry.email) ||
     !enquiry.markets ||
     enquiry.message.length < 20 ||
     (enquiry.contactMethod === "phone" && !enquiry.phone)

@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
+import { isValidEmail } from "@/lib/email-address";
 import {
   AssuranceMark,
   type AssuranceKind,
@@ -85,7 +87,7 @@ function FooterNavLink({
   return (
     <ConditionalLink
       href={href}
-      className="group/link relative inline-flex overflow-hidden text-base leading-6 text-text-tertiary transition-colors duration-380 hover:text-text-primary"
+      className="group/link relative inline-flex overflow-hidden text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary transition-colors duration-380 hover:text-text-primary"
       style={{ transitionTimingFunction: EASE }}
     >
       <span
@@ -108,6 +110,46 @@ function FooterNavLink({
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const markRef = useRef<HTMLDivElement>(null);
+  const [newsletterStatus, setNewsletterStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [newsletterError, setNewsletterError] = useState("");
+
+  const handleNewsletterSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const email = String(formData.get("email") ?? "").trim();
+
+    if (!isValidEmail(email)) {
+      setNewsletterStatus("error");
+      setNewsletterError("Enter a valid email address.");
+      const emailInput = form.elements.namedItem("email");
+      if (emailInput instanceof HTMLElement) emailInput.focus();
+      return;
+    }
+
+    setNewsletterStatus("submitting");
+    setNewsletterError("");
+
+    try {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+      const result = (await response.json()) as {error?: string};
+      if (!response.ok) throw new Error(result.error || "Unable to subscribe.");
+
+      form.reset();
+      setNewsletterStatus("success");
+    } catch (error) {
+      setNewsletterStatus("error");
+      setNewsletterError(
+        error instanceof Error ? error.message : "Unable to subscribe. Please try again.",
+      );
+    }
+  };
 
   useEffect(() => {
     const mark = markRef.current;
@@ -138,18 +180,19 @@ export function Footer() {
 
       <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 max-lg:flex-col max-lg:gap-8 max-md:gap-5 max-md:px-4">
         <div className="flex w-108 shrink-0 flex-col items-start gap-2 max-md:w-full">
-          <h2 className="text-xl font-semibold leading-7 text-text-primary">
+          <h2 className="text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7 text-text-primary">
             Stay ahead of changing markets
           </h2>
-          <p className="text-base leading-6 text-text-tertiary max-md:text-sm max-md:leading-5">
+          <p className="text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary ">
             Get Sovran&apos;s latest analysis on markets, policy, investment and
             institutions across Africa.
           </p>
         </div>
 
         <form
-          action="/contact"
           className="flex max-w-127 shrink-0 flex-col items-start gap-2 w-full"
+          onSubmit={handleNewsletterSubmit}
+          noValidate
         >
           <div className="flex w-full items-center gap-2 rounded-xs border border-border-primary bg-white/80 p-1.5 shadow-xs">
             <label htmlFor="footer-email" className="sr-only">
@@ -159,8 +202,14 @@ export function Footer() {
               id="footer-email"
               name="email"
               type="email"
+              inputMode="email"
+              autoComplete="email"
+              maxLength={254}
+              required
+              aria-invalid={newsletterStatus === "error"}
+              aria-describedby="footer-newsletter-message"
               placeholder="name@company.com"
-              className="min-w-0 flex-1 bg-transparent pr-3 pl-4 text-base leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
+              className="min-w-0 flex-1 bg-transparent pr-3 pl-4 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
             />
             <Button
               type="submit"
@@ -168,12 +217,27 @@ export function Footer() {
               size="md"
               showIcon
               className="shrink-0"
+              disabled={newsletterStatus === "submitting"}
             >
-              Subscribe
+              {newsletterStatus === "submitting" ? "Sending…" : "Subscribe"}
             </Button>
           </div>
-          <p className="text-xs leading-4.5 text-text-tertiary">
-            Occasional insights from Sovran. Unsubscribe at any time.
+          <label className="sr-only" aria-hidden="true">
+            Website
+            <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+          </label>
+          <p
+            id="footer-newsletter-message"
+            role={newsletterStatus === "error" ? "alert" : "status"}
+            className={`text-xs leading-4.5 ${
+              newsletterStatus === "error" ? "text-text-error-primary" : "text-text-tertiary"
+            }`}
+          >
+            {newsletterStatus === "success"
+              ? "Check your inbox to confirm your subscription."
+              : newsletterStatus === "error"
+                ? newsletterError
+                : "Occasional insights from Sovran. Unsubscribe at any time."}
           </p>
         </form>
       </div>
@@ -198,7 +262,7 @@ export function Footer() {
             </div>
           </ConditionalLink>
 
-          <div className="flex w-full flex-col gap-3 text-base leading-6">
+          <div className="flex w-full flex-col gap-3 text-base max-md:text-sm max-md:leading-5 leading-6">
             <p>
               We are an African advisory firm helping leaders navigate markets,
               policy and institutional complexity.
@@ -236,7 +300,7 @@ export function Footer() {
               key={column.heading}
               className="flex min-w-0 flex-1 flex-col items-start gap-4 overflow-hidden py-2"
             >
-              <p className="text-sm font-medium uppercase text-text-placeholder">
+              <p className="text-sm max-md:text-xs max-md:leading-4 font-medium uppercase text-text-placeholder">
                 {column.heading}
               </p>
               <div
@@ -260,13 +324,13 @@ export function Footer() {
 
       <div className="relative z-10 w-full border-t border-border-secondary" />
 
-      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 text-base leading-6 max-md:flex-col max-md:items-center max-md:gap-3 max-md:px-4 max-md:text-center max-md:text-sm max-md:leading-5">
+      <div className="relative z-10 flex w-full max-w-[1600px] items-start justify-between px-12 text-base max-md:text-sm max-md:leading-5 leading-6 max-md:flex-col max-md:items-center max-md:gap-3 max-md:px-4 max-md:text-center ">
         <p>© 2026 Sovran Advisory. All rights reserved</p>
         <div className="flex max-w-127 w-full min-w-0 items-start justify-end self-end gap-3 max-md:justify-center max-md:self-center">
           <FooterNavLink href="/legal">Legal</FooterNavLink>
-          <span className="text-xl font-medium leading-7.5">・</span>
+          <span className="text-xl max-md:text-lg max-md:leading-7 font-medium leading-7.5">・</span>
           <FooterNavLink href="/privacy">Privacy Policy</FooterNavLink>
-          <span className="text-xl font-medium leading-7.5">・</span>
+          <span className="text-xl max-md:text-lg max-md:leading-7 font-medium leading-7.5">・</span>
           <FooterNavLink href="/terms">Terms of Use</FooterNavLink>
         </div>
       </div>

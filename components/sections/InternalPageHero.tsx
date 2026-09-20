@@ -44,20 +44,20 @@ export function InternalPageHero({
           }`}
         >
           <div className="rounded-xs border border-border-secondary-alt bg-bg-secondary-alt px-3 py-1">
-            <p className="text-base leading-6 text-text-quaternary">
+            <p className="text-base max-md:text-sm max-md:leading-5 leading-6 text-text-quaternary">
               {eyebrow}
             </p>
           </div>
-          <h1 className="text-5xl font-medium leading-tight tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+          <h1 className="text-5xl max-md:text-4xl max-md:leading-11 font-medium leading-tight tracking-tight text-text-primary ">
             {title}
           </h1>
           {intro && (
-            <p className="max-w-3xl text-xl leading-7.5 text-text-tertiary max-md:text-lg max-md:leading-7">
+            <p className="max-w-3xl text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
               {intro}
             </p>
           )}
           {meta && (
-            <p className="text-sm leading-5 text-text-quaternary">{meta}</p>
+            <p className="text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">{meta}</p>
           )}
         </div>
 

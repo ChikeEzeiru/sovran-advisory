@@ -79,11 +79,11 @@ export function PracticePage({ data }: { data: PracticePageData }) {
               <SectionEyebrow surface="raised">{data.name}</SectionEyebrow>
               <h1
                 id="practice-page-heading"
-                className="text-5xl font-medium text-balance leading-tight tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
+                className="text-5xl max-md:text-4xl max-md:leading-11 font-medium text-balance leading-tight tracking-tight text-text-primary "
               >
                 {data.hero.title}
               </h1>
-              <p className="max-w-3xl text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="max-w-3xl text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 {data.hero.body}
               </p>
             </div>
@@ -115,12 +115,12 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                 <SectionEyebrow>{data.intro.eyebrow}</SectionEyebrow>
                 <h2
                   id="practice-intro-heading"
-                  className="text-4xl font-medium leading-11 tracking-tight text-balance text-text-primary max-md:text-3xl max-md:leading-9"
+                  className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-balance text-text-primary "
                 >
                   {data.intro.title}
                 </h2>
               </div>
-              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 {data.intro.body}
               </p>
             </div>
@@ -135,16 +135,16 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                       : ""
                   }`}
                 >
-                  <dd className="text-7xl font-medium leading-none tracking-tight text-text-secondary max-lg:text-6xl max-md:text-5xl">
+                  <dd className="text-7xl max-md:text-5xl max-md:leading-none font-medium leading-none tracking-tight text-text-secondary max-lg:text-6xl ">
                     <span className="sr-only">{metric.value}</span>
                     <span aria-hidden="true">
                       <SpinningNumber value={metric.value} size="display" />
                     </span>
                   </dd>
-                  <dt className="text-xl leading-7.5 text-text-tertiary">
+                  <dt className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary">
                     {metric.label}
                   </dt>
-                  <dd className="text-sm leading-5 text-text-quaternary">
+                  <dd className="text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
                     {metric.context}
                   </dd>
                 </div>
@@ -163,12 +163,12 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                 <SectionEyebrow>{data.capabilities.eyebrow}</SectionEyebrow>
                 <h2
                   id="practice-capabilities-heading"
-                  className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9"
+                  className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-secondary "
                 >
                   {data.capabilities.title}
                 </h2>
               </div>
-              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 {data.capabilities.body}
               </p>
             </div>
@@ -179,10 +179,10 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                   key={item.title}
                   className="rounded-xs border border-border-secondary bg-bg-primary p-4"
                 >
-                  <h3 className="text-base font-semibold leading-6 text-text-primary">
+                  <h3 className="text-base max-md:text-sm max-md:leading-5 font-semibold leading-6 text-text-primary">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-base leading-6 text-text-tertiary">
+                  <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                     {item.body}
                   </p>
                 </li>
@@ -201,12 +201,12 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                 <SectionEyebrow>{data.caseStudy.eyebrow}</SectionEyebrow>
                 <h2
                   id="practice-case-study-heading"
-                  className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9"
+                  className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-secondary "
                 >
                   {data.caseStudy.title}
                 </h2>
               </div>
-              <p className="line-clamp-3 text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="line-clamp-3 text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 {data.caseStudy.body}
               </p>
               <Button href={data.caseStudy.href} variant="primary" size="md">
@@ -243,10 +243,10 @@ export function PracticePage({ data }: { data: PracticePageData }) {
                       key={`${metric.value}-${metric.label}`}
                       className="p-4 bg-bg-tertiary"
                     >
-                      <dd className="mt-1 text-xl font-semibold leading-7.5 text-text-secondary">
+                      <dd className="mt-1 text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7.5 text-text-secondary">
                         {metric.value}
                       </dd>
-                      <dt className="text-sm leading-5 text-text-quaternary">
+                      <dt className="text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
                         {metric.label}
                       </dt>
                     </div>

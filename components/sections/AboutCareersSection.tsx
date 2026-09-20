@@ -10,10 +10,10 @@ export function AboutCareersSection() {
       <div className="mx-auto flex w-full max-w-400 flex-col gap-12">
         <div className="mx-auto flex max-w-222 flex-col items-center gap-3 text-center">
           <SectionEyebrow>Careers</SectionEyebrow>
-          <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+          <h2 className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary ">
             Build your career at Sovran
           </h2>
-          <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+          <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
             The problems we work on rarely come with obvious answers. They
             require people who are curious, rigorous and comfortable working
             across disciplines; people who can move from research to strategy,
@@ -35,10 +35,10 @@ export function AboutCareersSection() {
 
         <div className="grid grid-cols-[20rem_minmax(0,1fr)] gap-16 border-t border-border-secondary pt-12 max-lg:grid-cols-1 max-lg:gap-8">
           <div>
-            <h3 className="text-2xl font-medium leading-8 text-text-primary">
+            <h3 className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 text-text-primary">
               Advisory
             </h3>
-            <p className="mt-2 text-base leading-6 text-text-tertiary">
+            <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
               Open positions on our advisory team.
             </p>
           </div>

@@ -59,7 +59,7 @@ export default function RegistrationForm({ eventId }: { eventId: string }) {
         onChange={(e) => setEmail(e.target.value)}
         className="border rounded-[2px] px-3 py-2"
       />
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      {error && <p className="text-red-600 text-sm max-md:text-xs max-md:leading-4 ">{error}</p>}
       <button
         type="submit"
         disabled={status === 'submitting'}

@@ -107,11 +107,11 @@ export function FooterCTA({
         <div className="flex flex-col gap-2 max-md:gap-3">
           <h2
             id="footer-cta-heading"
-            className="text-3xl font-medium leading-10 text-text-primary max-md:leading-[38px]"
+            className="text-3xl max-md:text-2xl max-md:leading-8 font-medium leading-10 text-text-primary "
           >
             {title}
           </h2>
-          <p className="text-base leading-6 text-text-quaternary max-md:text-xl max-md:leading-7.5">
+          <p className="text-base max-md:text-sm max-md:leading-5 leading-6 text-text-quaternary ">
             {description}
           </p>
         </div>

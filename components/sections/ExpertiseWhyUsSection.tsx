@@ -40,18 +40,18 @@ export function ExpertiseWhyUsSection() {
   return (
     <section
       aria-labelledby="client-reasons-heading"
-      className="bg-neutral-900 py-20 max-md:py-16"
+      className="bg-neutral-900 py-12 xl:py-20"
       data-theme="dark"
     >
-      <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-10 max-md:px-4">
+      <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-4 xl:px-12">
         <div className="flex max-w-3xl flex-col gap-4">
           <h2
             id="client-reasons-heading"
-            className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
+            className="text-3xl leading-9.5 font-medium tracking-tight text-text-primary xl:text-4xl xl:leading-11"
           >
             Why Clients come to us
           </h2>
-          <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+          <p className="text-lg leading-7 text-text-tertiary xl:text-xl xl:leading-7.5">
             Clients usually come to us when the answer is not obvious, the
             environment is changing or a decision carries consequences beyond
             the immediate problem.
@@ -68,8 +68,7 @@ export function ExpertiseWhyUsSection() {
           }}
         >
           <ul
-            className="flex gap-0.5 overflow-x-auto pb-2 xl:h-80 xl:overflow-hidden xl:pb-0"
-            style={{ scrollbarWidth: "none" }}
+            className="flex flex-col gap-0.5 xl:h-80 xl:flex-row xl:overflow-hidden"
           >
             {CLIENT_REASONS.map((reason, index) => {
               const isActive = activeIndex === index;
@@ -79,7 +78,7 @@ export function ExpertiseWhyUsSection() {
               return (
                 <li
                   key={title}
-                  className={`relative aspect-5/6 min-w-60 flex-none overflow-hidden rounded-xs xl:aspect-auto xl:h-full xl:min-w-0 motion-reduce:xl:flex-1 ${CARD_TRANSITION} ${
+                  className={`relative h-40 w-full flex-none overflow-hidden rounded-xs xl:h-full xl:min-w-0 xl:flex-1 ${CARD_TRANSITION} ${
                     isActive ? "xl:flex-[2_1_0%]" : "xl:flex-1"
                   } ${isInactive ? "xl:opacity-65" : "opacity-100"}`}
                 >
@@ -89,7 +88,7 @@ export function ExpertiseWhyUsSection() {
                       alt=""
                       fill
                       unoptimized
-                      sizes="(min-width: 1600px) 501px, (min-width: 1280px) 34vw, 240px"
+                      sizes="(min-width: 1600px) 501px, (min-width: 1280px) 34vw, calc(100vw - 32px)"
                       className="object-cover grayscale"
                     />
                   </div>
@@ -100,8 +99,8 @@ export function ExpertiseWhyUsSection() {
 
                   <div className="absolute right-4 bottom-4 left-4 w-auto xl:right-auto xl:w-[calc(33.333cqw-2rem)]">
                     <h3
-                      className={`text-xl font-semibold leading-7.5 text-text-primary ${
-                        isActive ? "whitespace-nowrap" : ""
+                      className={`text-xl font-semibold leading-7.5 text-text-primary max-md:text-lg max-md:leading-7 ${
+                        isActive ? "xl:whitespace-nowrap" : ""
                       }`}
                     >
                       {isActive
@@ -113,14 +112,14 @@ export function ExpertiseWhyUsSection() {
                           ))}
                     </h3>
                     <div
-                      className={`grid transition-[grid-template-rows,opacity,transform] duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:grid-rows-[1fr] motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
+                      className={`hidden transition-[grid-template-rows,opacity,transform] duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:grid-rows-[1fr] motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none xl:pointer-fine:grid ${
                         isActive
                           ? "xl:pointer-fine:grid-rows-[1fr] xl:pointer-fine:translate-y-0 xl:pointer-fine:opacity-100"
                           : "xl:pointer-fine:grid-rows-[0fr] xl:pointer-fine:translate-y-2 xl:pointer-fine:opacity-0"
                       }`}
                     >
                       <div className="min-h-0 overflow-hidden">
-                        <p className="pt-2 text-base leading-6 text-text-tertiary">
+                        <p className="pt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                           {reason.copy}
                         </p>
                       </div>

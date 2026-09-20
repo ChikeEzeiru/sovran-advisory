@@ -142,7 +142,7 @@ export function HomeHero() {
                       />
                     </span>
                     <span
-                      className={`text-xl font-medium leading-7.5 whitespace-nowrap transition-colors duration-300 ${
+                      className={`text-xl font-medium leading-7.5 whitespace-nowrap transition-colors duration-300 max-md:text-lg max-md:leading-7 ${
                         isOpen ? "text-text-secondary" : "text-white"
                       }`}
                     >
@@ -159,7 +159,7 @@ export function HomeHero() {
                       style={{ transitionTimingFunction: EASE }}
                     >
                       <div className="pb-2 pl-16 pr-4">
-                        <p className="text-base font-normal leading-6 text-text-quaternary">
+                        <p className="text-base max-md:text-sm max-md:leading-5 font-normal leading-6 text-text-quaternary">
                           {card.description}
                         </p>
                       </div>
@@ -179,11 +179,11 @@ export function HomeHero() {
           {/* Headline */}
           <div className="flex flex-col gap-3">
             <div className="self-start border border-border-primary rounded-xs px-3 py-1">
-              <span className="text-base font-normal leading-6 text-white whitespace-nowrap max-md:text-sm max-md:leading-5">
+              <span className="text-base max-md:text-sm max-md:leading-5 font-normal leading-6 text-white whitespace-nowrap ">
                 Pan-African Strategic Advisory
               </span>
             </div>
-            <h1 className="text-[56px] font-medium leading-16 tracking-[-1.68px] text-white max-md:text-4xl max-md:leading-11 max-md:tracking-[-1.44px]">
+            <h1 className="text-[56px] max-md:text-4xl max-md:leading-11 font-medium leading-16 tracking-[-1.68px] text-white max-md:tracking-[-1.44px]">
               <span className="max-md:hidden">
                 Delivering outcomes few can match, <br />
                 for business and institutional leaders

@@ -61,11 +61,11 @@ const variantCls: Record<ButtonVariant, string> = {
 
 // px, py, text size, line-height
 const sizeCls: Record<ButtonSize, { padding: string; text: string }> = {
-  xs: { padding: "px-2.5 py-1.5", text: "text-sm leading-5" }, // 14/20 → 32px
-  sm: { padding: "px-3 py-2", text: "text-sm leading-5" }, // 14/20 → 36px
-  md: { padding: "px-3.5 py-2.5", text: "text-sm leading-5" }, // 14/20 → 40px
-  lg: { padding: "px-3.5 py-2.5", text: "text-base leading-6" }, // 16/24 → 44px
-  xl: { padding: "px-4.5 py-3", text: "text-base leading-6" }, // 16/24 → 48px
+  xs: { padding: "px-2.5 py-1.5", text: "text-sm max-md:text-xs max-md:leading-4 leading-5" }, // 14/20 → 32px
+  sm: { padding: "px-3 py-2", text: "text-sm max-md:text-xs max-md:leading-4 leading-5" }, // 14/20 → 36px
+  md: { padding: "px-3.5 py-2.5", text: "text-sm max-md:text-xs max-md:leading-4 leading-5" }, // 14/20 → 40px
+  lg: { padding: "px-3.5 py-2.5", text: "text-base max-md:text-sm max-md:leading-5 leading-6" }, // 16/24 → 44px
+  xl: { padding: "px-4.5 py-3", text: "text-base max-md:text-sm max-md:leading-5 leading-6" }, // 16/24 → 48px
 };
 
 function isPill(v: ButtonVariant) {

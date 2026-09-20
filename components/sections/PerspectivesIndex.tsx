@@ -55,17 +55,17 @@ function ArticleCard({ article }: { article: PerspectiveIndexItem }) {
           <ArticleBadge article={article} />
           <div className="flex flex-col gap-1">
             <div className="flex items-start gap-4">
-              <h2 className="min-w-0 flex-1 text-lg font-semibold leading-7 text-text-primary">
+              <h2 className="min-w-0 flex-1 text-lg max-md:text-base max-md:leading-6 font-semibold leading-7 text-text-primary">
                 {article.title}
               </h2>
               <ButtonArrowVisual className="mt-1 size-5 text-fg-quaternary" />
             </div>
-            <p className="text-base leading-6 text-text-tertiary">
+            <p className="text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
               {article.summary}
             </p>
           </div>
         </div>
-        <div className="text-sm leading-5">
+        <div className="text-sm max-md:text-xs max-md:leading-4 leading-5">
           <p className="font-semibold text-text-primary">{article.authorName}</p>
           <p className="text-text-tertiary">{article.published}</p>
         </div>
@@ -90,7 +90,7 @@ function PaginationButton({
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none max-sm:size-9 max-sm:justify-center max-sm:px-0"
+      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm max-md:text-xs max-md:leading-4 font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none max-sm:size-9 max-sm:justify-center max-sm:px-0"
     >
       {direction === "previous" && (
         <ButtonArrowVisual direction="left" />
@@ -180,15 +180,15 @@ export function PerspectivesIndex({
               <div className="flex flex-col items-start gap-4">
                 <ArticleBadge article={featured} />
                 <div>
-                  <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary transition-colors group-hover:text-text-brand-secondary max-md:text-xl max-md:leading-7.5">
+                  <h2 className="text-2xl max-md:text-xl max-md:leading-7.5 font-semibold leading-8 tracking-tight text-text-primary transition-colors group-hover:text-text-brand-secondary ">
                     {featured.title}
                   </h2>
-                  <p className="mt-2 text-base leading-6 text-text-tertiary">
+                  <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                     {featured.summary}
                   </p>
                 </div>
               </div>
-              <div className="text-sm leading-5">
+              <div className="text-sm max-md:text-xs max-md:leading-4 leading-5">
                 <p className="font-semibold text-text-primary">
                   {featured.authorName}
                 </p>
@@ -215,7 +215,7 @@ export function PerspectivesIndex({
                 setPage(1);
               }}
               placeholder="Search"
-              className="min-w-0 flex-1 bg-transparent text-base leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
+              className="min-w-0 flex-1 bg-transparent text-base max-md:text-sm max-md:leading-5 leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
             />
           </label>
 
@@ -231,7 +231,7 @@ export function PerspectivesIndex({
                   type="button"
                   aria-pressed={active}
                   onClick={() => updateCategory(item)}
-                  className={`group h-11 shrink-0 rounded-xs px-3 text-left text-base leading-6 transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] active:duration-100 motion-reduce:transform-none ${
+                  className={`group h-11 shrink-0 rounded-xs px-3 text-left text-base leading-6 transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] active:duration-100 motion-reduce:transform-none max-md:text-sm max-md:leading-5 ${
                     active
                       ? "border border-border-secondary bg-bg-primary-hover font-medium text-text-secondary"
                       : "text-text-quaternary hover:bg-bg-primary-hover hover:text-text-secondary"
@@ -250,7 +250,7 @@ export function PerspectivesIndex({
             <select
               value={category}
               onChange={(event) => updateCategory(event.target.value)}
-              className="w-full bg-transparent text-base leading-6 text-text-secondary outline-none"
+              className="w-full bg-transparent text-base max-md:text-sm max-md:leading-5 leading-6 text-text-secondary outline-none"
             >
               {categories.map((item) => (
                 <option key={item} value={item}>
@@ -270,10 +270,10 @@ export function PerspectivesIndex({
             </div>
           ) : (
             <div className="border-y border-border-secondary py-16">
-              <h2 className="text-2xl font-medium leading-8 text-text-primary">
+              <h2 className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 text-text-primary">
                 No Perspectives found
               </h2>
-              <p className="mt-2 text-base leading-6 text-text-tertiary">
+              <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                 Try another search term or category.
               </p>
             </div>
@@ -301,11 +301,11 @@ export function PerspectivesIndex({
                       aria-label={`Page ${pageNumber}`}
                       aria-current={pageNumber === page ? "page" : undefined}
                       onClick={() => setPage(pageNumber)}
-                      className={`size-9 rounded-xs text-sm font-medium leading-5 transition-[transform,background-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.94] active:duration-100 motion-reduce:transform-none ${
-                        pageNumber === page
-                          ? "bg-bg-primary text-text-secondary"
-                          : "text-text-quaternary hover:bg-bg-primary-hover"
-                      }`}
+                    className={`size-9 rounded-xs text-sm font-medium leading-5 transition-[transform,background-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.94] active:duration-100 motion-reduce:transform-none max-md:text-xs max-md:leading-4 ${
+                      pageNumber === page
+                        ? "bg-bg-primary text-text-secondary"
+                        : "text-text-quaternary hover:bg-bg-primary-hover"
+                    }`}
                     >
                       {pageNumber}
                     </button>
@@ -313,7 +313,7 @@ export function PerspectivesIndex({
                 )}
               </div>
 
-              <p className="hidden text-sm font-medium leading-5 text-text-secondary max-sm:block">
+              <p className="hidden text-sm max-md:text-xs max-md:leading-4 font-medium leading-5 text-text-secondary max-sm:block">
                 Page {page} of {pageCount}
               </p>
 

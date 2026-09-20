@@ -71,13 +71,13 @@ function ServiceCard({ service }: { service: Service }) {
       </div>
 
       <div className="flex w-full flex-col items-start gap-2 xl:w-[calc((100cqw-9rem)/4)] xl:shrink-0">
-        <h3 className="text-xl font-semibold leading-7 text-text-primary">
+        <h3 className="text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7 text-text-primary">
           {service.title}
         </h3>
-        <p className="text-base font-normal leading-6 text-text-tertiary">
+        <p className="text-base max-md:text-sm max-md:leading-5 font-normal leading-6 text-text-tertiary">
           {service.description}
         </p>
-        <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium leading-5 text-text-tertiary transition-colors duration-150 group-hover/service-card:text-text-brand-secondary">
+        <span className="mt-1 inline-flex items-center gap-1.5 text-sm max-md:text-xs max-md:leading-4 font-medium leading-5 text-text-tertiary transition-colors duration-150 group-hover/service-card:text-text-brand-secondary">
           <ButtonVisual size="sm" interaction="service-card">
             <span className="max-md:hidden">Explore</span>
             <span className="hidden max-md:inline">
@@ -101,12 +101,12 @@ export function ServicesSection() {
 
             <h2
               id="services-heading"
-              className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-[38px]"
+              className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary "
             >
               Complex markets require more than one perspective.
             </h2>
           </div>
-          <p className="max-w-4xl text-base font-normal leading-6 text-text-tertiary max-md:text-lg max-md:leading-7">
+          <p className="max-w-4xl text-base max-md:text-sm max-md:leading-5 font-normal leading-6 text-text-tertiary ">
             Our work often begins with a question about a market, an investment
             or a policy change. We bring together the research, strategy,
             institutional knowledge and delivery expertise needed to take it from

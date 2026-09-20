@@ -112,10 +112,10 @@ export default async function PerspectivePage({
                   {readingTime}
                 </span>
               </div>
-              <h1 className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+              <h1 className="text-5xl max-md:text-4xl max-md:leading-11 font-medium leading-15 tracking-tight text-text-primary ">
                 {article.title}
               </h1>
-              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 {article.summary}
               </p>
             </div>
@@ -138,21 +138,21 @@ export default async function PerspectivePage({
               <div className="flex flex-wrap items-start justify-between gap-6">
                 <dl className="flex gap-12 max-sm:w-full max-sm:justify-between max-sm:gap-6">
                   <div>
-                    <dt className="text-sm font-semibold text-text-brand-tertiary">
+                    <dt className="text-sm max-md:text-xs max-md:leading-4 font-semibold text-text-brand-tertiary">
                       Written by
                     </dt>
-                    <dd className="mt-2 text-lg font-medium text-text-primary">
+                    <dd className="mt-2 text-lg max-md:text-base max-md:leading-6 font-medium text-text-primary">
                       {article.author.name}
                     </dd>
-                    <p className="mt-1 text-sm leading-5 text-text-tertiary">
+                    <p className="mt-1 text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-tertiary">
                       {article.author.role}
                     </p>
                   </div>
                   <div>
-                    <dt className="text-sm font-semibold text-text-brand-tertiary">
+                    <dt className="text-sm max-md:text-xs max-md:leading-4 font-semibold text-text-brand-tertiary">
                       Published on
                     </dt>
-                    <dd className="mt-2 text-lg font-medium text-text-primary">
+                    <dd className="mt-2 text-lg max-md:text-base max-md:leading-6 font-medium text-text-primary">
                       {article.published}
                     </dd>
                   </div>
@@ -174,7 +174,7 @@ export default async function PerspectivePage({
                 >
                   <a
                     href="#introduction"
-                    className="text-base font-medium text-text-tertiary hover:text-text-primary"
+                    className="text-base max-md:text-sm max-md:leading-5 font-medium text-text-tertiary hover:text-text-primary"
                   >
                     Introduction
                   </a>
@@ -182,14 +182,14 @@ export default async function PerspectivePage({
                     <a
                       key={section.id}
                       href={`#${section.id}`}
-                      className="text-left text-base font-medium text-text-tertiary hover:text-text-primary"
+                      className="text-left text-base max-md:text-sm max-md:leading-5 font-medium text-text-tertiary hover:text-text-primary"
                     >
                       {section.title}
                     </a>
                   ))}
                   <a
                     href="#next"
-                    className="text-base font-medium text-text-tertiary hover:text-text-primary"
+                    className="text-base max-md:text-sm max-md:leading-5 font-medium text-text-tertiary hover:text-text-primary"
                   >
                     What this means
                   </a>
@@ -200,10 +200,10 @@ export default async function PerspectivePage({
                 <FeaturedIcon tone="brand">
                   <Send01 size={24} />
                 </FeaturedIcon>
-                <h2 className="mt-6 text-xl font-semibold text-text-primary">
+                <h2 className="mt-6 text-xl max-md:text-lg max-md:leading-7 font-semibold text-text-primary">
                   Weekly newsletter
                 </h2>
-                <p className="mt-2 text-sm leading-5 text-text-tertiary">
+                <p className="mt-2 text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-tertiary">
                   Clear analysis on the markets, institutions and operating
                   conditions shaping consequential decisions.
                 </p>
@@ -212,7 +212,7 @@ export default async function PerspectivePage({
                   <input
                     type="email"
                     placeholder="you@company.com"
-                    className="w-full rounded-xs border border-border-primary bg-bg-primary px-3.5 py-2.5 text-sm text-text-primary shadow-xs outline-none placeholder:text-text-placeholder focus:border-border-brand focus:ring-2 focus:ring-border-brand/20"
+                    className="w-full rounded-xs border border-border-primary bg-bg-primary px-3.5 py-2.5 text-sm max-md:text-xs max-md:leading-4 text-text-primary shadow-xs outline-none placeholder:text-text-placeholder focus:border-border-brand focus:ring-2 focus:ring-border-brand/20"
                   />
                 </label>
                 <Button
@@ -230,9 +230,9 @@ export default async function PerspectivePage({
               </div>
             </aside>
 
-            <div className="min-w-0 text-lg leading-7 text-text-tertiary max-lg:order-1 max-md:text-base max-md:leading-6">
+            <div className="min-w-0 text-lg max-md:text-base max-md:leading-6 leading-7 text-text-tertiary max-lg:order-1 ">
               <section id="introduction" className="scroll-mt-32">
-                <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary">
+                <h2 className="text-2xl max-md:text-xl max-md:leading-7.5 font-semibold leading-8 tracking-tight text-text-primary">
                   Introduction
                 </h2>
                 <div className="mt-5 flex flex-col gap-5">
@@ -243,10 +243,10 @@ export default async function PerspectivePage({
               </section>
 
               <blockquote className="my-12 border-l-2 border-border-brand pl-5">
-                <p className="text-2xl font-medium italic leading-8 text-text-primary max-md:text-xl max-md:leading-7.5">
+                <p className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium italic leading-8 text-text-primary ">
                   “{article.quote}”
                 </p>
-                <footer className="mt-5 text-base text-text-tertiary">
+                <footer className="mt-5 text-base max-md:text-sm max-md:leading-5 text-text-tertiary">
                   {article.author.name}
                 </footer>
               </blockquote>
@@ -257,7 +257,7 @@ export default async function PerspectivePage({
                   id={section.id}
                   className="scroll-mt-32 pt-10 first:pt-0"
                 >
-                  <h2 className="text-2xl font-semibold leading-8 tracking-tight text-text-primary">
+                  <h2 className="text-2xl max-md:text-xl max-md:leading-7.5 font-semibold leading-8 tracking-tight text-text-primary">
                     {section.title}
                   </h2>
                   <div className="mt-5 flex flex-col gap-5">
@@ -281,7 +281,7 @@ export default async function PerspectivePage({
                 id="next"
                 className="mt-12 scroll-mt-32 rounded-xs bg-bg-quaternary p-8 max-md:p-6"
               >
-                <h2 className="text-xl font-semibold text-text-primary">
+                <h2 className="text-xl max-md:text-lg max-md:leading-7 font-semibold text-text-primary">
                   What this means
                 </h2>
                 <p className="mt-3">{article.takeaway}</p>
@@ -302,7 +302,7 @@ export default async function PerspectivePage({
                   </span>
                 ))}
               </div>
-              <p className="mt-8 text-sm leading-5 text-text-quaternary">
+              <p className="mt-8 text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
                 Conceptual Perspective — created for demonstration purposes. The
                 research, organisations and examples described are fictional.
               </p>

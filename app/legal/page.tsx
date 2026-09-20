@@ -40,12 +40,12 @@ export default function LegalPage() {
               href={document.href}
               className="group flex min-h-72 flex-col justify-between rounded-xs border border-border-primary bg-bg-primary p-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current max-md:min-h-56 max-md:p-6"
             >
-              <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Policy</p>
+              <p className="text-sm max-md:text-xs max-md:leading-4 font-medium uppercase tracking-wider text-text-quaternary">Policy</p>
               <div>
-                <h2 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary group-hover:text-text-brand-secondary">{document.title}</h2>
-                <p className="mt-3 max-w-xl text-base leading-6 text-text-tertiary">{document.description}</p>
+                <h2 className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 tracking-tight text-text-secondary group-hover:text-text-brand-secondary">{document.title}</h2>
+                <p className="mt-3 max-w-xl text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">{document.description}</p>
               </div>
-              <p className="text-sm font-medium text-text-tertiary group-hover:text-text-brand-secondary">Read {document.title}</p>
+              <p className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-tertiary group-hover:text-text-brand-secondary">Read {document.title}</p>
             </ConditionalLink>
           ))}
         </section>

@@ -248,10 +248,10 @@ export function RegionalPresenceMap({
                     onBlur={() => setHoveredCountry(null)}
                     onClick={() => selectCountry(country)}
                   >
-                    <span className="block text-base font-medium leading-6">
+                    <span className="block text-base max-md:text-sm max-md:leading-5 font-medium leading-6">
                       {location.city}, {location.country}
                     </span>
-                    <span className="block text-sm leading-5 text-text-quaternary">
+                    <span className="block text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
                       {location.type}
                     </span>
                   </button>
@@ -260,7 +260,7 @@ export function RegionalPresenceMap({
             })}
           </ul>
         ) : (
-          <p className="text-sm leading-5 text-text-quaternary">
+          <p className="text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
             Regional locations will appear here once configured.
           </p>
         )}

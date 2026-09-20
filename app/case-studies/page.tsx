@@ -74,11 +74,11 @@ export default async function CaseStudiesPage() {
             <div className="flex max-w-4xl flex-col gap-2">
               <h1
                 id="case-studies-heading"
-                className="text-6xl font-medium leading-16 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
+                className="text-6xl max-md:text-4xl max-md:leading-11 font-medium leading-16 tracking-tight text-text-primary "
               >
                 Work shaped by real decisions.
               </h1>
-              <p className="max-w-4xl text-xl leading-7.5 text-text-secondary max-md:text-base max-md:leading-6">
+              <p className="max-w-4xl text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-secondary ">
                 See how we help businesses, investors and institutions
                 understand complex environments, make clearer choices and turn
                 those choices into action.

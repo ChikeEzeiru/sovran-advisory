@@ -11,11 +11,11 @@ export function AboutLeadershipSection() {
           <div className="flex max-w-194 flex-col items-start gap-4">
             <div className="flex flex-col items-start gap-2">
               <SectionEyebrow>Leadership</SectionEyebrow>
-              <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+              <h2 className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary ">
                 Experience across the markets we advise on.
               </h2>
             </div>
-            <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+            <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
               Our partners bring backgrounds in market intelligence, strategy,
               institutional advisory and delivery. They lead engagements
               directly, bringing together the people and expertise each

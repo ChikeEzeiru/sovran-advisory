@@ -32,15 +32,15 @@ async function OpenRoles() {
     return (
       <div className="grid grid-cols-[20rem_minmax(0,1fr)] gap-16 max-lg:grid-cols-1 max-lg:gap-8">
         <div>
-          <h2 className="text-xl font-semibold leading-7.5 text-text-primary">
+          <h2 className="text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7.5 text-text-primary">
             No open roles
           </h2>
-          <p className="mt-2 text-base leading-6 text-text-tertiary">
+          <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
             There are no current vacancies, but new opportunities will be published here.
           </p>
         </div>
         <div className="flex min-h-42 items-center rounded-xs border border-border-secondary bg-bg-primary p-6">
-          <p className="max-w-xl text-base leading-6 text-text-tertiary">
+          <p className="max-w-xl text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
             We are not recruiting at the moment. Please check back for future openings.
           </p>
         </div>
@@ -56,10 +56,10 @@ async function OpenRoles() {
           className="grid grid-cols-[20rem_minmax(0,1fr)] gap-16 max-lg:grid-cols-1 max-lg:gap-8"
         >
           <div>
-            <h2 className="text-xl font-semibold leading-7.5 text-text-primary">
+            <h2 className="text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7.5 text-text-primary">
               {department}
             </h2>
-            <p className="mt-2 text-base leading-6 text-text-tertiary">
+            <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
               {departmentRoles[0].departmentDescription}
             </p>
           </div>
@@ -103,11 +103,11 @@ export default function CareersPage() {
               <div className="flex flex-col gap-3">
                 <h1
                   id="careers-heading"
-                  className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
+                  className="text-5xl max-md:text-4xl max-md:leading-11 font-medium leading-15 tracking-tight text-text-primary "
                 >
                   Do work that has to hold up in the real world.
                 </h1>
-                <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+                <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                   We bring together people who ask better questions, work across
                   different perspectives and stay close to the practical work
                   after a decision is made.

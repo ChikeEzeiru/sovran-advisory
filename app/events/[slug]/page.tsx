@@ -81,12 +81,12 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       <main>
         <article>
           <header className="mx-auto w-full max-w-400 px-12 pt-40 pb-16 max-md:px-6 max-md:pt-32">
-            <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Event</p>
-            <h1 className="mt-4 max-w-5xl text-5xl font-medium leading-tight tracking-tight text-text-primary max-md:text-4xl max-md:leading-11">{typedEvent.title}</h1>
+            <p className="text-sm max-md:text-xs max-md:leading-4 font-medium uppercase tracking-wider text-text-quaternary">Event</p>
+            <h1 className="mt-4 max-w-5xl text-5xl max-md:text-4xl max-md:leading-11 font-medium leading-tight tracking-tight text-text-primary ">{typedEvent.title}</h1>
             <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-border-primary pt-5 max-md:grid-cols-1">
-              <div><dt className="text-sm text-text-quaternary">Date and time</dt><dd className="mt-1 text-base text-text-secondary">{date}</dd></div>
-              <div><dt className="text-sm text-text-quaternary">Location</dt><dd className="mt-1 text-base text-text-secondary">{typedEvent.location ?? "Details to follow"}</dd></div>
-              <div><dt className="text-sm text-text-quaternary">Access</dt><dd className="mt-1 text-base text-text-secondary">{typedEvent.price ? `$${(typedEvent.price / 100).toFixed(2)}` : "Complimentary"}</dd></div>
+              <div><dt className="text-sm max-md:text-xs max-md:leading-4 text-text-quaternary">Date and time</dt><dd className="mt-1 text-base max-md:text-sm max-md:leading-5 text-text-secondary">{date}</dd></div>
+              <div><dt className="text-sm max-md:text-xs max-md:leading-4 text-text-quaternary">Location</dt><dd className="mt-1 text-base max-md:text-sm max-md:leading-5 text-text-secondary">{typedEvent.location ?? "Details to follow"}</dd></div>
+              <div><dt className="text-sm max-md:text-xs max-md:leading-4 text-text-quaternary">Access</dt><dd className="mt-1 text-base max-md:text-sm max-md:leading-5 text-text-secondary">{typedEvent.price ? `$${(typedEvent.price / 100).toFixed(2)}` : "Complimentary"}</dd></div>
             </dl>
           </header>
 
@@ -101,18 +101,18 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 
           <div className="mx-auto grid w-full max-w-400 grid-cols-12 gap-12 px-12 py-24 max-lg:grid-cols-1 max-md:px-6 max-md:py-16">
             <div className="col-span-7 col-start-2 max-lg:col-span-1">
-              <h2 className="text-2xl font-medium text-text-primary">About this event</h2>
-              {typedEvent.description ? <div className="mt-5 space-y-5 text-lg leading-8 text-text-tertiary"><PortableText value={typedEvent.description} /></div> : <p className="mt-5 text-lg leading-8 text-text-tertiary">Further programme details will be published when the event opens for registration.</p>}
+              <h2 className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium text-text-primary">About this event</h2>
+              {typedEvent.description ? <div className="mt-5 space-y-5 text-lg max-md:text-base max-md:leading-6 leading-8 text-text-tertiary"><PortableText value={typedEvent.description} /></div> : <p className="mt-5 text-lg max-md:text-base max-md:leading-6 leading-8 text-text-tertiary">Further programme details will be published when the event opens for registration.</p>}
             </div>
             <aside className="col-span-4 rounded-xs border border-border-secondary bg-bg-primary p-8 shadow-xs max-lg:col-span-1">
-              <p className="text-sm font-medium uppercase tracking-wider text-text-quaternary">Registration</p>
-              <h2 className="mt-3 text-2xl font-medium text-text-primary">Request a place</h2>
+              <p className="text-sm max-md:text-xs max-md:leading-4 font-medium uppercase tracking-wider text-text-quaternary">Registration</p>
+              <h2 className="mt-3 text-2xl max-md:text-xl max-md:leading-7.5 font-medium text-text-primary">Request a place</h2>
               <div className="mt-6"><RegistrationForm eventId={typedEvent._id} /></div>
             </aside>
           </div>
 
           <div className="mx-auto flex w-full max-w-400 px-12 pb-24 max-md:px-6 max-md:pb-16">
-            <span className="rounded-xs border border-border-secondary bg-bg-secondary px-3 py-1 text-sm leading-5 text-text-tertiary">
+            <span className="rounded-xs border border-border-secondary bg-bg-secondary px-3 py-1 text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-tertiary">
               Conceptual event
             </span>
           </div>

@@ -79,7 +79,7 @@ export function AboutSection() {
         <SectionEyebrow>About Sovran</SectionEyebrow>
         <h2
           id="about-heading"
-          className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-[38px]"
+          className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary "
         >
           Behind decisions that shape markets.
         </h2>
@@ -115,12 +115,12 @@ export function AboutSection() {
               </p>
               <div
                 aria-hidden="true"
-                className="flex w-full flex-wrap items-center justify-center text-4xl font-medium leading-12 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-[38px]"
+                className="flex w-full flex-wrap items-center justify-center text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-12 tracking-tight text-text-secondary "
               >
                 <SpinningNumber value={item.value} />
                 <span>{item.suffix}</span>
               </div>
-              <p className="w-full whitespace-pre-line text-xl font-normal leading-7.5 text-text-quaternary max-md:text-lg max-md:leading-6">
+              <p className="w-full whitespace-pre-line text-xl max-md:text-lg max-md:leading-7 font-normal leading-7.5 text-text-quaternary ">
                 {item.label}
               </p>
             </div>

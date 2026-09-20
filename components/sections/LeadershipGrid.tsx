@@ -144,12 +144,12 @@ export function LeadershipGrid({leaders}: {leaders: Leader[]}) {
 
             <div className="mt-6 flex flex-col gap-2">
               <div className="flex items-center justify-between gap-4">
-                <h2 className="min-w-0 text-2xl font-medium leading-8 tracking-tight text-text-secondary">
+                <h2 className="min-w-0 text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 tracking-tight text-text-secondary">
                   {leader.name}
                 </h2>
                 <SocialMarks leader={leader} />
               </div>
-              <p className="max-w-72 text-lg leading-7 text-text-secondary">
+              <p className="max-w-72 text-lg max-md:text-base max-md:leading-6 leading-7 text-text-secondary">
                 {leader.role}
               </p>
             </div>
@@ -174,7 +174,7 @@ export function LeadershipGrid({leaders}: {leaders: Leader[]}) {
                 <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
                   <h2
                     id={`leader-name-${activeLeader.id}`}
-                    className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
+                    className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary "
                   >
                     {activeLeader.name}
                   </h2>
@@ -182,7 +182,7 @@ export function LeadershipGrid({leaders}: {leaders: Leader[]}) {
                     <SocialMarks leader={activeLeader} interactive />
                   </div>
                 </div>
-                <p className="text-lg leading-7 text-text-tertiary">
+                <p className="text-lg max-md:text-base max-md:leading-6 leading-7 text-text-tertiary">
                   {activeLeader.role}
                 </p>
               </div>
@@ -204,7 +204,7 @@ export function LeadershipGrid({leaders}: {leaders: Leader[]}) {
               </div>
               <div
                 id={`leader-bio-${activeLeader.id}`}
-                className="flex flex-col gap-4 p-2 text-xl leading-7.5 text-text-secondary max-lg:p-0 max-md:px-2 max-md:text-lg max-md:leading-7"
+                className="flex flex-col gap-4 p-2 text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-secondary max-lg:p-0 max-md:px-2 "
               >
                 {activeLeader.bio.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>

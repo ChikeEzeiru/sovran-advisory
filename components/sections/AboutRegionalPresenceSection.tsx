@@ -23,12 +23,12 @@ export function AboutRegionalPresenceSection() {
             <SectionEyebrow>Regional Presence</SectionEyebrow>
             <h2
               id="regional-presence-heading"
-              className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9"
+              className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-secondary "
             >
               Our work is grounded in the markets we operate in.
             </h2>
           </div>
-          <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+          <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
             Across our offices and wider network, we combine local knowledge
             with a regional view of Sub-Saharan Africa, helping clients
             understand the relationships, regulations and market realities
@@ -52,11 +52,11 @@ export function AboutRegionalPresenceSection() {
                       : "opacity-100"
                   }`}
                 >
-                  <p className="text-base font-medium leading-6 text-text-primary">
+                  <p className="text-base max-md:text-sm max-md:leading-5 font-medium leading-6 text-text-primary">
                     {location.city}, {location.country}
                   </p>
                   {location.address && (
-                    <p className="text-base leading-6 text-text-secondary">
+                    <p className="text-base max-md:text-sm max-md:leading-5 leading-6 text-text-secondary">
                       {location.address}
                     </p>
                   )}

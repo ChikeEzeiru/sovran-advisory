@@ -41,16 +41,16 @@ export default function AboutPage() {
             <div className="relative mx-auto w-full max-w-400 px-8 max-md:px-4">
               <div className="flex max-w-214 flex-col items-start gap-2 text-white">
                 <div className="rounded-xs border border-fg-brand-primary-alt px-3 py-1">
-                  <p className="whitespace-nowrap text-base leading-6">
+                  <p className="whitespace-nowrap text-base max-md:text-sm max-md:leading-5 leading-6">
                     About Us
                   </p>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <h1 className="text-5xl font-medium leading-15 tracking-tight max-md:text-3xl max-md:leading-9">
+                  <h1 className="text-5xl max-md:text-4xl max-md:leading-11 font-medium leading-15 tracking-tight ">
                     We advise organisations making high-stakes decisions in
                     complex markets.
                   </h1>
-                  <p className="text-xl leading-7.5 max-md:text-base max-md:leading-6">
+                  <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 ">
                     Since 2012, we have helped businesses, investors and public
                     institutions understand unfamiliar markets, make sound
                     strategic choices and turn those choices into practical
@@ -65,13 +65,13 @@ export default function AboutPage() {
         <section className="flex flex-col items-center justify-center">
           <div className="grid w-full max-w-400 grid-cols-2 gap-16 px-12 py-16 max-lg:grid-cols-1 max-lg:gap-10 max-md:px-4 max-md:py-12">
             <div className="flex flex-col gap-6 max-w-336">
-              <h2 className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9">
+              <h2 className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary ">
                 Our story{" "}
                 <span className="text-text-quaternary">
                   started with market intelligence
                 </span>
               </h2>
-              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 Sovran began as a small market-intelligence practice. Our early
                 work focused on helping clients understand new markets before
                 committing capital, entering partnerships or expanding
@@ -79,7 +79,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-5 text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+            <div className="flex flex-col gap-5 text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
               <p>
                 But the questions rarely ended with the research. Clients needed
                 to know what to do next, how to enter, who to work with, which

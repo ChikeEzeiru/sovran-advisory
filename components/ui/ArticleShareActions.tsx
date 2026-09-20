@@ -20,7 +20,7 @@ export function ArticleShareActions({ title }: { title: string }) {
     window.open(destination, "_blank", "noopener,noreferrer");
   }
 
-  const buttonClass = "inline-flex h-10 items-center justify-center rounded-xs border border-border-primary bg-bg-primary px-3.5 text-sm font-medium text-text-secondary shadow-xs transition-[transform,background-color] duration-150 hover:bg-bg-primary-hover active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current motion-reduce:transform-none";
+  const buttonClass = "inline-flex h-10 items-center justify-center rounded-xs border border-border-primary bg-bg-primary px-3.5 text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary shadow-xs transition-[transform,background-color] duration-150 hover:bg-bg-primary-hover active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current motion-reduce:transform-none";
 
   return (
     <div className="flex flex-wrap gap-2" aria-label="Share this Perspective">

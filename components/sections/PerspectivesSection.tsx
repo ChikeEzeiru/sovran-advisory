@@ -135,10 +135,10 @@ function MobileArticleDetails({
   return (
     <div className={`flex flex-col gap-4 ${className}`} style={style}>
       <div className="flex flex-col gap-2">
-        <h3 className="text-xl font-medium leading-7.5 text-text-secondary">
+        <h3 className="text-xl font-medium leading-7.5 text-text-secondary max-md:text-lg max-md:leading-7">
           {article.title}
         </h3>
-        <p className="text-base leading-6 text-text-tertiary">
+        <p className="text-base leading-6 text-text-tertiary max-md:text-sm max-md:leading-5">
           {article.body}
         </p>
       </div>
@@ -680,10 +680,10 @@ export function PerspectivesSection() {
               aria-hidden="true"
             >
               <div className="flex flex-col gap-2 max-w-[65%]">
-                <span className="block text-[24px] font-medium leading-8 text-text-secondary">
+                <span className="block text-[24px] max-md:text-xl max-md:leading-7.5 font-medium leading-8 text-text-secondary">
                   {ARTICLES[0].title}
                 </span>
-                <span className="block text-[18px] font-normal leading-7 text-text-secondary">
+                <span className="block text-[18px] max-md:text-base max-md:leading-6 font-normal leading-7 text-text-secondary">
                   {ARTICLES[0].body}
                 </span>
               </div>
@@ -718,10 +718,10 @@ export function PerspectivesSection() {
                   inert={!isActive}
                 >
                   <div className="flex flex-col gap-2 max-w-[65%]">
-                    <span className="block text-[24px] font-medium leading-8 text-text-secondary">
+                    <span className="block text-[24px] max-md:text-xl max-md:leading-7.5 font-medium leading-8 text-text-secondary">
                       {article.title}
                     </span>
-                    <span className="block text-[18px] font-normal leading-7 text-text-secondary">
+                    <span className="block text-[18px] max-md:text-base max-md:leading-6 font-normal leading-7 text-text-secondary">
                       {article.body}
                     </span>
                   </div>

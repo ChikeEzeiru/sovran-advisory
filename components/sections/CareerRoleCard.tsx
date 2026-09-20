@@ -58,11 +58,11 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
         aria-haspopup="dialog"
         aria-label={`View details for ${role.title}`}
         onClick={() => setIsOpen(true)}
-        className="group min-h-42 w-full cursor-pointer rounded-xs border border-border-secondary bg-bg-primary p-6 text-left transition-[border-color,background-color] duration-200 hover:border-border-primary hover:bg-bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring max-md:min-h-0 max-md:p-4"
+        className="group min-h-42 w-full cursor-pointer rounded-xs border border-border-secondary bg-bg-primary p-6 text-left transition-[border-color,background-color] duration-200 hover:border-border-primary hover:bg-bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring max-md:min-h-0 max-md:px-4 max-md:py-5"
       >
         <span className="flex min-h-30 flex-col max-md:min-h-0">
-          <span className="flex items-start justify-between gap-5 max-md:gap-3">
-            <span className="min-w-0 text-base font-semibold leading-6 text-text-primary">
+          <span className="flex items-start justify-between gap-5 max-md:flex-col max-md:justify-start max-md:gap-1.5">
+            <span className="min-w-0 text-base max-md:text-sm max-md:leading-5 font-semibold leading-6 text-text-primary">
               {role.title}
             </span>
             <BadgeWithFlag
@@ -76,11 +76,11 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
             </BadgeWithFlag>
           </span>
 
-          <span className="mt-2 max-w-182.5 text-base leading-6 text-text-tertiary max-md:text-sm max-md:leading-5">
+          <span className="mt-2 max-w-182.5 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary max-md:mt-3 ">
             {role.summary}
           </span>
 
-          <span className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-5 text-sm font-semibold leading-5 text-text-tertiary max-md:justify-between max-md:gap-x-3">
+          <span className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-5 text-sm max-md:text-xs max-md:leading-4 font-semibold leading-5 text-text-tertiary max-md:mt-5 max-md:justify-start max-md:gap-x-4 max-md:pt-0">
             <span className="inline-flex items-center gap-1.5">
               <Clock aria-hidden="true" className="size-5" />
               {role.employmentType}
@@ -91,7 +91,7 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
                 {role.compensation}
               </span>
             )}
-            <span className="inline-flex items-center gap-1.5 text-text-brand-tertiary">
+            <span className="inline-flex items-center gap-1.5 text-text-brand-tertiary max-md:hidden">
               <ButtonVisual size="xs">View role details</ButtonVisual>
             </span>
           </span>
@@ -116,11 +116,11 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
             <div className="flex min-w-0 max-w-3xl flex-col gap-2">
               <h2
                 id={titleId}
-                className="text-4xl font-medium leading-11 tracking-tight text-text-primary max-md:text-3xl max-md:leading-9"
+                className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary "
               >
                 {role.title}
               </h2>
-              <p className="text-lg leading-7 text-text-tertiary">{role.department}</p>
+              <p className="text-lg max-md:text-base max-md:leading-6 leading-7 text-text-tertiary">{role.department}</p>
             </div>
 
             <button
@@ -146,7 +146,7 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
                 {role.location}
               </BadgeWithFlag>
 
-              <dl className="flex flex-col gap-4 text-sm leading-5">
+              <dl className="flex flex-col gap-4 text-sm max-md:text-xs max-md:leading-4 leading-5">
                 <div className="flex items-start gap-2">
                   <Clock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-fg-quaternary" />
                   <div>
@@ -179,8 +179,8 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
 
             <div id={descriptionId} className="flex min-w-0 flex-col gap-8">
               <section>
-                <h3 className="text-xl font-semibold leading-7.5 text-text-primary">About the role</h3>
-                <div className="mt-3 flex flex-col gap-4 text-base leading-6 text-text-tertiary">
+                <h3 className="text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7.5 text-text-primary">About the role</h3>
+                <div className="mt-3 flex flex-col gap-4 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                   {role.overview.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
@@ -189,8 +189,8 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
 
               {role.responsibilities.length > 0 && (
                 <section>
-                  <h3 className="text-xl font-semibold leading-7.5 text-text-primary">What you will do</h3>
-                  <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-base leading-6 text-text-tertiary marker:text-fg-brand-primary">
+                  <h3 className="text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7.5 text-text-primary">What you will do</h3>
+                  <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary marker:text-fg-brand-primary">
                     {role.responsibilities.map((responsibility) => (
                       <li key={responsibility}>{responsibility}</li>
                     ))}
@@ -200,8 +200,8 @@ export function CareerRoleCard({role}: {role: CareerRole}) {
 
               {role.requirements.length > 0 && (
                 <section>
-                  <h3 className="text-xl font-semibold leading-7.5 text-text-primary">What we are looking for</h3>
-                  <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-base leading-6 text-text-tertiary marker:text-fg-brand-primary">
+                  <h3 className="text-xl max-md:text-lg max-md:leading-7 font-semibold leading-7.5 text-text-primary">What we are looking for</h3>
+                  <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary marker:text-fg-brand-primary">
                     {role.requirements.map((requirement) => (
                       <li key={requirement}>{requirement}</li>
                     ))}

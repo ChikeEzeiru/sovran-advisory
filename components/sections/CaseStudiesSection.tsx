@@ -49,7 +49,7 @@ const SUPPORTING_STUDIES = [
 
 function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <p className="flex items-baseline gap-1 text-base leading-6">
+    <p className="flex items-baseline gap-1 text-base max-md:text-sm max-md:leading-5 leading-6">
       <span className="shrink-0 font-semibold text-text-secondary">
         {value}
       </span>
@@ -70,14 +70,14 @@ export function CaseStudiesSection() {
             <SectionEyebrow>Case Studies</SectionEyebrow>
             <h2
               id="case-studies-heading"
-              className="max-w-xl text-4xl font-medium leading-11 tracking-tight text-text-secondary"
+              className="max-w-xl text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-secondary"
             >
               Practical outcomes for complex challenges.
             </h2>
           </div>
 
           <div className="flex min-w-0 flex-col items-start gap-5 max-md:gap-4">
-            <p className="max-w-2xl text-xl font-normal leading-7.5 text-text-tertiary">
+            <p className="max-w-2xl text-xl max-md:text-lg max-md:leading-7 font-normal leading-7.5 text-text-tertiary">
               From entering new markets to delivering complex programmes, our
               work brings together the expertise each challenge requires.
             </p>
@@ -102,7 +102,7 @@ export function CaseStudiesSection() {
                   className="object-cover"
                 />
               </span>
-              <h3 className="text-xl font-medium leading-7.5 tracking-tight text-text-secondary group-hover/featured:text-text-brand-secondary max-md:leading-7">
+              <h3 className="text-xl max-md:text-lg max-md:leading-7 font-medium leading-7.5 tracking-tight text-text-secondary group-hover/featured:text-text-brand-secondary ">
                 {FEATURED_STUDY.title}
               </h3>
             </ConditionalLink>
@@ -160,7 +160,7 @@ export function CaseStudiesSection() {
                       className="object-cover"
                     />
                   </span>
-                  <h3 className="text-xl font-medium leading-7.5 tracking-tight text-text-primary-on-brand">
+                  <h3 className="text-xl max-md:text-lg max-md:leading-7 font-medium leading-7.5 tracking-tight text-text-primary-on-brand">
                     {study.title}
                   </h3>
                 </div>

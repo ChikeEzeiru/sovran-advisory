@@ -32,10 +32,10 @@ export function AboutEvolutionSection() {
             className="object-cover"
           />
           <span aria-hidden="true" className="absolute inset-0 bg-black/25" />
-          <p className="relative text-6xl font-bold leading-16 tracking-tight">
+          <p className="relative text-6xl max-md:text-4xl max-md:leading-11 font-bold leading-16 tracking-tight">
             2012
           </p>
-          <p className="relative text-xl leading-7.5">Sovran was founded</p>
+          <p className="relative text-xl max-md:text-lg max-md:leading-7 leading-7.5">Sovran was founded</p>
         </article>
 
         <div
@@ -56,14 +56,14 @@ export function AboutEvolutionSection() {
                     key={milestone.title.join(" ")}
                     className="h-full w-72 shrink-0 rounded-xs border border-border-primary p-4"
                   >
-                    <h2 className="text-xl font-medium leading-7.5 tracking-tight text-text-secondary-hover">
+                    <h2 className="text-xl max-md:text-lg max-md:leading-7 font-medium leading-7.5 tracking-tight text-text-secondary-hover">
                       {milestone.title.map((line) => (
                         <span key={line} className="block">
                           {line}
                         </span>
                       ))}
                     </h2>
-                    <p className="mt-4 text-lg leading-7 text-text-tertiary">
+                    <p className="mt-4 text-lg max-md:text-base max-md:leading-6 leading-7 text-text-tertiary">
                       {milestone.body}
                     </p>
                   </article>

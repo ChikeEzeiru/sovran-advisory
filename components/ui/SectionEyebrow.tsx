@@ -18,7 +18,7 @@ export function SectionEyebrow({
     <div
       className={`w-fit rounded-xs border px-3 py-1 ${surfaceClasses[surface]}`}
     >
-      <p className="whitespace-nowrap text-base font-normal leading-6 text-text-quaternary">
+      <p className="whitespace-nowrap text-base max-md:text-sm max-md:leading-5 font-normal leading-6 text-text-quaternary">
         {children}
       </p>
     </div>

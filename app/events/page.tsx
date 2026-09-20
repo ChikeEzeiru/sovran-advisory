@@ -42,15 +42,15 @@ export default function EventsPage() {
         <section className="mx-auto w-full max-w-400 px-12 pt-32 pb-20 max-md:px-6 max-md:pt-20">
           <div className="flex max-w-3xl flex-col items-start gap-4">
             <div className="rounded-xs border border-border-secondary bg-bg-secondary px-3 py-1">
-              <p className="text-base leading-6 text-text-tertiary">
+              <p className="text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                 Events &amp; convening
               </p>
             </div>
             <div>
-              <h1 className="text-5xl font-medium leading-15 tracking-tight text-text-primary max-md:text-4xl max-md:leading-11">
+              <h1 className="text-5xl max-md:text-4xl max-md:leading-11 font-medium leading-15 tracking-tight text-text-primary ">
                 Useful conversations around decisions in motion.
               </h1>
-              <p className="mt-4 text-xl leading-7.5 text-text-tertiary text-pretty">
+              <p className="mt-4 text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary text-pretty">
                 Sovran convenes small roundtables, executive briefings and
                 working sessions where market evidence, institutional
                 perspectives and practical experience can be examined together.
@@ -63,7 +63,7 @@ export default function EventsPage() {
           <div className="flex flex-col gap-8">
             <div>
               <SectionEyebrow>Upcoming events</SectionEyebrow>
-              <h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">
+              <h2 className="mt-3 text-3xl max-md:text-2xl max-md:leading-8 font-medium leading-9 tracking-tight text-text-primary">
                 The next room is still being shaped.
               </h2>
             </div>
@@ -75,10 +75,10 @@ export default function EventsPage() {
                 >
                   <Calendar size={24} />
                 </div>
-                <h3 className="mt-6 text-2xl font-medium leading-8 text-text-primary">
+                <h3 className="mt-6 text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 text-text-primary">
                   No upcoming events are currently published.
                 </h3>
-                <p className="mt-3 text-base leading-6 text-text-tertiary">
+                <p className="mt-3 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                   We announce small roundtables and briefings when there is a
                   clear question worth bringing people together around.
                 </p>
@@ -99,7 +99,7 @@ export default function EventsPage() {
           <div className="mx-auto flex w-full max-w-400 flex-col gap-10 px-12 py-24 max-md:px-6 max-md:py-16">
             <div>
               <SectionEyebrow>Past events</SectionEyebrow>
-              <h2 className="mt-3 text-3xl font-medium leading-9 tracking-tight text-text-primary">
+              <h2 className="mt-3 text-3xl max-md:text-2xl max-md:leading-8 font-medium leading-9 tracking-tight text-text-primary">
                 Recent questions we have convened around.
               </h2>
             </div>
@@ -123,16 +123,16 @@ export default function EventsPage() {
                     />
                   </div>
                   <div>
-                    <p className="text-sm text-text-quaternary">
+                    <p className="text-sm max-md:text-xs max-md:leading-4 text-text-quaternary">
                       {event.format} · {event.date}
                     </p>
-                    <h3 className="mt-2 max-w-2xl text-2xl font-medium leading-8 tracking-tight text-text-secondary">
+                    <h3 className="mt-2 max-w-2xl text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 tracking-tight text-text-secondary">
                       {event.title}
                     </h3>
-                    <p className="mt-3 max-w-2xl text-base leading-6 text-text-tertiary">
+                    <p className="mt-3 max-w-2xl text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                       {event.description}
                     </p>
-                    <p className="mt-4 text-sm text-text-quaternary">
+                    <p className="mt-4 text-sm max-md:text-xs max-md:leading-4 text-text-quaternary">
                       {event.location}
                     </p>
                   </div>
@@ -166,10 +166,10 @@ export default function EventsPage() {
               ],
             ].map(([title, copy]) => (
               <div key={title} className="border-t border-border-primary pt-5">
-                <h3 className="text-xl font-medium text-text-secondary">
+                <h3 className="text-xl max-md:text-lg max-md:leading-7 font-medium text-text-secondary">
                   {title}
                 </h3>
-                <p className="mt-2 text-base leading-6 text-text-tertiary">
+                <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                   {copy}
                 </p>
               </div>

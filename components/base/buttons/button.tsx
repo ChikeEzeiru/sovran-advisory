@@ -23,7 +23,7 @@ export const styles = sortCx({
     sizes: {
         xs: {
             root: [
-                "gap-1 rounded-[2px] px-2.5 py-1.5 text-sm font-semibold before:rounded-[1px] data-icon-only:p-2",
+                "gap-1 rounded-[2px] px-2.5 py-1.5 text-sm max-md:text-xs max-md:leading-4 font-semibold before:rounded-[1px] data-icon-only:p-2",
                 "in-data-input-wrapper:px-3.5 in-data-input-wrapper:py-2.5 in-data-input-wrapper:data-icon-only:p-2.5",
                 "*:data-icon:size-4 *:data-icon:stroke-[2.25px]",
             ].join(" "),
@@ -31,14 +31,14 @@ export const styles = sortCx({
         },
         sm: {
             root: [
-                "gap-1 rounded-[2px] px-3 py-2 text-sm font-semibold before:rounded-[1px] data-icon-only:p-2",
+                "gap-1 rounded-[2px] px-3 py-2 text-sm max-md:text-xs max-md:leading-4 font-semibold before:rounded-[1px] data-icon-only:p-2",
                 "in-data-input-wrapper:px-3.5 in-data-input-wrapper:py-2.5 in-data-input-wrapper:data-icon-only:p-2.5",
             ].join(" "),
             linkRoot: "gap-1 *:data-text:underline-offset-3",
         },
         md: {
             root: [
-                "gap-1 rounded-[2px] px-3.5 py-2.5 text-sm font-semibold before:rounded-[1px] data-icon-only:p-2.5",
+                "gap-1 rounded-[2px] px-3.5 py-2.5 text-sm max-md:text-xs max-md:leading-4 font-semibold before:rounded-[1px] data-icon-only:p-2.5",
                 "in-data-input-wrapper:gap-1.5 in-data-input-wrapper:px-4 in-data-input-wrapper:text-md in-data-input-wrapper:data-icon-only:p-3",
             ].join(" "),
             linkRoot: "gap-1 *:data-text:underline-offset-4",

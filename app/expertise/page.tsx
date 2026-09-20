@@ -107,11 +107,11 @@ export default function ExpertisePage() {
             <div className="flex max-w-3xl flex-col gap-4">
               <h2
                 id="disciplines-heading"
-                className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9"
+                className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-secondary "
               >
                 Different disciplines, one view of the problem.
               </h2>
-              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 Clients rarely come to us with problems that fit neatly into one
                 category. We bring together strategy, policy, technology and
                 communications to address each challenge in context.
@@ -137,14 +137,14 @@ export default function ExpertisePage() {
                   </div>
                   <div className="flex items-end justify-between gap-6 max-sm:flex-col max-sm:items-start max-sm:gap-3">
                     <div className="flex max-w-108 min-w-0 flex-col gap-2">
-                      <h3 className="text-2xl font-medium leading-8 tracking-tight text-text-secondary">
+                      <h3 className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 tracking-tight text-text-secondary">
                         {practice.title}
                       </h3>
-                      <p className="text-lg leading-7 text-text-secondary max-md:text-base max-md:leading-6">
+                      <p className="text-lg max-md:text-base max-md:leading-6 leading-7 text-text-secondary ">
                         {practice.copy}
                       </p>
                     </div>
-                    <span className="inline-flex shrink-0 items-center gap-1.5 text-base font-semibold leading-6 text-text-brand-tertiary transition-colors duration-150 group-hover/service-card:text-text-brand-secondary">
+                    <span className="inline-flex shrink-0 items-center gap-1.5 text-base max-md:text-sm max-md:leading-5 font-semibold leading-6 text-text-brand-tertiary transition-colors duration-150 group-hover/service-card:text-text-brand-secondary">
                       <ButtonVisual size="lg" interaction="service-card">
                         Explore {practice.title}
                       </ButtonVisual>
@@ -168,12 +168,12 @@ export default function ExpertisePage() {
                 <SectionEyebrow>How We Work</SectionEyebrow>
                 <h2
                   id="how-we-work-heading"
-                  className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9"
+                  className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-secondary "
                 >
                   Working through complexity
                 </h2>
               </div>
-              <p className="text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6">
+              <p className="text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary ">
                 We start by studying the environment around the question: the
                 market, institutions, stakeholders and constraints. From there,
                 we work with clients to determine what matters, what is possible
@@ -198,10 +198,10 @@ export default function ExpertisePage() {
                   key={principle.title}
                   className="flex flex-col items-center gap-1 border-t-4 border-border-tertiary px-4 pt-6 text-center max-md:items-start max-md:text-left"
                 >
-                  <h3 className="text-lg font-semibold leading-7 text-text-secondary">
+                  <h3 className="text-lg max-md:text-base max-md:leading-6 font-semibold leading-7 text-text-secondary">
                     {principle.title}
                   </h3>
-                  <p className="max-w-sm text-base leading-6 text-text-tertiary">
+                  <p className="max-w-sm text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
                     {principle.copy}
                   </p>
                 </div>
@@ -220,12 +220,12 @@ export default function ExpertisePage() {
                 <SectionEyebrow>Case Studies</SectionEyebrow>
                 <h2
                   id="expertise-cases-heading"
-                  className="text-4xl font-medium leading-11 tracking-tight text-text-secondary max-md:text-3xl max-md:leading-9"
+                  className="text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-secondary "
                 >
                   What our work looks like in practice
                 </h2>
               </div>
-              <p className="max-w-2xl text-xl leading-7.5 text-text-tertiary max-md:text-base max-md:leading-6 md:self-end">
+              <p className="max-w-2xl text-xl max-md:text-lg max-md:leading-7 leading-7.5 text-text-tertiary md:self-end">
                 From entering new markets to delivering complex programmes, our
                 work brings together the expertise each challenge requires.
               </p>
@@ -261,12 +261,12 @@ export default function ExpertisePage() {
                           className="object-cover"
                         />
                       </span>
-                      <h3 className="text-xl font-medium leading-7.5 tracking-tight text-white">
+                      <h3 className="text-xl max-md:text-lg max-md:leading-7 font-medium leading-7.5 tracking-tight text-white">
                         {study.title}
                       </h3>
                     </div>
                   </div>
-                  <p className="flex items-baseline gap-1 px-2 pt-3 pb-5 text-base leading-6">
+                  <p className="flex items-baseline gap-1 px-2 pt-3 pb-5 text-base max-md:text-sm max-md:leading-5 leading-6">
                     <span className="shrink-0 font-semibold text-text-secondary">
                       {study.metric}
                     </span>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { XClose } from "@untitledui/icons";
 import { Button } from "@/components/ui/Button";
+import { isValidEmail } from "@/lib/email-address";
 import { SOVRAN_MARKETS } from "@/lib/markets";
 
 type FieldErrors = Partial<
@@ -11,13 +12,13 @@ type FieldErrors = Partial<
 >;
 
 const inputClass =
-  "w-full rounded-xs border border-border-primary bg-bg-primary px-3.5 py-2.5 text-base text-text-primary shadow-xs outline-none placeholder:text-text-placeholder focus:border-border-brand focus:ring-2 focus:ring-border-brand/20 aria-invalid:border-border-error aria-invalid:ring-2 aria-invalid:ring-border-error/20";
+  "w-full rounded-xs border border-border-primary bg-bg-primary px-3.5 py-2.5 text-base max-md:text-sm max-md:leading-5 text-text-primary shadow-xs outline-none placeholder:text-text-placeholder focus:border-border-brand focus:ring-2 focus:ring-border-brand/20 aria-invalid:border-border-error aria-invalid:ring-2 aria-invalid:ring-border-error/20";
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
 
   return (
-    <span id={id} className="text-sm leading-5 text-text-error-primary">
+    <span id={id} className="text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-error-primary">
       {message}
     </span>
   );
@@ -49,7 +50,7 @@ export function ContactForm() {
 
     if (!name) errors.name = "Enter your name.";
     if (!organisation) errors.organisation = "Enter your organisation.";
-    if (!/^\S+@\S+\.\S+$/.test(email)) errors.email = "Enter a valid work email.";
+    if (!isValidEmail(email)) errors.email = "Enter a valid work email.";
     if (!markets) errors.markets = "Tell us which market or markets are involved.";
     if (message.length < 20) errors.message = "Please provide a little more detail.";
     if (contactMethod === "phone" && !phone) errors.phone = "Enter the best number to reach you.";
@@ -179,11 +180,11 @@ export function ContactForm() {
         tabIndex={-1}
         className="min-w-0 flex-1 border-t border-border-secondary pt-8 outline-none"
       >
-        <p className="text-sm font-semibold text-text-brand-tertiary">Enquiry received</p>
-        <h2 className="mt-3 text-3xl font-medium leading-9.5 tracking-tight text-text-primary">
+        <p className="text-sm max-md:text-xs max-md:leading-4 font-semibold text-text-brand-tertiary">Enquiry received</p>
+        <h2 className="mt-3 text-3xl max-md:text-2xl max-md:leading-8 font-medium leading-9.5 tracking-tight text-text-primary">
           Thank you for getting in touch.
         </h2>
-        <p className="mt-4 max-w-xl text-lg leading-7 text-text-tertiary">
+        <p className="mt-4 max-w-xl text-lg max-md:text-base max-md:leading-6 leading-7 text-text-tertiary">
           A member of our team will review your enquiry and respond within two business days.
         </p>
         <Button variant="secondary" className="mt-8" onClick={() => setStatus("idle")}>
@@ -200,7 +201,7 @@ export function ContactForm() {
       noValidate
     >
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium text-text-secondary">Name</span>
+        <span className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">Name</span>
         <input
           name="name"
           type="text"
@@ -215,7 +216,7 @@ export function ContactForm() {
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium text-text-secondary">Organisation</span>
+        <span className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">Organisation</span>
         <input
           name="organisation"
           type="text"
@@ -230,7 +231,7 @@ export function ContactForm() {
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium text-text-secondary">Work email</span>
+        <span className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">Work email</span>
         <input
           name="email"
           type="email"
@@ -246,7 +247,7 @@ export function ContactForm() {
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium text-text-secondary">When do you need support?</span>
+        <span className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">When do you need support?</span>
         <select name="timeframe" className={inputClass} defaultValue="">
           <option value="">Select a timeframe (optional)</option>
           <option value="Immediately">Immediately</option>
@@ -257,10 +258,10 @@ export function ContactForm() {
       </label>
 
       <div className="col-span-2 flex flex-col gap-1.5 max-md:col-span-1">
-        <label htmlFor="contact-markets" className="text-sm font-medium text-text-secondary">
+        <label htmlFor="contact-markets" className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">
           Market(s) involved
         </label>
-        <p id="contact-markets-help" className="text-sm leading-5 text-text-quaternary">
+        <p id="contact-markets-help" className="text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
           Select one or more markets where Sovran has established experience.
         </p>
         <div className="relative">
@@ -274,7 +275,7 @@ export function ContactForm() {
             {markets.map((market) => (
               <span
                 key={market}
-                className="inline-flex items-center gap-0.5 rounded-xs border border-border-primary bg-bg-primary py-0.5 pr-1 pl-2.5 text-sm font-medium leading-5 text-text-secondary"
+                className="inline-flex items-center gap-0.5 rounded-xs border border-border-primary bg-bg-primary py-0.5 pr-1 pl-2.5 text-sm max-md:text-xs max-md:leading-4 font-medium leading-5 text-text-secondary"
               >
                 {market}
                 <button
@@ -316,7 +317,7 @@ export function ContactForm() {
                 setActiveMarketIndex(0);
               }}
               onKeyDown={handleMarketKeyDown}
-              className="min-w-36 flex-1 bg-transparent px-1 text-base leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
+              className="min-w-36 flex-1 bg-transparent px-1 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
               placeholder={markets.length === 0 ? "Search markets" : "Add another market"}
             />
           </div>
@@ -336,7 +337,7 @@ export function ContactForm() {
                     type="button"
                     role="option"
                     aria-selected="false"
-                    className={`flex w-full cursor-pointer rounded-xs px-3 py-2 text-left text-sm leading-5 text-text-secondary transition-colors ${
+                    className={`flex w-full cursor-pointer rounded-xs px-3 py-2 text-left text-sm leading-5 text-text-secondary transition-colors max-md:text-xs max-md:leading-4 ${
                       index === activeMarketIndex ? "bg-bg-primary-hover" : "hover:bg-bg-primary-hover"
                     }`}
                     onPointerDown={(event) => event.preventDefault()}
@@ -347,7 +348,7 @@ export function ContactForm() {
                   </button>
                 ))
               ) : (
-                <p className="px-3 py-2 text-sm leading-5 text-text-quaternary">
+                <p className="px-3 py-2 text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-quaternary">
                   No covered markets match your search.
                 </p>
               )}
@@ -358,7 +359,7 @@ export function ContactForm() {
       </div>
 
       <label className="col-span-2 flex flex-col gap-1.5 max-md:col-span-1">
-        <span className="text-sm font-medium text-text-secondary">
+        <span className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">
           What are you working through?
           <span aria-hidden="true" className="text-text-brand-tertiary">
             *
@@ -377,7 +378,7 @@ export function ContactForm() {
       </label>
 
       <label className="col-span-2 flex flex-col gap-1.5 max-md:col-span-1">
-        <span className="text-sm font-medium text-text-secondary">Preferred contact method</span>
+        <span className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">Preferred contact method</span>
         <select
           name="contactMethod"
           className={inputClass}
@@ -392,7 +393,7 @@ export function ContactForm() {
 
       {contactMethod === "phone" && (
         <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-text-secondary">Phone number</span>
+          <span className="text-sm max-md:text-xs max-md:leading-4 font-medium text-text-secondary">Phone number</span>
           <input
             name="phone"
             type="tel"
@@ -415,7 +416,7 @@ export function ContactForm() {
 
       <div className="col-span-2 max-md:col-span-1">
         {formError && (
-          <p role="alert" className="mb-4 text-sm leading-5 text-text-error-primary">
+          <p role="alert" className="mb-4 text-sm max-md:text-xs max-md:leading-4 leading-5 text-text-error-primary">
             {formError}
           </p>
         )}

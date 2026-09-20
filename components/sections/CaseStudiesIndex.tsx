@@ -45,7 +45,7 @@ function PaginationButton({
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none max-sm:size-9 max-sm:justify-center max-sm:px-0"
+      className="group inline-flex h-9 items-center gap-1.5 rounded-xs bg-bg-primary px-3 text-sm max-md:text-xs max-md:leading-4 font-semibold leading-5 text-text-secondary shadow-xs transition-[transform,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-bg-primary-hover active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bg-primary disabled:active:scale-100 motion-reduce:transform-none max-sm:size-9 max-sm:justify-center max-sm:px-0"
     >
       {direction === "previous" && <ButtonArrowVisual direction="left" />}
       <span className="max-sm:hidden">
@@ -113,7 +113,7 @@ export function CaseStudiesIndex({
                 setPage(1);
               }}
               placeholder="Search"
-              className="min-w-0 flex-1 bg-transparent text-base leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
+              className="min-w-0 flex-1 bg-transparent text-base max-md:text-sm max-md:leading-5 leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
             />
           </label>
 
@@ -130,7 +130,7 @@ export function CaseStudiesIndex({
                   type="button"
                   aria-pressed={active}
                   onClick={() => updateCategory(item)}
-                  className={`group h-11 shrink-0 rounded-xs px-4 text-base leading-6 transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] active:duration-100 motion-reduce:transform-none ${
+                  className={`group h-11 shrink-0 rounded-xs px-4 text-base leading-6 transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] active:duration-100 motion-reduce:transform-none max-md:text-sm max-md:leading-5 ${
                     active
                       ? "border border-border-secondary bg-bg-primary font-medium text-text-secondary"
                       : "text-text-quaternary hover:bg-bg-primary-hover hover:text-text-secondary"
@@ -151,7 +151,7 @@ export function CaseStudiesIndex({
               onChange={(event) =>
                 updateCategory(event.target.value as (typeof CATEGORIES)[number])
               }
-              className="w-full bg-transparent text-base leading-6 text-text-secondary outline-none"
+              className="w-full bg-transparent text-base max-md:text-sm max-md:leading-5 leading-6 text-text-secondary outline-none"
             >
               {CATEGORIES.map((item) => (
                 <option key={item} value={item}>
@@ -194,14 +194,14 @@ export function CaseStudiesIndex({
                           className="object-contain object-top-left"
                         />
                       </span>
-                      <h2 className="min-w-0 text-xl font-medium leading-7.5 tracking-tight text-text-primary-on-brand">
+                      <h2 className="min-w-0 text-xl max-md:text-lg max-md:leading-7 font-medium leading-7.5 tracking-tight text-text-primary-on-brand">
                         {study.title}
                       </h2>
                     </div>
                   </div>
 
                   {study.metric.value && study.metric.label ? (
-                    <p className="flex items-baseline gap-1 px-2 pt-3 pb-5 text-base leading-6">
+                    <p className="flex items-baseline gap-1 px-2 pt-3 pb-5 text-base max-md:text-sm max-md:leading-5 leading-6">
                       <span className="shrink-0 font-semibold text-text-secondary">
                         {study.metric.value}
                       </span>
@@ -216,10 +216,10 @@ export function CaseStudiesIndex({
           </div>
         ) : (
           <div className="border-y border-border-secondary py-16">
-            <h2 className="text-2xl font-medium leading-8 text-text-primary">
+            <h2 className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 text-text-primary">
               No case studies found
             </h2>
-            <p className="mt-2 text-base leading-6 text-text-tertiary">
+            <p className="mt-2 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-tertiary">
               Try another search term or practice.
             </p>
           </div>
@@ -247,7 +247,7 @@ export function CaseStudiesIndex({
                     aria-label={`Page ${pageNumber}`}
                     aria-current={pageNumber === page ? "page" : undefined}
                     onClick={() => setPage(pageNumber)}
-                    className={`size-9 rounded-xs text-sm font-medium leading-5 transition-[transform,background-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.94] active:duration-100 motion-reduce:transform-none ${
+                    className={`size-9 rounded-xs text-sm font-medium leading-5 transition-[transform,background-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.94] active:duration-100 motion-reduce:transform-none max-md:text-xs max-md:leading-4 ${
                       pageNumber === page
                         ? "bg-bg-primary text-text-secondary"
                         : "text-text-quaternary hover:bg-bg-primary-hover"
@@ -259,7 +259,7 @@ export function CaseStudiesIndex({
               )}
             </div>
 
-            <p className="hidden text-sm font-medium leading-5 text-text-secondary max-sm:block">
+            <p className="hidden text-sm max-md:text-xs max-md:leading-4 font-medium leading-5 text-text-secondary max-sm:block">
               Page {page} of {pageCount}
             </p>
 
