@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { SearchLg } from "@untitledui/icons";
+import { ChevronDown, FilterLines, SearchLg } from "@untitledui/icons";
 import { ButtonArrowVisual, ButtonVisual } from "@/components/ui/Button";
 import { ConditionalLink } from "@/components/ui/ConditionalLink";
 
@@ -98,7 +98,7 @@ export function CaseStudiesIndex({
   return (
     <section className="bg-bg-secondary-alt-2 py-16">
       <div className="mx-auto flex w-full max-w-400 flex-col gap-16 px-12 max-md:gap-12 max-md:px-4">
-        <div className="flex w-full items-center justify-between max-lg:flex-col max-lg:items-stretch max-lg:gap-4">
+        <div className="flex w-full items-center justify-between max-lg:flex-col max-lg:items-stretch max-lg:gap-4 max-md:gap-3">
           <label className="flex h-11 w-100 shrink-0 items-center gap-2 rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-fg-brand-primary-alt max-lg:w-full">
             <SearchLg
               aria-hidden="true"
@@ -113,7 +113,7 @@ export function CaseStudiesIndex({
                 setPage(1);
               }}
               placeholder="Search"
-              className="min-w-0 flex-1 bg-transparent text-base max-md:text-sm max-md:leading-5 leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
+              className="min-w-0 flex-1 bg-transparent text-base leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
             />
           </label>
 
@@ -144,14 +144,22 @@ export function CaseStudiesIndex({
             })}
           </div>
 
-          <label className="hidden h-11 w-full items-center rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs max-md:flex">
+          <label className="hidden h-11 w-full items-center gap-2 rounded-xs border border-border-primary bg-bg-primary px-3.5 shadow-xs focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-fg-brand-primary-alt max-md:flex">
+            <FilterLines
+              aria-hidden="true"
+              className="size-5 shrink-0 text-fg-quaternary"
+            />
             <span className="sr-only">Case-study practice</span>
             <select
               value={category}
               onChange={(event) =>
                 updateCategory(event.target.value as (typeof CATEGORIES)[number])
               }
-              className="w-full bg-transparent text-base max-md:text-sm max-md:leading-5 leading-6 text-text-secondary outline-none"
+              className={`min-w-0 flex-1 appearance-none bg-transparent text-base leading-6 outline-none ${
+                category === "All"
+                  ? "text-text-placeholder"
+                  : "text-text-primary"
+              }`}
             >
               {CATEGORIES.map((item) => (
                 <option key={item} value={item}>
@@ -159,6 +167,10 @@ export function CaseStudiesIndex({
                 </option>
               ))}
             </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none size-5 shrink-0 text-fg-quaternary"
+            />
           </label>
         </div>
 

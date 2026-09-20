@@ -180,9 +180,9 @@ export default function PartnershipsPage() {
           </div>
         </section>
 
-        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-4 max-md:py-12">
-          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 max-md:gap-10">
-            <h2 className="text-center text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary max-md:text-left ">
+        <section className="bg-bg-secondary-alt-2 px-12 py-16 max-md:px-4">
+          <div className="mx-auto flex w-full max-w-400 flex-col gap-16 max-md:gap-12">
+            <h2 className="text-center text-4xl max-md:text-3xl max-md:leading-9.5 font-medium leading-11 tracking-tight text-text-primary">
               Selected partnerships
             </h2>
 
@@ -190,7 +190,7 @@ export default function PartnershipsPage() {
               {SELECTED_PARTNERSHIPS.map((partner) => (
                 <article
                   key={partner.name}
-                  className="flex min-h-52 flex-col items-center gap-3 rounded-xs border border-border-secondary p-6 text-center max-sm:min-h-0 max-sm:items-start max-sm:border-0 max-sm:p-0 max-sm:text-left"
+                  className="flex min-h-52 flex-col items-center gap-3 rounded-xs border border-border-secondary p-6 text-center max-sm:min-h-0 max-sm:items-start max-sm:px-4 max-sm:py-5 max-sm:text-left"
                 >
                   <h3 className="text-2xl max-md:text-xl max-md:leading-7.5 font-medium leading-8 tracking-tight text-text-secondary ">
                     {partner.name}
