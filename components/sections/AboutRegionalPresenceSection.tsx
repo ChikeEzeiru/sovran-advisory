@@ -65,7 +65,7 @@ export function AboutRegionalPresenceSection() {
             </address>
           </div>
 
-          <div className="relative h-full min-w-0 flex-1 overflow-visible max-lg:h-112 max-lg:w-full max-lg:flex-none max-md:h-96">
+          <div className="relative h-full min-w-0 flex-1 overflow-visible max-lg:h-112 max-lg:w-full max-lg:flex-none max-md:hidden">
             <div className="absolute -top-48 left-1/2 h-149 w-full -translate-x-1/2 max-lg:inset-0 max-lg:size-full max-lg:translate-x-0">
               <RegionalPresenceMap
                 locations={SOVRAN_LOCATIONS}

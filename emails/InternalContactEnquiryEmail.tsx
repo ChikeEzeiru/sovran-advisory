@@ -24,6 +24,8 @@ type InternalContactEnquiryEmailProps = {
   message: string;
   submittedAt: string;
   reference: string;
+  logoSrc?: string;
+  heroImageSrc?: string;
 };
 
 export default function InternalContactEnquiryEmail({
@@ -38,6 +40,8 @@ export default function InternalContactEnquiryEmail({
   message,
   submittedAt,
   reference,
+  logoSrc = absoluteUrl("/images/emails/sovran-logo-dark.png"),
+  heroImageSrc = absoluteUrl("/images/emails/internal-contact-email-hero.jpg"),
 }: InternalContactEnquiryEmailProps) {
   return (
     <Html>
@@ -47,7 +51,7 @@ export default function InternalContactEnquiryEmail({
         <Container style={containerStyle}>
           <Section style={headerStyle}>
             <Img
-              src={absoluteUrl("/images/emails/sovran-logo-dark.png")}
+              src={logoSrc}
               width="121"
               height="40"
               alt="Sovran Advisory"
@@ -56,7 +60,14 @@ export default function InternalContactEnquiryEmail({
           </Section>
 
           <Section style={heroOuterStyle}>
-            <Section style={heroStyle}>
+            <Img
+              src={heroImageSrc}
+              width="568"
+              height="174"
+              alt="Lagos cityscape"
+              style={internalHeroImageStyle}
+            />
+            <Section style={heroTitleStyle}>
               <Heading as="h1" style={headingStyle}>New website enquiry</Heading>
             </Section>
           </Section>
@@ -150,18 +161,20 @@ const containerStyle = {
 const headerStyle = {height: "56px"};
 const logoStyle = {margin: "8px 8px 8px auto"};
 const heroOuterStyle = {padding: "16px", paddingTop: "0"};
-const heroStyle = {
-  height: "262px",
-  borderRadius: "2px",
+const internalHeroImageStyle = {
+  display: "block",
+  width: "100%",
+  height: "174px",
+  objectFit: "cover" as const,
+  borderRadius: "2px 2px 0 0",
+};
+const heroTitleStyle = {
+  padding: "18px 16px 24px",
+  borderRadius: "0 0 2px 2px",
   backgroundColor: "#44504e",
-  backgroundImage: `linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)), url(${absoluteUrl("/images/emails/internal-contact-email-hero.jpg")})`,
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
 };
 const headingStyle = {
   margin: "0",
-  padding: "188px 16px 24px",
   color: "#ffffff",
   fontSize: "36px",
   fontWeight: "500",

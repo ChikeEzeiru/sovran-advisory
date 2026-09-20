@@ -45,6 +45,13 @@ body {
   to   { transform: rotate(360deg); }
 }
 
+@media (max-width: 47.999rem) {
+  .about-evolution-marquee {
+    animation: none;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .about-evolution-marquee {
     animation: none;

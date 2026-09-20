@@ -18,6 +18,8 @@ type ContactAcknowledgementEmailProps = {
   timeframe?: string;
   message: string;
   reference: string;
+  logoSrc?: string;
+  heroImageSrc?: string;
 };
 
 const colours = {
@@ -35,6 +37,8 @@ export default function ContactAcknowledgementEmail({
   timeframe,
   message,
   reference,
+  logoSrc = absoluteUrl("/images/emails/sovran-logo-light.png"),
+  heroImageSrc = absoluteUrl("/images/emails/contact-email-hero.jpg"),
 }: ContactAcknowledgementEmailProps) {
   return (
     <Html>
@@ -42,14 +46,23 @@ export default function ContactAcknowledgementEmail({
       <Preview>Our team will review your enquiry and respond within two business days.</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
-          <Section style={heroStyle}>
+          <Section style={heroHeaderStyle}>
             <Img
-              src={absoluteUrl("/images/emails/sovran-logo-light.png")}
+              src={logoSrc}
               width="121"
               height="40"
               alt="Sovran Advisory"
               style={contactLogoStyle}
             />
+          </Section>
+          <Img
+            src={heroImageSrc}
+            width="600"
+            height="206"
+            alt="Lagos cityscape"
+            style={externalHeroImageStyle}
+          />
+          <Section style={heroTitleStyle}>
             <Heading as="h1" style={headingStyle}>
               Your enquiry has
               <br />
@@ -120,19 +133,27 @@ const containerStyle = {
   backgroundColor: colours.background,
 };
 
-const heroStyle = {
-  height: "350px",
+const heroHeaderStyle = {
+  height: "56px",
   backgroundColor: "#333b3c",
-  backgroundImage: `linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url(${absoluteUrl("/images/emails/contact-email-hero.jpg")})`,
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+};
+
+const externalHeroImageStyle = {
+  display: "block",
+  width: "100%",
+  height: "206px",
+  objectFit: "cover" as const,
+};
+
+const heroTitleStyle = {
+  padding: "18px 16px 24px",
+  backgroundColor: "#333b3c",
 };
 
 const contactLogoStyle = {margin: "8px 0 0 8px"};
 
 const headingStyle = {
-  margin: "158px 16px 24px",
+  margin: "0",
   color: "#ffffff",
   fontSize: "36px",
   fontWeight: "500",

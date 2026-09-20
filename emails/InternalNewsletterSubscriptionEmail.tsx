@@ -15,12 +15,16 @@ type InternalNewsletterSubscriptionEmailProps = {
   email: string;
   subscribedAt: string;
   consentVersion: string;
+  logoSrc?: string;
+  heroImageSrc?: string;
 };
 
 export default function InternalNewsletterSubscriptionEmail({
   email,
   subscribedAt,
   consentVersion,
+  logoSrc = absoluteUrl("/images/emails/sovran-logo-dark.png"),
+  heroImageSrc = absoluteUrl("/images/emails/internal-newsletter-email-hero.jpg"),
 }: InternalNewsletterSubscriptionEmailProps) {
   return (
     <Html>
@@ -30,7 +34,7 @@ export default function InternalNewsletterSubscriptionEmail({
         <Container style={containerStyle}>
           <Section style={headerStyle}>
             <Img
-              src={absoluteUrl("/images/emails/sovran-logo-dark.png")}
+              src={logoSrc}
               width="121"
               height="40"
               alt="Sovran Advisory"
@@ -39,7 +43,14 @@ export default function InternalNewsletterSubscriptionEmail({
           </Section>
 
           <Section style={heroOuterStyle}>
-            <Section style={heroStyle}>
+            <Img
+              src={heroImageSrc}
+              width="568"
+              height="150"
+              alt="Lagos cityscape"
+              style={internalHeroImageStyle}
+            />
+            <Section style={heroTitleStyle}>
               <Heading as="h1" style={headingStyle}>
                 Newsletter
                 <br />
@@ -103,18 +114,20 @@ const containerStyle = {
 const headerStyle = {height: "56px"};
 const logoStyle = {margin: "8px 8px 8px auto"};
 const heroOuterStyle = {padding: "16px", paddingTop: "0"};
-const heroStyle = {
-  height: "262px",
-  borderRadius: "2px",
+const internalHeroImageStyle = {
+  display: "block",
+  width: "100%",
+  height: "150px",
+  objectFit: "cover" as const,
+  borderRadius: "2px 2px 0 0",
+};
+const heroTitleStyle = {
+  padding: "14px 16px 20px",
+  borderRadius: "0 0 2px 2px",
   backgroundColor: "#44504e",
-  backgroundImage: `linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.3)), url(${absoluteUrl("/images/emails/internal-newsletter-email-hero.jpg")})`,
-  backgroundPosition: "center bottom",
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
 };
 const headingStyle = {
   margin: "0",
-  padding: "144px 16px 24px",
   color: "#ffffff",
   fontSize: "36px",
   fontWeight: "500",

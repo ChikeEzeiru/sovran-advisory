@@ -29,6 +29,16 @@ function getInternalRecipient() {
   );
 }
 
+function emailAssetUrl(path: string) {
+  const configuredBaseUrl = process.env.EMAIL_ASSET_BASE_URL?.trim();
+  if (!configuredBaseUrl) return absoluteUrl(path);
+
+  const baseUrl = configuredBaseUrl.startsWith("http")
+    ? configuredBaseUrl
+    : `https://${configuredBaseUrl}`;
+  return new URL(path, baseUrl).toString();
+}
+
 function formatEmailTimestamp(date: Date) {
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
@@ -106,8 +116,13 @@ export async function sendContactEnquiry(params: {
   ]
 
   const firstName = params.name.trim().split(/\s+/)[0] || params.name;
-  const { error } = await resend.batch.send(
-    [
+  const internalLogoContentId = "sovran-internal-contact-logo";
+  const internalHeroContentId = "sovran-internal-contact-hero";
+  const acknowledgementLogoContentId = "sovran-contact-logo";
+  const acknowledgementHeroContentId = "sovran-contact-hero";
+
+  const [internalEmail, acknowledgementEmail] = await Promise.all([
+    resend.emails.send(
       {
         from: fromAddress,
         to: recipient,
@@ -125,9 +140,28 @@ export async function sendContactEnquiry(params: {
           message: params.message,
           submittedAt,
           reference,
+          logoSrc: `cid:${internalLogoContentId}`,
+          heroImageSrc: `cid:${internalHeroContentId}`,
         }),
         text: lines.join("\n"),
+        attachments: [
+          {
+            path: emailAssetUrl("/images/emails/sovran-logo-dark.png"),
+            filename: "sovran-logo-dark.png",
+            contentType: "image/png",
+            contentId: internalLogoContentId,
+          },
+          {
+            path: emailAssetUrl("/images/emails/internal-contact-email-hero.jpg"),
+            filename: "internal-contact-email-hero.jpg",
+            contentType: "image/jpeg",
+            contentId: internalHeroContentId,
+          },
+        ],
       },
+      {idempotencyKey: `contact-${reference}-internal`},
+    ),
+    resend.emails.send(
       {
         from: fromAddress,
         to: params.email,
@@ -141,14 +175,31 @@ export async function sendContactEnquiry(params: {
           timeframe: params.timeframe,
           message: params.message,
           reference,
+          logoSrc: `cid:${acknowledgementLogoContentId}`,
+          heroImageSrc: `cid:${acknowledgementHeroContentId}`,
         }),
+        attachments: [
+          {
+            path: emailAssetUrl("/images/emails/sovran-logo-light.png"),
+            filename: "sovran-logo-light.png",
+            contentType: "image/png",
+            contentId: acknowledgementLogoContentId,
+          },
+          {
+            path: emailAssetUrl("/images/emails/contact-email-hero.jpg"),
+            filename: "contact-email-hero.jpg",
+            contentType: "image/jpeg",
+            contentId: acknowledgementHeroContentId,
+          },
+        ],
       },
-    ],
-    {idempotencyKey: `contact-${reference}`},
-  );
+      {idempotencyKey: `contact-${reference}-acknowledgement`},
+    ),
+  ]);
 
-  if (error) {
-    throw new Error(`Resend failed to send contact enquiry: ${error.message}`);
+  const emailError = internalEmail.error ?? acknowledgementEmail.error;
+  if (emailError) {
+    throw new Error(`Resend failed to send contact enquiry: ${emailError.message}`);
   }
 }
 
@@ -157,6 +208,8 @@ export async function sendNewsletterConfirmation(params: {
   token: string;
 }) {
   const resend = getEmailClient();
+  const logoContentId = "sovran-newsletter-confirmation-logo";
+  const heroContentId = "sovran-newsletter-confirmation-hero";
   const confirmationUrl = absoluteUrl(
     `/api/newsletter/confirm?token=${encodeURIComponent(params.token)}`,
   );
@@ -168,7 +221,23 @@ export async function sendNewsletterConfirmation(params: {
     react: NewsletterConfirmationEmail({
       email: params.email,
       confirmationUrl,
+      logoSrc: `cid:${logoContentId}`,
+      heroImageSrc: `cid:${heroContentId}`,
     }),
+    attachments: [
+      {
+        path: emailAssetUrl("/images/emails/sovran-logo-light.png"),
+        filename: "sovran-logo-light.png",
+        contentType: "image/png",
+        contentId: logoContentId,
+      },
+      {
+        path: emailAssetUrl("/images/emails/newsletter-email-hero.jpg"),
+        filename: "newsletter-email-hero.jpg",
+        contentType: "image/jpeg",
+        contentId: heroContentId,
+      },
+    ],
   });
 
   if (error) {
@@ -212,6 +281,8 @@ export async function confirmNewsletterSubscription(email: string) {
   if (isNewSubscription) {
     const subscribedAt = formatEmailTimestamp(new Date());
     const consentVersion = "2026-09";
+    const logoContentId = "sovran-internal-newsletter-logo";
+    const heroContentId = "sovran-internal-newsletter-hero";
     const {error} = await resend.emails.send({
       from: getFromAddress(),
       to: recipient,
@@ -220,6 +291,8 @@ export async function confirmNewsletterSubscription(email: string) {
         email,
         subscribedAt,
         consentVersion,
+        logoSrc: `cid:${logoContentId}`,
+        heroImageSrc: `cid:${heroContentId}`,
       }),
       text: [
         "Newsletter subscription confirmed",
@@ -232,6 +305,20 @@ export async function confirmNewsletterSubscription(email: string) {
         "",
         "No action is required.",
       ].join("\n"),
+      attachments: [
+        {
+          path: emailAssetUrl("/images/emails/sovran-logo-dark.png"),
+          filename: "sovran-logo-dark.png",
+          contentType: "image/png",
+          contentId: logoContentId,
+        },
+        {
+          path: emailAssetUrl("/images/emails/internal-newsletter-email-hero.jpg"),
+          filename: "internal-newsletter-email-hero.jpg",
+          contentType: "image/jpeg",
+          contentId: heroContentId,
+        },
+      ],
     });
     if (error) throw new Error(error.message);
   }
