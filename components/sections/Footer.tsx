@@ -209,7 +209,7 @@ export function Footer() {
               aria-invalid={newsletterStatus === "error"}
               aria-describedby="footer-newsletter-message"
               placeholder="name@company.com"
-              className="min-w-0 flex-1 bg-transparent pr-3 pl-4 text-base max-md:text-sm max-md:leading-5 leading-6 text-text-primary outline-none placeholder:text-text-placeholder"
+              className="footer-newsletter-input min-w-0 flex-1 bg-transparent pr-3 pl-4 text-base max-md:text-sm max-md:leading-5 leading-6 text-neutral-900 outline-none placeholder:text-text-placeholder"
             />
             <Button
               type="submit"

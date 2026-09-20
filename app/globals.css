@@ -25,6 +25,15 @@
   animation: about-evolution-marquee-scroll 84s linear infinite;
 }
 
+.footer-newsletter-input:autofill,
+.footer-newsletter-input:-webkit-autofill,
+.footer-newsletter-input:-webkit-autofill:hover,
+.footer-newsletter-input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px color-mix(in srgb, white 80%, var(--sovran-color-neutral-950)) inset;
+  caret-color: var(--sovran-color-neutral-900);
+  -webkit-text-fill-color: var(--sovran-color-neutral-900);
+}
+
 body {
   background: var(--sovran-color-bg-secondary-alt-2);
   color: var(--sovran-color-text-primary);

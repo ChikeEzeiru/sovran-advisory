@@ -21,6 +21,14 @@ function getAuditBcc() {
   return process.env.EMAIL_AUDIT_BCC?.trim() || undefined;
 }
 
+function getInternalRecipient() {
+  return (
+    process.env.CONTACT_ENQUIRY_TO?.trim() ||
+    process.env.NEWSLETTER_NOTIFICATION_TO?.trim() ||
+    getAuditBcc()
+  );
+}
+
 function formatEmailTimestamp(date: Date) {
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
@@ -72,7 +80,7 @@ export async function sendContactEnquiry(params: {
   contactMethod: string
   phone?: string
 }) {
-  const recipient = process.env.CONTACT_ENQUIRY_TO;
+  const recipient = getInternalRecipient();
 
   if (!recipient) {
     throw new Error("Contact enquiry delivery is not configured");
